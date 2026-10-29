@@ -1,0 +1,380 @@
+/* --- Core Settings --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Prevent scrolling while the main page is behind the loading layer */
+body.loading {
+    overflow: hidden;
+}
+
+/* --- Responsive Fixed Overlay --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #FFF5F2 0%, #FFEBE5 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    padding: 20px;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
+}
+
+/* Responsive Content wrapper scaling safely for small viewports */
+.preloader-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* --- Vector Branding & Scaling --- */
+.logo-icon-wrapper {
+    width: 25vw;
+    max-width: 100px;
+    min-width: 70px;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.logo-icon {
+    width: 100%;
+    height: 100%;
+}
+
+.arch {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: drawArch 2s ease-in-out forwards;
+}
+
+.arch-2 {
+    animation-delay: 0.3s;
+}
+
+.sparkle {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 50px 15px;
+    animation: popSparkle 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
+}
+
+@keyframes drawArch {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes popSparkle {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* --- Fluid Typography --- */
+.brand-name {
+    font-size: calc(1.8rem + 1vw); /* Fluid responsive sizing metric */
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: #5D4A47;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.brand-tagline {
+    font-size: clamp(0.75rem, 2vw, 0.9rem); /* Limits size boundary neatly */
+    letter-spacing: 0.15em;
+    color: #8C7672;
+    margin-bottom: 36px;
+    text-transform: uppercase;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive Progress Bar Container --- */
+.progress-container {
+    width: 50%;
+    min-width: 140px;
+    max-width: 200px;
+    height: 3px;
+    background: rgba(232, 153, 141, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #E8998D, #F3B0A6);
+    border-radius: 10px;
+    transition: width 2s linear;
+}
+
+.loading-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #A6908C;
+}
+
+/* --- Exit Class Triggered by JS --- */
+#preloader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* --- Header Variables & Base Config --- */
+:root {
+    --text-main: #1A1A1A;
+    --text-muted: #5D4A47;
+    --accent-peach: #E8998D;
+    --accent-pink: #F3B0A6;
+    --bg-light: #FFF8F6;
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 248, 246, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(93, 74, 71, 0.05);
+    z-index: 999;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+/* --- Brand Logo --- */
+.logo-wrapper {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+.logo-wrapper:hover {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+.brand-logo-img {
+    height: 42px; /* Scales logically based on your assets */
+    width: auto;
+    object-fit: contain;
+}
+
+/* --- Centered Navigation (Desktop) --- */
+.nav-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 8px 4px;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover {
+    color: var(--accent-peach);
+}
+
+/* Active Link Status Indicator Line */
+.nav-link.active {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-peach), var(--accent-pink));
+    border-radius: 2px;
+}
+
+/* --- Authentication Actions --- */
+.auth-btn {
+    padding: 10px 24px;
+    background-color: var(--text-main);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.auth-btn:hover {
+    background-color: var(--accent-peach);
+    transform: translateY(-1px);
+}
+
+.mobile-auth-btn {
+    display: none;
+}
+
+/* --- Hamburger Trigger Icon --- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-main);
+    border-radius: 2px;
+    transition: var(--transition-smooth);
+}
+
+/* --- Responsive Layout & 80% Sidebar Architecture --- */
+@media (max-width: 992px) {
+    .header-container {
+        padding: 0 24px;
+        height: 70px;
+    }
+
+    .auth-wrapper {
+        display: none; /* Hide standard right aligned auth */
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    /* 80% Mobile Navigation Sidebar Panel Drawer */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -80%; /* Kept hidden off-screen naturally */
+        width: 80%;
+        height: 100vh;
+        background-color: rgba(255, 248, 246, 0.98);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+        left: auto;
+        transform: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 120px 40px 40px 40px;
+        z-index: 1000;
+        transition: var(--transition-smooth);
+    }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        width: 100%;
+        margin-bottom: 48px;
+    }
+
+    .nav-link {
+        font-size: 1.2rem;
+    }
+
+    .mobile-auth-btn {
+        display: block;
+        width: 100%;
+        max-width: 240px;
+        padding: 14px;
+        text-align: center;
+    }
+
+    /* Blur Backdrop Overlay Container */
+    .menu-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(93, 74, 71, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 998;
+        transition: var(--transition-smooth);
+    }
+
+    /* --- Active Open State Triggers --- */
+    .nav-menu.is-open {
+        right: 0;
+    }
+
+    .menu-backdrop.is-visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Hamburger Transformation into 'X' Close icon */
+    .hamburger.is-active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.is-active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.is-active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}

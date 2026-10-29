@@ -1,0 +1,4668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Preloader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+    <!-- Standalone Responsive Preloader Screen -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <!-- Scaling Vector Icon (Abstract Event Arches) -->
+            <div class="logo-icon-wrapper">
+                <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
+                    <path class="arch arch-1" d="M20 90V50C20 33.4315 33.4315 20 50 20C66.5685 20 80 33.4315 80 50V90" stroke="url(#peachGradient)" stroke-width="6" stroke-linecap="round"/>
+                    <path class="arch arch-2" d="M35 90V55C35 46.7157 41.7157 40 50 40C58.2843 40 65 46.7157 65 55V90" stroke="url(#pinkGradient)" stroke-width="5" stroke-linecap="round"/>
+                    <circle class="sparkle" cx="50" cy="15" r="4" fill="#E8998D"/>
+                </svg>
+            </div>
+
+            
+            <h1 class="brand-name">Stackly</h1>
+            <p class="brand-tagline">Curating Moments, Styling Spaces</p>
+
+            <!-- Progress Tracker Components -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <span class="loading-text">Crafting your experience...</span>
+        </div>
+    </div>
+
+    <!-- Global SVG Gradient Definitions -->
+    <svg width="0" height="0" style="position:absolute; visibility: hidden;">
+        <defs>
+            <linearGradient id="peachGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD3C4"/>
+                <stop offset="100%" stop-color="#E8998D"/>
+            </linearGradient>
+            <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF0EC"/>
+                <stop offset="100%" stop-color="#F3B0A6"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const preloader = document.getElementById("preloader");
+    const progressBar = document.getElementById("progress-bar");
+
+    // Instantly begin progress bar loading transition
+    setTimeout(() => {
+        progressBar.style.width = "100%";
+    }, 50);
+
+    // Exact 2000ms delay window before executing clean removal sequence
+    setTimeout(() => {
+        preloader.classList.add("fade-out");
+        document.body.classList.remove("loading");
+        
+        // Remove structural items entirely after fade duration closes
+        setTimeout(() => {
+            preloader.remove();
+        }, 600); 
+    }, 2000);
+});
+
+    </script>
+
+    <!-- Navigation Header Component -->
+<header class="main-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="window.location.reload();" role="button" aria-label="Refresh home page">
+            <img src="path-to-your-logo.png" alt="Stackly Logo" class="brand-logo-img">
+        </div>
+
+        <!-- Center Navigation Menu -->
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-list">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="#packages" class="nav-link">Packages</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <!-- Auth Button duplicated inside mobile drawer for layout flow -->
+            <button class="auth-btn mobile-auth-btn">Sign In</button>
+        </nav>
+
+        <!-- Right Side Auth Button (Desktop View) -->
+        <div class="auth-wrapper">
+            <button class="auth-btn">Sign In</button>
+        </div>
+
+        <!-- Mobile Hamburger Trigger -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+    </div>
+</header>
+
+<!-- Mobile Blur Backdrop Layer -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const navMenu = document.getElementById("navMenu");
+    const menuBackdrop = document.getElementById("menuBackdrop");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    // Unified function to handle open/close states
+    const toggleMenu = () => {
+        const isOpen = navMenu.classList.toggle("is-open");
+        hamburgerBtn.classList.toggle("is-active");
+        menuBackdrop.classList.toggle("is-visible");
+        
+        // Accessibility update
+        hamburgerBtn.setAttribute("aria-expanded", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+    };
+
+    // Trigger toggle on click elements
+    hamburgerBtn.addEventListener("click", toggleMenu);
+    menuBackdrop.addEventListener("click", toggleMenu);
+
+    // Track Navigation Item Interactions and switch visual Active State
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Remove active profile styling classes from all existing links
+            navLinks.forEach(item => item.classList.remove("active"));
+            
+            // Apply focus/active states cleanly onto target item
+            link.classList.add("active");
+
+            // Smooth close logic handling mobile interactions
+            if (navMenu.classList.contains("is-open")) {
+                toggleMenu();
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Sub-Header Actions Utility Bar Section -->
+<section class="action-bar-section">
+    <div class="action-bar-container">
+        
+        <!-- Left Side Dynamic Context Operations -->
+        <div class="left-actions-group">
+            <!-- Validation Protected Search Box -->
+            <form class="action-search-form" id="searchForm" novalidate>
+                <div class="search-input-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search decor styles, events..." aria-label="Search">
+                    <button type="submit" class="search-submit-btn" aria-label="Submit search">
+                        <!-- Search Vector Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <!-- Custom Native Tooltip Alert Placement -->
+                    <span class="validation-message" id="searchAlert">Please fill out this field.</span>
+                </div>
+            </form>
+
+            <!-- Interactive Geolocation Pointer -->
+            <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="location-anchor-link">
+                <!-- Map Pin Vector Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pin-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span class="location-text">Coimbatore, TN</span>
+            </a>
+        </div>
+
+        <!-- Center Flex Spacer (Maintained Horizontally via CSS Flex layout alignment) -->
+        <div class="center-flex-spacer"></div>
+
+        <!-- Right Side Social Ecosystem Layout -->
+        <div class="right-socials-group">
+            <!-- Instagram -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Instagram profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Facebook profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <!-- YouTube -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit YouTube channel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit LinkedIn workspace">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Action Utility Config --- */
+.action-bar-section {
+    width: 100%;
+    background-color: #FFF8F6;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 16px 0;
+    margin-top: 80px; /* Aligns correctly below the fixed header layout offset */
+}
+
+.action-bar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Left Sided Alignment Flex Units --- */
+.left-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Validation Wrapper Box Structure */
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrapper input {
+    width: 260px;
+    padding: 10px 40px 10px 16px;
+    border: 1.5px solid rgba(93, 74, 71, 0.15);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #1A1A1A;
+    background-color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: #E8998D;
+    box-shadow: 0 0 0 3px rgba(232, 153, 141, 0.1);
+}
+
+.search-submit-btn {
+    position: absolute;
+    right: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8C7672;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.search-submit-btn:hover {
+    color: #E8998D;
+}
+
+.search-submit-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Message Box Dynamic Placement CSS */
+.validation-message {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 12px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+/* Clean micro triangle anchor decoration pointing up to input window */
+.validation-message::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 16px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #1A1A1A transparent;
+}
+
+.validation-message.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- Location Map Point Links --- */
+.location-anchor-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #5D4A47;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.location-anchor-link:hover {
+    color: #E8998D;
+}
+
+.location-anchor-link svg.pin-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D;
+}
+
+/* --- Center Segment --- */
+.center-flex-spacer {
+    flex-grow: 1;
+}
+
+/* --- Right Side Vectors --- */
+.right-socials-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.social-icon-link {
+    color: #5D4A47;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.social-icon-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-icon-link:hover {
+    color: #E8998D;
+    transform: translateY(-2px);
+}
+
+/* --- Fully Responsive Breakpoints Viewports Layout --- */
+@media (max-width: 992px) {
+    .action-bar-container {
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .action-bar-section {
+        margin-top: 70px; /* Responsive tracking downscaled configuration step */
+        padding: 14px 0;
+    }
+
+    .action-bar-container {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .left-actions-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .search-input-wrapper input {
+        width: 100%; /* Spans viewport wide cleanly on compact displays */
+    }
+
+    .location-anchor-link {
+        justify-content: center;
+        padding: 4px 0;
+    }
+
+    .center-flex-spacer {
+        display: none; /* Collapses space unit natively when running vertical structures */
+    }
+
+    .right-socials-group {
+        justify-content: center;
+        border-top: 1px solid rgba(232, 153, 141, 0.1);
+        padding-top: 14px;
+        gap: 28px;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    const searchAlert = document.getElementById("searchAlert");
+
+    searchForm.addEventListener("submit", (e) => {
+        // Halt default transmission protocols instantly
+        e.preventDefault();
+
+        // Extract whitespace stripped characters from input layer
+        const queryValue = searchInput.value.trim();
+
+        if (queryValue === "") {
+            // Reveal validation context box banner
+            searchAlert.classList.add("is-visible");
+            searchInput.focus();
+        } else {
+            // Clean active errors out and smoothly direct to targeted broken page path
+            searchAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Dismiss active visible validation boxes if user initiates typing corrections
+    searchInput.addEventListener("input", () => {
+        if (searchAlert.classList.contains("is-visible")) {
+            searchAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Dismiss tooltip box elements cleanly if user shifts layout context/blur focus
+    searchInput.addEventListener("blur", () => {
+        searchAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Creative Immersive Hero Section -->
+<section class="hero-section">
+    
+    <!-- Background Cinematic Video Container -->
+    <div class="hero-video-container">
+        <!-- Replace 'your-luxury-decor-video.mp4' with your actual video file link -->
+        <video autoplay loop muted playsinline class="hero-bg-video">
+            <source src="your-luxury-decor-video.mp4" type="video/mp4">
+        </video>
+        <!-- Overlay tint to keep text readable against bright video frames -->
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Main Content Container Grid -->
+    <div class="hero-grid-container">
+        
+        <!-- Left Side: Dynamic Text & Action Blocks -->
+        <div class="hero-left-content">
+            <!-- Word-by-word sliding title container -->
+            <h1 class="split-word-title" aria-label="Bespoke Luxury Event Styling">
+                <span class="word left-slide">Bespoke</span>
+                <span class="word right-slide">Luxury</span>
+                <span class="word left-slide">Event</span>
+                <span class="word right-slide">Styling</span>
+            </h1>
+            
+            <p class="hero-interactive-para">
+                We craft breathtaking spaces, magnificent floral stages, and premium atmospheric lighting designed uniquely for life's unforgettable celebrations.
+            </p>
+
+            <div class="hero-cta-wrapper">
+                <button class="hero-btn primary-cta" onclick="window.location.href='404.html'">Book Consultation</button>
+                <button class="hero-btn secondary-cta" onclick="window.location.href='404.html'">View Gallery</button>
+            </div>
+        </div>
+
+        <!-- Right Side: Beautiful 3D Floating Feature Blocks -->
+        <div class="hero-right-content">
+            
+            <!-- Feature Card 1 -->
+            <div class="floating-feature-card float-delay-1" onclick="window.location.href='404.html'">
+                <div class="feature-icon-box">
+                    <!-- Floral Design SVG -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 6a6 6 0 0 1 6 6v1a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-1a6 6 0 0 1 6-6z"></path><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div class="feature-text-box">
+                    <h3>Floral Artistry</h3>
+                    <p>Exquisite fresh & luxury botanical setups.</p>
+                </div>
+            </div>
+
+            <!-- Feature Card 2 -->
+            <div class="floating-feature-card float-delay-2" onclick="window.location.href='404.html'">
+                <div class="feature-icon-box">
+                    <!-- Lighting/Sparkle SVG -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                </div>
+                <div class="feature-text-box">
+                    <h3>Ambient Lighting</h3>
+                    <p>Mood transformational design architectures.</p>
+                </div>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="floating-feature-card float-delay-3" onclick="window.location.href='404.html'">
+                <div class="feature-icon-box">
+                    <!-- Premium Mandapam/Structure Architecture SVG -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10a7 7 0 0 1 14 0v11M9 21v-4a3 3 0 0 1 6 0v4"></path></svg>
+                </div>
+                <div class="feature-text-box">
+                    <h3>Royal Mandapams</h3>
+                    <p>Grand cultural stages built beautifully.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Hero Layout Architecture --- */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 152px); /* Automatically scales between action utilities */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 60px 0;
+    background-color: #1A1A1A; /* Fallback theme block */
+}
+
+/* Fullscreen looping video layout frame */
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.85) 0%, rgba(93, 74, 71, 0.4) 100%);
+}
+
+/* Grid Matrix Container */
+.hero-grid-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* --- Left Segment: Text Timelines & Alternating Animations --- */
+.hero-left-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.split-word-title {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 16px;
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    letter-spacing: -2px;
+}
+
+.word {
+    display: inline-block;
+    opacity: 0;
+}
+
+/* Alternating word entrance directions */
+.word.left-slide {
+    transform: translateX(-100px);
+    animation: slideInWord 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+}
+
+.word.right-slide {
+    transform: translateX(100px);
+    animation: slideInWord 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+}
+
+/* Step staggered index calculation map */
+.split-word-title .word:nth-child(1) { animation-delay: 0.1s; }
+.split-word-title .word:nth-child(2) { animation-delay: 0.25s; }
+.split-word-title .word:nth-child(3) { animation-delay: 0.4s; }
+.split-word-title .word:nth-child(4) { animation-delay: 0.55s; }
+
+@keyframes slideInWord {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Creative Hoverable Paragraph Styling */
+.hero-interactive-para {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: #FFF0EC;
+    max-width: 580px;
+    margin-bottom: 40px;
+    cursor: default;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+    transform-origin: left center;
+}
+
+.hero-interactive-para:hover {
+    transform: scale(1.03);
+    color: #FFD3C4; /* Soft peach shift on user hover entry */
+}
+
+/* Bottom Sequence CTA Entry Points */
+.hero-cta-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.hero-btn {
+    padding: 16px 36px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: bounceUpCTA 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+}
+
+.primary-cta {
+    background-color: #E8998D;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.3);
+    animation-delay: 0.8s; /* Comes up first */
+    transition: all 0.3s;
+}
+
+.primary-cta:hover {
+    background-color: #D6867B;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 20px rgba(232, 153, 141, 0.5);
+}
+
+.secondary-cta {
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    animation-delay: 0.95s; /* Staggered follow up entry */
+    transition: all 0.3s;
+}
+
+.secondary-cta:hover {
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    transform: translateY(-3px) !important;
+}
+
+@keyframes bounceUpCTA {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Right Segment: Fluid Floating Feature Cards --- */
+.hero-right-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.floating-feature-card {
+    background: rgba(255, 248, 246, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 20px 24px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Vector box styles */
+.feature-icon-box {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(232, 153, 141, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFD3C4;
+    transition: all 0.3s;
+}
+
+.feature-icon-box svg {
+    width: 24px;
+    height: 24px;
+}
+
+.feature-text-box h3 {
+    font-size: 1.15rem;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.feature-text-box p {
+    font-size: 0.85rem;
+    color: #FFD3C4;
+}
+
+/* Custom interactive hover responses per card module */
+.floating-feature-card:hover {
+    background: rgba(255, 248, 246, 0.2);
+    transform: scale(1.05) translateX(-10px);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+
+.floating-feature-card:hover .feature-icon-box {
+    background-color: #E8998D;
+    color: #FFFFFF;
+    transform: rotate(15deg);
+}
+
+/* Three separate asymmetric harmonic oscillation paths */
+.float-delay-1 { animation: floatAnim1 5s ease-in-out infinite; }
+.float-delay-2 { animation: floatAnim2 6s ease-in-out infinite; }
+.float-delay-3 { animation: floatAnim3 5.5s ease-in-out infinite; }
+
+@keyframes floatAnim1 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+@keyframes floatAnim2 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+}
+@keyframes floatAnim3 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- Highly Responsive Viewport Adapters --- */
+@media (max-width: 1200px) {
+    .split-word-title { font-size: 4rem; }
+    .hero-grid-container { gap: 40px; }
+}
+
+@media (max-width: 992px) {
+    .hero-grid-container {
+        grid-template-columns: 1fr; /* Collapses neatly into a vertical single-column stack */
+        gap: 50px;
+        text-align: center;
+    }
+    
+    .split-word-title {
+        justify-content: center;
+        font-size: 3.8rem;
+    }
+
+    .hero-interactive-para {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-cta-wrapper {
+        justify-content: center;
+    }
+
+    .floating-feature-card:hover {
+        transform: scale(1.03) translateY(-5px); /* Responsive ergonomic balancing adjustment */
+    }
+}
+
+@media (max-width: 576px) {
+    .split-word-title {
+        font-size: 2.6rem;
+        gap: 0 10px;
+    }
+
+    .hero-interactive-para {
+        font-size: 1.05rem;
+    }
+
+    .hero-cta-wrapper {
+        flex-direction: column;
+        width: 100%;
+        gap: 14px;
+    }
+
+    .hero-btn {
+        width: 100%;
+        padding: 14px;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // Optional viewport view entries or extra parallax logic can sit here safely.
+    // The core structural delays are managed directly inside the native high-performance GPU CSS pipelines.
+});
+
+</script>
+
+<!-- Elegant Brand Showcase Section -->
+<section class="showcase-section" id="showcaseSection">
+    <div class="showcase-container">
+        
+        <!-- Scroll-Triggered Animated Title -->
+        <h2 class="showcase-title" id="showcaseTitle">
+            <span class="word-fade">Crafting</span>
+            <span class="word-fade">Beautiful</span>
+            <span class="word-fade">Weddings</span>
+            <span class="word-fade">With</span>
+            <span class="word-fade">Passion</span>
+            <span class="word-fade">&</span>
+            <span class="word-fade">Precision</span>
+        </h2>
+
+        <!-- Interactive Layout Grid Layout Matrix -->
+        <div class="showcase-grid-layout">
+            
+            <!-- Left Card: Planners Feature -->
+            <div class="showcase-card left-card" onclick="window.location.href='404.html'">
+                <div class="card-icon-header">
+                    <!-- Award/Star Vector Icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="vector-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <h3>Award-Winning Planners</h3>
+                </div>
+                <p>Our planning team has earned recognized awards for creativity and design quality. We focus on delivering professional coordination and a premium experience for every couple.</p>
+            </div>
+
+            <!-- Central Hero Floral Circular Visual Element -->
+            <div class="center-visual-circle">
+                <div class="circle-image-wrapper">
+                    <!-- Replace with path to your floral accent graphic asset -->
+                    <img src="path-to-your-flowers.png" alt="Stackly Wedding Floral Artistry" class="floral-display-img">
+                </div>
+            </div>
+
+            <!-- Right Card: Customization Feature -->
+            <div class="showcase-card right-card" onclick="window.location.href='404.html'">
+                <div class="card-icon-header">
+                    <!-- Theme/Design Vector Icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="vector-icon"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 6a6 6 0 0 1 6 6v1a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-1a6 6 0 0 1 6-6z"></path></svg>
+                    <h3>Theme Customization</h3>
+                </div>
+                <p>Every couple is unique, so we create themes that reflect your personal style. From colors to decor elements, each design is carefully crafted to match your vision.</p>
+            </div>
+
+        </div>
+
+        <!-- Integrated Counters Statistics Layout Layer -->
+        <div class="stats-counter-strip" id="statsStrip">
+            <div class="stat-box">
+                <div class="number-display"><span class="stat-count" data-target="10">0</span>+</div>
+                <div class="stat-label">Years of Experience</div>
+            </div>
+            <div class="divider-line"></div>
+            <div class="stat-box">
+                <div class="number-display"><span class="stat-count" data-target="300">0</span>+</div>
+                <div class="stat-label">Successful Weddings</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Showcase Layout & Theme Mapping --- */
+.showcase-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Soft Pale Pink/Peach Background */
+    padding: 120px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.showcase-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Word-by-Word Scroll Headings --- */
+.showcase-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Clean High-Contrast Near-Black */
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 80px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.word-fade {
+    opacity: 0.1;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.word-fade.reveal-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* --- Layout Symmetric Matrix Architecture --- */
+.showcase-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+/* Base card architectures */
+.showcase-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 10px 30px rgba(93, 74, 71, 0.03);
+    cursor: pointer;
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.4s ease, 
+                opacity 0.8s ease;
+}
+
+.showcase-card.left-card { transform: translateX(-50px); }
+.showcase-card.right-card { transform: translateX(50px); }
+
+.showcase-card.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.showcase-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.12);
+}
+
+/* Content Element Detailing */
+.card-icon-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.vector-icon {
+    width: 24px;
+    height: 24px;
+    color: #E8998D; /* Brand Peach Color */
+}
+
+.card-icon-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111111;
+}
+
+.showcase-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+}
+
+/* --- Central Circular Image Frame --- */
+.center-visual-circle {
+    width: 320px;
+    height: 320px;
+    background-color: #E6E2DB; /* Light warm-gray background accent precisely from image */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.center-visual-circle.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.circle-image-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.floral-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.center-visual-circle:hover .floral-display-img {
+    transform: scale(1.05);
+}
+
+/* --- Numerical Stats Ribbon Container --- */
+.stats-counter-strip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.02);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.stats-counter-strip.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stat-box {
+    text-align: center;
+    flex: 1;
+}
+
+.number-display {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #111111;
+    margin-bottom: 6px;
+    letter-spacing: -1px;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #8C7672;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.divider-line {
+    width: 1px;
+    height: 50px;
+    background-color: rgba(232, 153, 141, 0.25);
+}
+
+/* --- Responsive Layout Breakpoint Adjusters --- */
+@media (max-width: 992px) {
+    .showcase-grid-layout {
+        grid-template-columns: 1fr; /* Stacks column sections naturally on smaller screen sizes */
+        gap: 40px;
+        justify-items: center;
+    }
+    
+    .showcase-card {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .showcase-card.left-card,
+    .showcase-card.right-card {
+        transform: translateY(40px); /* Adjust side slide to standard vertical translations */
+    }
+
+    .center-visual-circle {
+        order: -1; /* Pushes beautiful circle visual up to the top focal point on mobile viewports */
+        width: 260px;
+        height: 260px;
+    }
+
+    .showcase-title { font-size: 2.5rem; margin-bottom: 50px; }
+}
+
+@media (max-width: 600px) {
+    .showcase-container { padding: 0 20px; }
+    .stats-counter-strip {
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+    .divider-line {
+        width: 60%;
+        height: 1px;
+    }
+    .showcase-title { font-size: 1.9rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Sequence Controller ---
+    const words = document.querySelectorAll(".word-fade");
+    
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: Element Entry Sequencer Hook ---
+    const cards = document.querySelectorAll(".showcase-card");
+    const centerCircle = document.querySelector(".center-visual-circle");
+    const statsStrip = document.getElementById("statsStrip");
+
+    const visualElementsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Reveal components smoothly
+                centerCircle.classList.add("animate-in");
+                
+                cards.forEach((card, i) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-in");
+                    }, (i + 1) * 250); // Stagger cards sequentially
+                });
+
+                setTimeout(() => {
+                    statsStrip.classList.add("animate-in");
+                    // Trigger number accumulation counters inside strip
+                    document.querySelectorAll(".stat-count").forEach(counter => startCounting(counter));
+                }, 750);
+
+                visualElementsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    const targetSection = document.getElementById("showcaseSection");
+    if (targetSection) visualElementsObserver.observe(targetSection);
+
+
+    // --- PART 3: Odometer Metric Animation Framework ---
+    function startCounting(counterElement) {
+        if (!counterElement) return;
+        
+        const target = parseInt(counterElement.getAttribute("data-target"), 10);
+        let current = 0;
+        const duration = 2000; // 2 seconds counting animation runtime window
+        const stepTime = Math.abs(Math.floor(duration / target));
+        
+        // Prevent step delay interval crashes on single small metrics (e.g. 10 years)
+        const frameRate = stepTime < 20 ? 20 : stepTime; 
+        const increment = target / (duration / frameRate);
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counterElement.textContent = target;
+                clearInterval(timer);
+            } else {
+                counterElement.textContent = Math.floor(current);
+            }
+        }, frameRate);
+    }
+});
+
+</script>
+
+<!-- Asymmetric Fixed-Proportion Gallery Section -->
+<section class="portfolio-section" id="portfolioSection">
+    
+    <!-- Floating Vector Decorations -->
+    <div class="floating-bg-vectors">
+        <svg class="bg-vector vector-1" viewBox="0 0 24 24" fill="none" stroke="rgba(232,153,141,0.15)" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+        <svg class="bg-vector vector-2" viewBox="0 0 24 24" fill="none" stroke="rgba(232,153,141,0.15)" stroke-width="1.5"><path d="M12 2v20M17 5H7M19 9H5M21 13H3"/></svg>
+    </div>
+
+    <div class="portfolio-container">
+        
+        <!-- Header Controls -->
+        <div class="portfolio-header">
+            <h2 class="letter-reveal-title" id="scrollTitle">Our Recent Wedding Moments</h2>
+            <p class="portfolio-subtitle">A closer look at the love stories we've thoughtfully planned and beautifully brought to life.</p>
+            <button class="portfolio-cta-btn" onclick="window.location.href='404.html'">View Full Portfolio</button>
+        </div>
+
+        <!-- Asymmetric Balanced Grid Matrix -->
+        <div class="masonry-gallery-grid">
+            
+            <!-- Column 1 (Left Balanced Set) -->
+            <div class="gallery-column col-left">
+                <div class="gallery-item item-wedding-1 fly-from-left" onclick="window.location.href='404.html'">
+                    <img src="path-to-wedding-1.jpg" alt="Wedding Moment 1" loading="lazy">
+                </div>
+                <div class="gallery-row-split">
+                    <div class="gallery-item item-detail-close fly-from-bottom" onclick="window.location.href='404.html'">
+                        <img src="path-to-wedding-2.jpg" alt="Wedding Detail Close Up" loading="lazy">
+                    </div>
+                    <div class="gallery-item item-bridal-flower fly-from-bottom" onclick="window.location.href='404.html'">
+                        <img src="path-to-wedding-3.jpg" alt="Bridal Flower Arrangement" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2 (Center Hero Portrait & Altar Strip) -->
+            <div class="gallery-column col-center">
+                <div class="gallery-item item-main-portrait fly-from-top" onclick="window.location.href='404.html'">
+                    <img src="path-to-wedding-4.jpg" alt="Main Bridal Portrait Showcase" loading="lazy">
+                </div>
+                <div class="gallery-item item-altar fly-from-bottom" onclick="window.location.href='404.html'">
+                    <img src="path-to-wedding-5.jpg" alt="Couples Altar Presentation" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Column 3 (Right Multi-Tier Stack) -->
+            <div class="gallery-column col-right">
+                <div class="gallery-row-split-top">
+                    <div class="gallery-item item-reception fly-from-right" onclick="window.location.href='404.html'">
+                        <img src="path-to-wedding-6.jpg" alt="Reception Table Layout" loading="lazy">
+                    </div>
+                    <div class="gallery-item item-toast fly-from-right" onclick="window.location.href='404.html'">
+                        <img src="path-to-wedding-7.jpg" alt="Candid Wedding Toast" loading="lazy">
+                    </div>
+                </div>
+                <div class="gallery-item item-lighting fly-from-bottom" onclick="window.location.href='404.html'">
+                    <img src="path-to-wedding-8.jpg" alt="Luxury Hall Lighting Styling" loading="lazy">
+                </div>
+                <div class="gallery-item item-bridesmaids fly-from-right" onclick="window.location.href='404.html'">
+                    <img src="path-to-wedding-9.jpg" alt="Bridesmaids Celebration Group" loading="lazy">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Master Layout Settings --- */
+.portfolio-section {
+    width: 100%;
+    background-color: #FFF8F6;
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.portfolio-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* --- Vector Background Ambience --- */
+.floating-bg-vectors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bg-vector {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+}
+
+.vector-1 { top: 15%; left: 5%; animation: floatSlow 8s ease-in-out infinite; }
+.vector-2 { bottom: 20%; right: 4%; animation: floatSlow 10s ease-in-out infinite reverse; }
+
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(15deg); }
+}
+
+/* --- Typography Controls --- */
+.portfolio-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+    position: relative;
+    z-index: 2;
+}
+
+.letter-reveal-title {
+    font-size: 4.2rem;
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.letter-reveal-title .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px) scale(0.9);
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.letter-reveal-title .char.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.portfolio-subtitle {
+    font-size: 1.05rem;
+    color: #5D4A47;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.portfolio-cta-btn {
+    padding: 14px 32px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.portfolio-cta-btn:hover {
+    background-color: #E8998D;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(232, 153, 141, 0.25);
+}
+
+/* ==========================================================================
+   EXPLICIT MASONRY STRUCTURAL ARCHITECTURE (Fixes Layout Collapsing)
+   ========================================================================== */
+.masonry-gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.15fr; /* Precise proportional horizontal ratio */
+    gap: 24px;
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Secondary splitting blocks inside columns */
+.gallery-row-split, 
+.gallery-row-split-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* Master Cards Configuration Style */
+.gallery-item {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: rgba(243, 176, 166, 0.08); /* Frosted tint placeholder fallback */
+    box-shadow: 0 10px 30px rgba(93, 74, 71, 0.04);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Forces graphic bounding box normalization */
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.04);
+}
+
+/* --------------------------------------------------------------------------
+   INDIVIDUAL STRUCTURAL TARGET BOUNDARIES (Guarantees Alignment Regardless of Image Content)
+   -------------------------------------------------------------------------- */
+
+/* Column 1 Assignments */
+.item-wedding-1 {
+    height: 380px;
+}
+.item-detail-close, 
+.item-bridal-flower {
+    height: 220px;
+}
+
+/* Column 2 Assignments */
+.item-main-portrait {
+    height: 480px;
+}
+.item-altar {
+    height: 120px;
+}
+
+/* Column 3 Assignments */
+.item-reception, 
+.item-toast {
+    height: 160px;
+}
+.item-lighting {
+    height: 260px;
+}
+.item-bridesmaids {
+    height: 152px;
+}
+
+/* --------------------------------------------------------------------------
+   DIRECTIONAL MOVEMENT MAPPING FLUID HOOKS
+   -------------------------------------------------------------------------- */
+.gallery-item.fly-from-left { transform: translateX(-60px); }
+.gallery-item.fly-from-right { transform: translateX(60px); }
+.gallery-item.fly-from-top { transform: translateY(-60px); }
+.gallery-item.fly-from-bottom { transform: translateY(60px); }
+
+.gallery-item.fly-active {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* ==========================================================================
+   RESPONSIVE OVERRIDES (Maintains Structural Proportions on Smaller viewports)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .letter-reveal-title { font-size: 2.8rem; }
+    .masonry-gallery-grid { gap: 16px; }
+    .gallery-column { gap: 16px; }
+    .gallery-row-split, .gallery-row-split-top { gap: 16px; }
+
+    /* Downscale Heights Proportionally for Tablet Viewports */
+    .item-wedding-1 { height: 300px; }
+    .item-detail-close, .item-bridal-flower { height: 180px; }
+    .item-main-portrait { height: 400px; }
+    .item-altar { height: 100px; }
+    .item-reception, .item-toast { height: 130px; }
+    .item-lighting { height: 210px; }
+    .item-bridesmaids { height: 130px; }
+}
+
+@media (max-width: 768px) {
+    .portfolio-section { padding: 60px 0; }
+    .letter-reveal-title { font-size: 2.2rem; }
+    
+    /* Safely flatten structural matrix grids into clean single file vertical flows */
+    .masonry-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .gallery-row-split-top {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Standardize safe display heights on mobile viewports to prevent disproportionate scaling */
+    .gallery-item,
+    .item-wedding-1,
+    .item-detail-close,
+    .item-bridal-flower,
+    .item-main-portrait,
+    .item-altar,
+    .item-reception,
+    .item-toast,
+    .item-lighting,
+    .item-bridesmaids {
+        height: 280px;
+    }
+
+    /* Convert mobile animation entry vectors to uniform vertical slides for rendering fluidly */
+    .gallery-item.fly-from-left,
+    .gallery-item.fly-from-right,
+    .gallery-item.fly-from-top {
+        transform: translateY(40px);
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-row-split-top {
+        grid-template-columns: 1fr; /* Pure linear stack flow on minor displays */
+    }
+    .letter-reveal-title { font-size: 1.8rem; }
+    .gallery-item { height: 230px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Letter-by-Letter Structural Preparation ---
+    const titleElement = document.getElementById("scrollTitle");
+    const titleText = titleElement.textContent;
+    titleElement.textContent = ""; 
+
+    [...titleText].forEach(char => {
+        const span = document.createElement("span");
+        span.classList.add("char");
+        span.innerHTML = char === " " ? "&nbsp;" : char;
+        titleElement.appendChild(span);
+    });
+
+    const characters = titleElement.querySelectorAll(".char");
+
+
+    // --- PART 2: Scroll Intersection Pipeline Observer ---
+    const portfolioObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                
+                // Sequence text character transitions
+                characters.forEach((char, index) => {
+                    setTimeout(() => {
+                        char.classList.add("revealed");
+                    }, index * 30); 
+                });
+
+                // Sequence card container entrance pipelines
+                const items = document.querySelectorAll(".gallery-item");
+                items.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add("fly-active");
+                    }, index * 100); 
+                });
+
+                portfolioObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 }); 
+
+    const targetSection = document.getElementById("portfolioSection");
+    if (targetSection) portfolioObserver.observe(targetSection);
+});
+
+</script>
+
+<!-- Asymmetric Services Showcase Section -->
+<section class="services-section" id="servicesSection">
+    
+    <!-- Floating Soft Vector Elements -->
+    <div class="services-bg-vectors">
+        <svg class="float-spark spark-1" viewBox="0 0 24 24" fill="none" stroke="rgba(232, 153, 141, 0.2)" stroke-width="2"><path d="M12 2v20M2 12h20M5.93 5.93l12.14 12.14M5.93 18.07l12.14-12.14"/></svg>
+        <svg class="float-spark spark-2" viewBox="0 0 24 24" fill="none" stroke="rgba(243, 176, 166, 0.2)" stroke-width="1.5"><path d="M12 3v18M3 12h18"/></svg>
+    </div>
+
+    <div class="services-container">
+        
+        <!-- Section Header Layout Layer -->
+        <div class="services-top-bar">
+            <div class="title-block">
+                <span class="sub-brand-label">Services Portfolio</span>
+                <h2 class="services-main-title" id="servicesTitle">
+                    <span class="word-fade">Crafting</span>
+                    <span class="word-fade">Every</span>
+                    <span class="word-fade">Single</span>
+                    <span class="word-fade">Detail</span>
+                </h2>
+            </div>
+            <div class="desc-block">
+                <p>Our premium styling services are designed to support every developmental stage of your grand event. From your initial spatial concept visualization to on-site production, we refine every element for visual cohesion.</p>
+            </div>
+        </div>
+
+        <!-- Asymmetric Blocks Structural Matrix -->
+        <div class="services-interactive-grid" id="servicesGrid">
+            
+            <!-- Service Card 1 -->
+            <div class="service-card-item card-stagger-1" onclick="window.location.href='404.html'">
+                <div class="service-img-container">
+                    <img src="path-to-wedding-planning.jpg" alt="Luxury Wedding Planning and Directing" loading="lazy">
+                    <div class="card-glass-overlay"></div>
+                </div>
+                <div class="service-text-content">
+                    <div class="card-icon-spark">✦</div>
+                    <h3>Wedding Planning</h3>
+                    <p>A timeless celebration set against breathtaking curated landscapes, where classic elegance meets meticulous micro-coordination. We tailor your timeline flawlessly.</p>
+                </div>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div class="service-card-item card-stagger-2" onclick="window.location.href='404.html'">
+                <div class="service-img-container">
+                    <img src="path-to-event-design.jpg" alt="Bespoke Floral and Stage Concept Design" loading="lazy">
+                    <div class="card-glass-overlay"></div>
+                </div>
+                <div class="service-text-content">
+                    <div class="card-icon-spark">✦</div>
+                    <h3>Event Design</h3>
+                    <p>Transforming empty halls into lush sensory experiences. Specializing in grand floral ceiling installations, luxury tablescapes, and thematic custom backdrops.</p>
+                </div>
+                <!-- Hand-scripted Side Decorative Typography from image -->
+                <span class="side-script-text text-right-pos">What We Do</span>
+            </div>
+
+            <!-- Service Card 3 -->
+            <div class="service-card-item card-stagger-3" onclick="window.location.href='404.html'">
+                <div class="service-img-container">
+                    <img src="path-to-production.jpg" alt="Sound Light and Stage Structure Management" loading="lazy">
+                    <div class="card-glass-overlay"></div>
+                </div>
+                <div class="service-text-content">
+                    <div class="card-icon-spark">✦</div>
+                    <h3>Production Management</h3>
+                    <p>Engineering sound, structural German trusses, and intelligent ambient layout illumination matrices safely to anchor massive premium crowd assemblies.</p>
+                </div>
+                <span class="side-script-text text-left-pos">Professionals</span>
+            </div>
+
+            <!-- Service Card 4 -->
+            <div class="service-card-item card-stagger-4" onclick="window.location.href='404.html'">
+                <div class="service-img-container">
+                    <img src="path-to-private-events.jpg" alt="Intimate Private Family Milestone Decor" loading="lazy">
+                    <div class="card-glass-overlay"></div>
+                </div>
+                <div class="service-text-content">
+                    <div class="card-icon-spark">✦</div>
+                    <h3>Private Events</h3>
+                    <p>Curating refined luxury aesthetics for high-end corporate galas, milestone birthday parties, and traditional home ceremonies with intimate perfection.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Base Layout & Canvas Configuration --- */
+@import url('https://googleapis.com');
+
+.services-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Soft Pale Pink Theme */
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.services-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Floating Spark Vectors --- */
+.services-bg-vectors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.float-spark {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+}
+
+.spark-1 { top: 10%; right: 8%; animation: pulseRotate 6s ease-in-out infinite; }
+.spark-2 { bottom: 15%; left: 5%; animation: pulseRotate 8s ease-in-out infinite reverse; }
+
+@keyframes pulseRotate {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+    50% { transform: scale(1.15) rotate(45deg); opacity: 1; }
+}
+
+/* --- Top Bar & Word Scroll Reveal Title --- */
+.services-top-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: flex-end;
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 2;
+}
+
+.sub-brand-label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #E8998D;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.services-main-title {
+    font-size: 3.6rem;
+    font-weight: 700;
+    color: #111111; /* Near Black */
+    line-height: 1.1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 14px;
+}
+
+.word-fade {
+    opacity: 0.15;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.word-fade.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.desc-block p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #5D4A47;
+    max-width: 540px;
+}
+
+/* --- Asymmetric 2x2 Interactive Layout Matrix --- */
+.services-interactive-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 50px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Base Card Block Structures */
+.service-card-item {
+    position: relative;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.03);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll Animate-in Initialization States */
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.4s ease;
+}
+
+.service-card-item.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card Image Frames & Frosted Dark Hover Blurs */
+.service-img-container {
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    position: relative;
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+.service-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card-glass-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(26,26,26,0) 30%, rgba(26, 26, 26, 0.75) 100%);
+    opacity: 0.85;
+    transition: all 0.4s ease;
+}
+
+/* Text Content Overlay Framework */
+.service-text-content {
+    padding: 36px;
+    position: relative;
+}
+
+.card-icon-spark {
+    color: #E8998D;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    transition: transform 0.4s ease;
+}
+
+.service-text-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 14px;
+}
+
+.service-text-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+}
+
+/* --- Elegant Premium Card Hover Effects --- */
+.service-card-item:hover {
+    box-shadow: 0 20px 50px rgba(232, 153, 141, 0.18);
+}
+
+.service-card-item:hover .service-img-container img {
+    transform: scale(1.06);
+}
+
+/* Converts layer overlay into dark modern atmospheric tint from user reference photo */
+.service-card-item:hover .card-glass-overlay {
+    background: rgba(26, 26, 26, 0.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 1;
+}
+
+.service-card-item:hover .card-icon-spark {
+    transform: rotate(90deg) scale(1.2);
+}
+
+/* --- Asymmetric Script Overlay Typography --- */
+.side-script-text {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 3rem;
+    color: rgba(93, 74, 71, 0.12); /* Extremely subtle script lettering */
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: -1;
+}
+
+.text-right-pos {
+    right: -140px;
+    top: 45%;
+    transform: rotate(90deg);
+}
+
+.text-left-pos {
+    left: -160px;
+    bottom: 20%;
+    transform: rotate(-90deg);
+}
+
+/* --- Robust Responsive Architecture Adapters --- */
+@media (max-width: 1100px) {
+    .services-main-title { font-size: 3rem; }
+    .side-script-text { display: none; } /* Drops complex overlapping script flags on medium screens */
+}
+
+@media (max-width: 992px) {
+    .services-top-bar {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 50px;
+    }
+    
+    .services-interactive-grid {
+        grid-template-columns: 1fr; /* Compresses 2x2 grid down into a clean 1-column stack flow */
+        gap: 36px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+
+    .service-text-content { padding: 28px; }
+}
+
+@media (max-width: 576px) {
+    .services-section { padding: 60px 0; }
+    .services-container { padding: 0 24px; }
+    .services-main-title { font-size: 2.2rem; }
+    .service-text-content h3 { font-size: 1.3rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Title Scroller Hook ---
+    const words = document.querySelectorAll(".word-fade");
+    
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: One-by-One Staggered Card Entry Sequence ---
+    const servicesGrid = document.getElementById("servicesGrid");
+    const serviceCards = document.querySelectorAll(".service-card-item");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Loop the child elements and introduce delays dynamically based on indexing
+                serviceCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-in");
+                    }, index * 200); // Staggers entries by 200ms increments
+                });
+                gridObserver.unobserve(servicesGrid);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    if (servicesGrid) gridObserver.observe(servicesGrid);
+});
+
+</script>
+
+<!-- Creative Floating 2-Line CTA Banner Section -->
+<section class="cta-banner-section" id="ctaSection">
+    <div class="cta-banner-container">
+        
+        <!-- Floating Visual Card Shell -->
+        <div class="floating-cta-card">
+            
+            <!-- Img Tag Background Layer -->
+            <div class="cta-image-wrapper">
+                <img src="path-to-your-luxury-background.jpg" alt="Stackly Grand Event Styling Background" class="cta-bg-img" loading="lazy">
+                <!-- Atmospheric dark peach tint layer to keep typography highly visible -->
+                <div class="cta-color-tint"></div>
+            </div>
+
+            <!-- Content Layout Matrix -->
+            <div class="cta-content-inner">
+                
+                <!-- 2-Line Dynamic Alternating Header Box -->
+                <div class="cta-text-block">
+                    <!-- Line 1 -->
+                    <h2 class="cta-title-line line-left" id="ctaLine1">
+                        <span class="cta-word">Ready</span>
+                        <span class="cta-word">To</span>
+                        <span class="cta-word">Transform</span>
+                        <span class="cta-word">Your</span>
+                        <span class="cta-word">Next</span>
+                        <span class="cta-word">Venue?</span>
+                    </h2>
+                    <!-- Line 2 -->
+                    <p class="cta-title-line line-right" id="ctaLine2">
+                        <span class="cta-word">Let's</span>
+                        <span class="cta-word">Style</span>
+                        <span class="cta-word">An</span>
+                        <span class="cta-word">Unforgettable</span>
+                        <span class="cta-word">Experience</span>
+                        <span class="cta-word">Together.</span>
+                    </p>
+                </div>
+
+                <!-- Bottom Up Sequential CTA Action Buttons -->
+                <div class="cta-actions-block">
+                    <button class="cta-action-btn primary-gold" onclick="window.location.href='404.html'">Check Availability</button>
+                    <button class="cta-action-btn secondary-outline" onclick="window.location.href='404.html'">Get Free Quote</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Floating CTA Section Core Config --- */
+.cta-banner-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Standard theme pale pink canvas background */
+    padding: 30px 0; /* Padding allows the card element to appear cleanly floating */
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-banner-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Floating Box Architecture Shell --- */
+.floating-cta-card {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    border-radius: 32px; /* Keeps edges highly curved and floating precisely */
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(93, 74, 71, 0.15); /* Gives deep spatial elevation depth drop shadows */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+}
+
+/* Background Img Tag Layer Scaling Protocols */
+.cta-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.cta-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.floating-cta-card:hover .cta-bg-img {
+    transform: scale(1.04); /* Soft graphic expansion on whole banner hover element focus */
+}
+
+.cta-color-tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.85) 0%, rgba(93, 74, 71, 0.75) 100%);
+}
+
+/* --- Foreground Content Containers --- */
+.cta-content-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 60px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.cta-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- 2-Line Side Entrance Typography Map --- */
+.cta-title-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    line-height: 1.2;
+}
+
+/* Line 1 (Large Heading) */
+.cta-title-line.line-left {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -1px;
+}
+
+/* Line 2 (Refined Description Headline) */
+.cta-title-line.line-right {
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: #FFD3C4; /* Soft branding theme peach accent contrast line text color */
+}
+
+/* Core Word Translation Configurations */
+.cta-word {
+    opacity: 0;
+    display: inline-block;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Alternating directional word logic mappings */
+.line-left .cta-word { transform: translateX(-50px); }
+.line-right .cta-word { transform: translateX(50px); }
+
+/* Class targets stamped on intersection via Javascript Observer pipelines */
+.cta-title-line.reveal-active .cta-word {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --- Bottom Up Staggered CTA Buttons --- */
+.cta-actions-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 240px;
+}
+
+.cta-action-btn {
+    width: 100%;
+    padding: 16px 32px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    text-align: center;
+    
+    /* Animation initialization settings */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15), 
+                transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15),
+                background-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+.floating-cta-card.animate-actions .cta-action-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Separate step loading timelines per button element */
+.floating-cta-card.animate-actions .primary-gold { transition-delay: 0.1s; }
+.floating-cta-card.animate-actions .secondary-outline { transition-delay: 0.25s; }
+
+/* Button Skins Visual Designing */
+.primary-gold {
+    background-color: #E8998D; /* Brand focal signature tone */
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.3);
+}
+
+.primary-gold:hover {
+    background-color: #D6867B;
+    box-shadow: 0 8px 25px rgba(232, 153, 141, 0.45);
+    transform: translateY(-2px) !important;
+}
+
+.secondary-outline {
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+.secondary-outline:hover {
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    transform: translateY(-2px) !important;
+}
+
+/* --- Rigid Responsive Layout Overrides --- */
+@media (max-width: 1024px) {
+    .cta-content-inner {
+        padding: 50px 40px;
+    }
+    .cta-title-line.line-left { font-size: 2.3rem; }
+    .cta-title-line.line-right { font-size: 1.2rem; }
+}
+
+@media (max-width: 900px) {
+    .cta-banner-section { padding: 40px 0; }
+    .cta-banner-container { padding: 0 20px; }
+    
+    /* Transforms horizontal split layout to stacked alignment safely on compact viewports */
+    .cta-content-inner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 36px;
+    }
+
+    .cta-title-line {
+        justify-content: center;
+    }
+
+    .cta-actions-block {
+        flex-direction: row; /* Orients buttons horizontally alongside each other on tablets */
+        justify-content: center;
+        width: 100%;
+    }
+
+    .cta-action-btn {
+        max-width: 220px;
+    }
+}
+
+@media (max-width: 576px) {
+    .floating-cta-card { border-radius: 24px; }
+    .cta-content-inner { padding: 40px 24px; }
+    
+    .cta-title-line.line-left { font-size: 1.8rem; }
+    .cta-title-line.line-right { font-size: 1.05rem; }
+    
+    .cta-actions-block {
+        flex-direction: column; /* Stack buttons single file linear layout on small smartphones */
+        align-items: center;
+    }
+    
+    .cta-action-btn {
+        max-width: 100%;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const ctaSection = document.getElementById("ctaSection");
+    const line1 = document.getElementById("ctaLine1");
+    const line2 = document.getElementById("ctaLine2");
+    const ctaCard = document.querySelector(".floating-cta-card");
+
+    // --- PART 1: Staggered Word Index Calculation Preparation ---
+    const buildWordDelays = (lineElement, initialDelay) => {
+        const words = lineElement.querySelectorAll(".cta-word");
+        words.forEach((word, index) => {
+            // Generates sequential inline transition delays for smooth running word flows
+            word.style.transitionDelay = `${initialDelay + (index * 70)}ms`;
+        });
+        return initialDelay + (words.length * 70); // Returns final calculation window
+    };
+
+    // Stagger word flows so line 2 sequences directly after line 1 completes drawing
+    const endLine1Delay = buildWordDelays(line1, 100);
+    buildWordDelays(line2, endLine1Delay + 50);
+
+
+    // --- PART 2: Scroll Intersection Pipeline Logic ---
+    const ctaObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Trigger line text translations
+                line1.classList.add("reveal-active");
+                line2.classList.add("reveal-active");
+
+                // Trigger bottom buttons slide-up action sequence frame
+                ctaCard.classList.add("animate-actions");
+
+                // Clear check to optimize resource utilization loops
+                ctaObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.25 }); // Fires when 25% of the banner block enters display canvas frame boundary
+
+    if (ctaSection) ctaObserver.observe(ctaSection);
+});
+
+</script>
+
+<!-- Interactive Wedding Stories Infinite Carousel Section -->
+<section class="stories-carousel-section" id="storiesSection">
+    <div class="carousel-master-wrapper">
+        
+        <!-- Header Container with Scroll Word Reveal -->
+        <div class="carousel-section-header">
+            <h2 class="carousel-main-title" id="carouselTitle">
+                <span class="c-word">Real</span>
+                <span class="c-word">Weddings,</span>
+                <span class="c-word">Timeless</span>
+                <span class="c-word">Spaces,</span>
+                <span class="c-word">Impeccable</span>
+                <span class="c-word">Styling</span>
+            </h2>
+            <p class="carousel-subtitle">Explore our gallery of thoughtfully planned and beautifully styled milestone celebrations.</p>
+        </div>
+
+        <!-- Carousel Viewport Container Box -->
+        <div class="stories-carousel-viewport">
+            <div class="stories-carousel-track" id="carouselTrack">
+                
+                <!-- Card 1 -->
+                <div class="story-carousel-card item-side-left-far" onclick="window.location.href='404.html'">
+                    <div class="story-image-box">
+                        <img src="path-to-wedding-1.jpg" alt="Timeless Wedding Gallery 1" loading="lazy">
+                    </div>
+                    <div class="story-meta-box">
+                        <h3>Timeless wedding at castle Hill Inn in newport RI</h3>
+                        <span class="couple-names">MEGHA & TEJA</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="story-carousel-card item-side-left" onclick="window.location.href='404.html'">
+                    <div class="story-image-box">
+                        <img src="path-to-wedding-2.jpg" alt="Timeless Wedding Gallery 2" loading="lazy">
+                    </div>
+                    <div class="story-meta-box">
+                        <h3>Timeless wedding at castle Hill Inn in newport RI</h3>
+                        <span class="couple-names">SAM & SUNNY</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 (Center Hero Portrait - Highlighted) -->
+                <div class="story-carousel-card item-center-focus" onclick="window.location.href='404.html'">
+                    <div class="story-image-box">
+                        <img src="path-to-wedding-3.jpg" alt="Timeless Wedding Gallery 3" loading="lazy">
+                    </div>
+                    <div class="story-meta-box">
+                        <h3>Timeless wedding at castle Hill Inn in newport RI</h3>
+                        <span class="couple-names">ALEX & SAM</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="story-carousel-card item-side-right" onclick="window.location.href='404.html'">
+                    <div class="story-image-box">
+                        <img src="path-to-wedding-4.jpg" alt="Timeless Wedding Gallery 4" loading="lazy">
+                    </div>
+                    <div class="story-meta-box">
+                        <h3>Timeless wedding at castle Hill Inn in newport RI</h3>
+                        <span class="couple-names">STRACY & SACHI</span>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="story-carousel-card item-side-right-far" onclick="window.location.href='404.html'">
+                    <div class="story-image-box">
+                        <img src="path-to-wedding-5.jpg" alt="Timeless Wedding Gallery 5" loading="lazy">
+                    </div>
+                    <div class="story-meta-box">
+                        <h3>Timeless wedding at castle Hill Inn in newport RI</h3>
+                        <span class="couple-names">NITCHAL & IZUMI</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Action Control View Button -->
+        <div class="carousel-control-row">
+            <button class="carousel-view-all-btn" onclick="window.location.href='404.html'">Explore Our Full Gallery</button>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Background Theme Configuration --- */
+.stories-carousel-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach theme canvas background */
+    padding: 100px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-master-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Title Word-by-Word Scroll Reveal Styling --- */
+.carousel-section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+}
+
+.carousel-main-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Near Black Typography */
+    line-height: 1.2;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    letter-spacing: -1px;
+}
+
+.c-word {
+    opacity: 0.15;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.c-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.carousel-subtitle {
+    font-size: 1.05rem;
+    color: #5D4A47;
+    line-height: 1.6;
+}
+
+/* --- Carousel Track Architecture Layout --- */
+.stories-carousel-viewport {
+    width: 100%;
+    overflow: visible; /* Allows side card layers to trail neatly off-canvas boundaries */
+    padding: 20px 0;
+}
+
+.stories-carousel-track {
+    display: flex;
+    align-items: flex-end; /* Layout alignment grounds cards symmetrically onto baseline paths */
+    justify-content: center;
+    gap: 24px;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    width: max-content;
+    margin: 0 auto;
+}
+
+/* --- Card Sizing Controls (Matches Image Layout Proportions) --- */
+.story-carousel-card {
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Individual card widths & heights structural definition maps */
+.item-side-left-far, 
+.item-side-right-far {
+    width: 220px;
+    opacity: 0.5;
+}
+.item-side-left-far .story-image-box, 
+.item-side-right-far .story-image-box { height: 260px; }
+
+.item-side-left, 
+.item-side-right {
+    width: 240px;
+    opacity: 0.75;
+}
+.item-side-left .story-image-box, 
+.item-side-right .story-image-box { height: 300px; }
+
+/* Center Focus Element Parameters (Enlarged Middle Portrait Aspect Ratio) */
+.item-center-focus {
+    width: 290px;
+    opacity: 1;
+    transform: translateY(-10px); /* Lifts focus block upward slightly */
+}
+.item-center-focus .story-image-box {
+    height: 380px;
+    box-shadow: 0 20px 50px rgba(232, 153, 141, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Universal Image Container Shell Box Configuration Style */
+.story-image-box {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(93, 74, 71, 0.04);
+    background-color: #FFEBE5;
+    transition: box-shadow 0.4s ease;
+}
+
+.story-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Hover Scale-up Actions */
+.story-carousel-card:hover {
+    opacity: 1;
+}
+
+.story-carousel-card:hover .story-image-box img {
+    transform: scale(1.05);
+}
+
+/* --- Typography Content Structuring Blocks --- */
+.story-meta-box {
+    margin-top: 18px;
+    padding: 0 6px;
+    width: 100%;
+}
+
+.story-meta-box h3 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #4A3E3D;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.item-center-focus .story-meta-box h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111111;
+}
+
+.couple-names {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #E8998D; /* Brand Peach Signature Color Accent Line Text */
+    text-transform: uppercase;
+}
+
+/* --- Action View Button --- */
+.carousel-control-row {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.carousel-view-all-btn {
+    padding: 14px 36px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-view-all-btn:hover {
+    background-color: #E8998D;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(232, 153, 141, 0.3);
+}
+
+/* --- Fully Fluid Responsive Breakpoint Layout Adapters --- */
+@media (max-width: 1200px) {
+    .item-center-focus { width: 260px; }
+    .item-center-focus .story-image-box { height: 340px; }
+    .item-side-left, .item-side-right { width: 210px; }
+    .item-side-left .story-image-box, .item-side-right .story-image-box { height: 270px; }
+    .item-side-left-far, .item-side-right-far { width: 190px; }
+    .item-side-left-far .story-image-box, .item-side-right-far .story-image-box { height: 230px; }
+}
+
+@media (max-width: 992px) {
+    .carousel-main-title { font-size: 2.5rem; }
+    .stories-carousel-track { gap: 16px; }
+    
+    /* Scale modifications for stable layout presentation over smaller displays */
+    .item-side-left-far, .item-side-right-far { display: none; } /* Hide outer endpoints on small tablets */
+}
+
+@media (max-width: 600px) {
+    .stories-carousel-section { padding: 60px 0; }
+    .carousel-master-wrapper { padding: 0 20px; }
+    .carousel-main-title { font-size: 1.8rem; gap: 0 8px; }
+    
+    /* Safe Mobile Fallback: Converts into a uniform linear focused flow layout framework */
+    .stories-carousel-track {
+        align-items: center;
+    }
+    .item-side-left, .item-side-right { display: none; } /* Focus entirely on active centered nodes for tiny screens */
+    .item-center-focus { width: 280px; transform: none; }
+    .item-center-focus .story-image-box { height: 360px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Intersection Observer ---
+    const words = document.querySelectorAll(".c-word");
+    
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: Automated 1-Second Continuously Rotating Pipeline Mechanics ---
+    const track = document.getElementById("carouselTrack");
+    const classOrder = [
+        "item-side-left-far", 
+        "item-side-left", 
+        "item-center-focus", 
+        "item-side-right", 
+        "item-side-right-far"
+    ];
+
+    // Auto-advance loop cadence sequence scheduler framework
+    setInterval(() => {
+        const cards = Array.from(track.children);
+        
+        // Dequeue first element node card component path out of track matrix
+        const firstCard = cards[0];
+        
+        // Append child structure back cleanly behind tail boundary index layer
+        track.appendChild(firstCard);
+        
+        // Re-evaluate list configuration nodes order arrays instantly
+        const reOrderedCards = Array.from(track.children);
+        
+        // Map proportional styling identifier labels back onto elements systematically
+        reOrderedCards.forEach((card, index) => {
+            // Wipe existing structural layout styling classes out completely
+            classOrder.forEach(className => card.classList.remove(className));
+            
+            // Re-assign corresponding metrics
+            if(classOrder[index]) {
+                card.classList.add(classOrder[index]);
+            }
+        });
+
+    }, 1000); // 1-second continuous rotation cycle speed window interval
+});
+
+</script>
+
+<!-- Interactive Dual-Column FAQ Section -->
+<section class="faq-section" id="faqSection">
+    
+    <!-- Ambient Floating Background Design Units -->
+    <div class="faq-bg-vectors">
+        <svg class="faq-spark s-1" viewBox="0 0 24 24" fill="none" stroke="rgba(232, 153, 141, 0.15)" stroke-width="2"><path d="M12 2v20M2 12h20M5.93 5.93l12.14 12.14M5.93 18.07l12.14-12.14"/></svg>
+        <svg class="faq-spark s-2" viewBox="0 0 24 24" fill="none" stroke="rgba(243, 176, 166, 0.15)" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+    </div>
+
+    <div class="faq-container">
+        
+        <!-- Header Container with Scroll Word Reveal -->
+        <div class="faq-header-block">
+            <span class="faq-small-tag">FAQ</span>
+            <h2 class="faq-title" id="faqTitle">
+                <span class="f-word">Popular</span>
+                <span class="f-word">Wedding</span>
+                <span class="f-word">Questions</span>
+            </h2>
+        </div>
+
+        <!-- 2-Column Responsive Accordion Grid Layout Matrix -->
+        <div class="faq-grid-wrapper" id="faqGrid">
+            
+            <!-- Column 1 -->
+            <div class="faq-column">
+                
+                <!-- FAQ Item 1 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">How do I plan a wedding in one month?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>Planning a compressed timeline wedding requires clear execution priorities. We assist by securing premier micro-venues, coordinating custom pre-styled decorative frameworks, and managing fast-track invitations within your timeline constraints.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Do we need a wedding planner?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>While optional, an expert decorator and planner ensures full visual continuity, handles layout design vectors, coordinates stage installations, and resolves logistical on-site vendor issues so you can relax completely.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">How do you plan a destination wedding?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>We begin destination tracking with digital spatial mapping and remote site analysis, followed by secure transport logistics for custom floral staging arrays and localized vendor micro-management setups.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Column 2 -->
+            <div class="faq-column">
+                
+                <!-- FAQ Item 4 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Can children attend our wedding?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>That choice is entirely up to you. If children are attending, we can design matching low-height activity seating clusters, safe dessert presentation bars, and interactive kids-zone decor elements.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Are wedding planners insured?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>Yes, Stackly carries comprehensive liability and operational production insurance coverages across all venue staging operations, structural frame engineering setups, and site design logistics installations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Do you plan marquee weddings?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>Absolutely. We specialize in transforming outdoor marquee tents and grand German structures with internal ceiling fabrics, heavy botanical drapes, custom lighting tracks, and integrated floor layout designs.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Configuration Base --- */
+.faq-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach theme canvas color */
+    padding: 10px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.faq-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Floating Design Vectors --- */
+.faq-bg-vectors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.faq-spark {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+.s-1 { top: 12%; left: 6%; animation: spinSlow 12s linear infinite; }
+.s-2 { bottom: 15%; right: 6%; animation: floatDelta 6s ease-in-out infinite; }
+
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+@keyframes floatDelta {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* --- Word-by-Word Scroll Headings --- */
+.faq-header-block {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.faq-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #8C7672;
+    margin-bottom: 12px;
+}
+
+.faq-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Clean High-Contrast Near-Black requested */
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.f-word {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.f-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Symmetric Dual-Column Matrix Grid --- */
+.faq-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 32px;
+    position: relative;
+    z-index: 2;
+    align-items: flex-start;
+}
+
+.faq-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* --- Accordion Card Styling --- */
+.faq-accordion-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15); /* Light branding theme contour lines */
+    border-radius: 12px; /* Soft rectangular radius matching reference photo */
+    box-shadow: 0 4px 15px rgba(93, 74, 71, 0.02);
+    overflow: hidden;
+    
+    /* Scroll Animation Base Targets */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+.faq-accordion-card.animate-card-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card Hover Elevation Effect */
+.faq-accordion-card:hover {
+    box-shadow: 0 10px 30px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+
+/* Card Layout Trigger Button */
+.faq-trigger-btn {
+    width: 100%;
+    padding: 24px 28px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+}
+
+.faq-question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2A2221;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.faq-accordion-card:hover .faq-question-text {
+    color: #111111;
+}
+
+/* Round Badge Vector Containment Circle matching image precisely */
+.faq-chevron-badge {
+    width: 38px;
+    height: 38px;
+    background-color: #A3756B; /* Soft brown-tint peach tone from user reference layout photo */
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+}
+
+.faq-chevron-badge svg {
+    width: 16px;
+    height: 16px;
+}
+
+.faq-accordion-card:hover .faq-chevron-badge {
+    background-color: #E8998D; /* Shifts to signature vivid branding color tone on focus */
+}
+
+/* --- Expanding Answer Panel Mechanics via CSS max-height transitions --- */
+.faq-answer-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.faq-answer-content {
+    padding: 0 28px 28px 28px;
+}
+
+.faq-answer-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+    border-top: 1px dashed rgba(232, 153, 141, 0.15);
+    padding-top: 16px;
+}
+
+/* --- Interactive Active Toggle States mapping from JS actions --- */
+.faq-accordion-card.is-expanded {
+    border-color: rgba(232, 153, 141, 0.5);
+    box-shadow: 0 10px 30px rgba(232, 153, 141, 0.08);
+}
+
+.faq-accordion-card.is-expanded .faq-question-text {
+    color: #E8998D; /* Brand text highlight on expanded cards */
+}
+
+.faq-accordion-card.is-expanded .faq-chevron-badge {
+    transform: rotate(180deg); /* Flips arrow up symmetrically */
+    background-color: #1A1A1A; /* Inverts color block */
+}
+
+/* --- Fully Fluid Responsive Breakpoint Layout Matrix Overrides --- */
+@media (max-width: 992px) {
+    .faq-title { font-size: 2.6rem; }
+    
+    /* Safely collapses dual columns down into an ergonomic single vertical column stack stream */
+    .faq-grid-wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+    .faq-column { gap: 20px; }
+}
+
+@media (max-width: 576px) {
+    .faq-section { padding: 60px 0; }
+    .faq-container { padding: 0 24px; }
+    .faq-title { font-size: 1.9rem; gap: 0, 8px; }
+    .faq-trigger-btn { padding: 20px; }
+    .faq-answer-content { padding: 0 20px 20px 20px; }
+    .faq-question-text { font-size: 1rem; }
+    .faq-chevron-badge { width: 32px; height: 32px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Controller Pipeline ---
+    const words = document.querySelectorAll(".f-word");
+    
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: Staggered Item-by-Item Scroll Trigger Entry ---
+    const faqGrid = document.getElementById("faqGrid");
+    const faqCards = document.querySelectorAll(".faq-accordion-card");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Loop the cards inside your grid system and stagger entry sequences smoothly
+                faqCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-card-in");
+                    }, index * 120); // 120ms staggered timeline gaps
+                });
+                gridObserver.unobserve(faqGrid);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    if (faqGrid) gridObserver.observe(faqGrid);
+
+
+    // --- PART 3: Interactive Smooth Accordion Expansion Logic ---
+    faqCards.forEach(card => {
+        const triggerBtn = card.querySelector(".faq-trigger-btn");
+        const answerPanel = card.querySelector(".faq-answer-panel");
+
+        triggerBtn.addEventListener("click", () => {
+            const isCurrentlyExpanded = card.classList.contains("is-expanded");
+
+            // OPTIONAL UX OPTIMIZATION: Close all other open cards when a new one opens
+            faqCards.forEach(otherCard => {
+                if (otherCard !== card && otherCard.classList.contains("is-expanded")) {
+                    otherCard.classList.remove("is-expanded");
+                    otherCard.querySelector(".faq-answer-panel").style.maxHeight = "0px";
+                    otherCard.setAttribute("aria-expanded", "false");
+                }
+            });
+
+            // Toggle selected item panel target states
+            if (isCurrentlyExpanded) {
+                card.classList.remove("is-expanded");
+                answerPanel.style.maxHeight = "0px";
+                card.setAttribute("aria-expanded", "false");
+            } else {
+                card.classList.add("is-expanded");
+                // Computes the raw fluid internal padding boundaries and updates max-height pixel maps accurately
+                answerPanel.style.maxHeight = answerPanel.scrollHeight + "px";
+                card.setAttribute("aria-expanded", "true");
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Creative Fluid Testimonial Section -->
+<section class="testimonial-section" id="testimonialSection">
+    
+    <!-- Option to set background image via CSS or direct source -->
+    <div class="testimonial-bg-wrapper">
+        <!-- Replace 'luxury-backdrop.jpg' with your actual texture, pattern, or event photo link -->
+        <img src="path-to-luxury-backdrop.jpg" alt="Stackly Aesthetic Background Texture" class="test-bg-img" loading="lazy">
+        <div class="testimonial-overlay-tint"></div>
+    </div>
+
+    <div class="testimonial-container">
+        
+        <!-- Section Header Layout -->
+        <div class="testimonial-header">
+            <span class="testimonial-tag">Kind Words</span>
+            <!-- Scroll-Triggered Letter-by-Letter Title Container -->
+            <h2 class="letter-reveal-title" id="testimonialTitle">Love Letters From Our Couples</h2>
+        </div>
+
+        <!-- Cascading Grid Wrapper Matrix -->
+        <div class="testimonial-cards-grid" id="testimonialGrid">
+            
+            <!-- Review Card 1 -->
+            <div class="testimonial-card flex-stagger-1" onclick="window.location.href='404.html'">
+                <div class="card-quote-mark">“</div>
+                <div class="rating-stars-row">
+                    <!-- 5 Clean Inline Star Vector Paths -->
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-body">
+                    Stackly completely transformed our outdoor pavilion into a fairy-tale dream. The fresh botanical arches and cascading fairy lights left our guests speechless!
+                </p>
+                <div class="user-profile-meta">
+                    <img src="path-to-couple-avatar-1.jpg" alt="Priya and Rahul" class="avatar-img" loading="lazy">
+                    <div class="user-text">
+                        <h3>Priya & Rahul</h3>
+                        <span>Grand Wedding Celebration</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div class="testimonial-card flex-stagger-2" onclick="window.location.href='404.html'">
+                <div class="card-quote-mark">“</div>
+                <div class="rating-stars-row">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-body">
+                    The attention to detail during our custom engagement stage setup was unmatched. They worked tirelessly to map our exact theme down to the linen choices.
+                </p>
+                <div class="user-profile-meta">
+                    <img src="path-to-couple-avatar-2.jpg" alt="Anjali and Vikram" class="avatar-img" loading="lazy">
+                    <div class="user-text">
+                        <h3>Anjali & Vikram</h3>
+                        <span>Heritage Mandapam Ceremony</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 3 -->
+            <div class="testimonial-card flex-stagger-3" onclick="window.location.href='404.html'">
+                <div class="card-quote-mark">“</div>
+                <div class="rating-stars-row">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-body">
+                    Flawless execution! Production management, lighting architecture, and stage design were coordinated flawlessly. Highly professional team!
+                </p>
+                <div class="user-profile-meta">
+                    <img src="path-to-couple-avatar-3.jpg" alt="Deepak and Sneha" class="avatar-img" loading="lazy">
+                    <div class="user-text">
+                        <h3>Deepak & Sneha</h3>
+                        <span>Luxury Reception Gala</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Configuration Base --- */
+.testimonial-section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    overflow: hidden;
+    background-color: #1A1A1A; /* Dark fallback backing */
+}
+
+/* Background Img Tag Options Container Framework */
+.testimonial-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.test-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-overlay-tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient mapping blends branding tones while preserving depth visibility */
+    background: linear-gradient(to bottom, rgba(255, 248, 246, 0.96) 0%, rgba(255, 235, 229, 0.94) 100%);
+}
+
+.testimonial-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Section Headers & Letter Reveal Typography --- */
+.testimonial-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 70px auto;
+}
+
+.testimonial-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand Signature Peach Tint */
+    margin-bottom: 12px;
+}
+
+.letter-reveal-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #111111; /* Clean High-Contrast Near-Black */
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+/* Character metrics injected natively via JavaScript pipelines */
+.letter-reveal-title .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.letter-reveal-title .char.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- Review Grid Component Structure --- */
+.testimonial-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: stretch;
+}
+
+.testimonial-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 24px;
+    padding: 40px 36px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.03);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll Animation Initializations State Hooks */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+.testimonial-card.animate-card-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card Hover Responses */
+.testimonial-card:hover {
+    box-shadow: 0 20px 50px rgba(232, 153, 141, 0.15);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+
+/* Stylized Decorative Giant Floating Quote */
+.card-quote-mark {
+    position: absolute;
+    top: 15px;
+    right: 32px;
+    font-size: 5rem;
+    font-family: serif;
+    line-height: 1;
+    color: rgba(243, 176, 166, 0.25);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Rating Vector Stars Matrix Elements */
+.rating-stars-row {
+    display: flex;
+    gap: 4px;
+    color: #F4B0A6; /* Pale pink branding star vector accent coloring */
+    margin-bottom: 24px;
+}
+
+.rating-stars-row svg {
+    width: 18px;
+    height: 18px;
+}
+
+.testimonial-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4A3E3D;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+/* User Identity Bio Row Placement */
+.user-profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-top: 1px dashed rgba(232, 153, 141, 0.2);
+    padding-top: 20px;
+}
+
+.avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFF8F6;
+    background-color: #FFEBE5;
+}
+
+.user-text h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 2px;
+}
+
+.user-text span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #8C7672;
+}
+
+/* --- Rigid Fluid Responsive Overrides --- */
+@media (max-width: 1100px) {
+    .letter-reveal-title { font-size: 2.8rem; }
+    .testimonial-cards-grid { gap: 20px; }
+    .testimonial-card { padding: 32px 24px; }
+}
+
+@media (max-width: 992px) {
+    /* Safely realigns row architectures into single column pipelines over vertical viewports */
+    .testimonial-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-section { padding: 60px 0; }
+    .testimonial-container { padding: 0 24px; }
+    .letter-reveal-title { font-size: 1.9rem; }
+    .testimonial-card { border-radius: 20px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Dynamic Letter-by-Letter Dom Token Generation ---
+    const titleElement = document.getElementById("testimonialTitle");
+    const rawText = titleElement.textContent;
+    titleElement.textContent = ""; // Clear current plain text element frame
+
+    // Parse every text block character code node into single animated visibility tokens
+    [...rawText].forEach(char => {
+        const tokenSpan = document.createElement("span");
+        tokenSpan.classList.add("char");
+        tokenSpan.innerHTML = char === " " ? "&nbsp;" : char; // Handle blank space elements cleanly
+        titleElement.appendChild(tokenSpan);
+    });
+
+    const individualCharacters = titleElement.querySelectorAll(".char");
+
+
+    // --- PART 2: High Performance Scroll Intersection Pipeline ---
+    const testimonialGrid = document.getElementById("testimonialGrid");
+    const reviewCards = document.querySelectorAll(".testimonial-card");
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                
+                // Pipeline 1: Letter-by-letter drawing speed sequencing
+                individualCharacters.forEach((char, index) => {
+                    setTimeout(() => {
+                        char.classList.add("revealed");
+                    }, index * 30); // 30ms running stagger spacing
+                });
+
+                // Pipeline 2: Staggered card container entry cascades
+                reviewCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-card-in");
+                    }, index * 150); // 150ms incremental sequence offset timeline tracking
+                });
+
+                // Dismiss layout tracking mechanisms to optimize script memory loops
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 }); // Triggers when 12% of the panel crosses visible display limits
+
+    const targetSection = document.getElementById("testimonialSection");
+    if (targetSection) scrollObserver.observe(targetSection);
+});
+
+</script>
+
+<!-- Final Aligned Masonry Blog Grid Component -->
+<section class="blog-section" id="blogSection">
+    <div class="blog-container">
+        
+        <!-- Header Container with Scroll Word Reveal -->
+        <div class="blog-header">
+            <span class="blog-small-tag">Insights & Trends</span>
+            <h2 class="blog-main-title" id="blogTitle">
+                <span class="b-word">The</span>
+                <span class="b-word">Art</span>
+                <span class="b-word">Of</span>
+                <span class="b-word">Event</span>
+                <span class="b-word">Styling</span>
+            </h2>
+        </div>
+
+        <!-- Corrected Matrix Grid (Forces Perfect Horizontal Line-Level Tracking) -->
+        <div class="blog-masonry-matrix">
+            
+            <!-- LEFT COLUMN -->
+            <div class="blog-column">
+                <!-- Post 1 (Top Row Aligned) -->
+                <div class="blog-post-card fly-from-left" onclick="window.location.href='404.html'">
+                    <div class="blog-image-wrapper top-row-height">
+                        <img src="path-to-decor-details.jpg" alt="Botanical Dining Tablescapes" loading="lazy">
+                        <div class="read-more-overlay"><span class="read-more-btn">Read Article</span></div>
+                    </div>
+                    <div class="blog-meta-content">
+                        <span class="blog-date">October 2026</span>
+                        <h3>Table Curations: Sourcing Delicate Table Elements</h3>
+                    </div>
+                </div>
+
+                <!-- Post 2 (Bottom Row) -->
+                <div class="blog-post-card fly-from-bottom" onclick="window.location.href='404.html'">
+                    <div class="blog-image-wrapper bottom-row-height">
+                        <img src="path-to-outdoor-shoot.jpg" alt="Outdoor Wedding Attire Shoot" loading="lazy">
+                        <div class="read-more-overlay"><span class="read-more-btn">Read Article</span></div>
+                    </div>
+                    <div class="blog-meta-content">
+                        <span class="blog-date">September 2026</span>
+                        <h3>Forest Vows: Designing Cohesive Outdoor Drapes</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER COLUMN (Now Features Two Cards Symmetrically Aligned) -->
+            <div class="blog-column">
+                <!-- Post 3 (Top Row Aligned) -->
+                <div class="blog-post-card fly-from-top" onclick="window.location.href='404.html'">
+                    <div class="blog-image-wrapper top-row-height">
+                        <img src="path-to-main-wedding-story.jpg" alt="Luxury Altar Presentation Shoot" loading="lazy">
+                        <div class="read-more-overlay"><span class="read-more-btn">Read Full Story</span></div>
+                    </div>
+                    <div class="blog-meta-content">
+                        <span class="blog-date">Featured Editorial</span>
+                        <h3>A Cinematic Meadow Vow Transformation Story</h3>
+                    </div>
+                </div>
+
+                <!-- New Post 6 (Bottom Row Center Addition) -->
+                <div class="blog-post-card fly-from-bottom" onclick="window.location.href='404.html'">
+                    <div class="blog-image-wrapper bottom-row-height">
+                        <img src="path-to-center-bottom-decor.jpg" alt="Luxury Reception Lighting Infrastructure" loading="lazy">
+                        <div class="read-more-overlay"><span class="read-more-btn">Read Article</span></div>
+                    </div>
+                    <div class="blog-meta-content">
+                        <span class="blog-date">November 2026</span>
+                        <h3>Illumination Focus: Creating Depth with Smart Uplighting</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="blog-column">
+                <!-- Post 4 (Top Row Aligned) -->
+                <div class="blog-post-card fly-from-right" onclick="window.location.href='404.html'">
+                    <div class="blog-image-wrapper top-row-height">
+                        <img src="path-to-bridal-close-up.jpg" alt="Elegant Bridal Close Up Studio Profile" loading="lazy">
+                        <div class="read-more-overlay"><span class="read-more-btn">Read Article</span></div>
+                    </div>
+                    <div class="blog-meta-content">
+                        <span class="blog-date">August 2026</span>
+                        <h3>Bridal Harmony: Matching Veils with Lighting Plans</h3>
+                    </div>
+                </div>
+
+                <!-- Post 5 (Bottom Row) -->
+                <div class="blog-post-card fly-from-bottom" onclick="window.location.href='404.html'">
+                    <div class="blog-image-wrapper bottom-row-height">
+                        <img src="path-to-veil-detail.jpg" alt="Lace Veil Texture Elements" loading="lazy">
+                        <div class="read-more-overlay"><span class="read-more-btn">Read Article</span></div>
+                    </div>
+                    <div class="blog-meta-content">
+                        <span class="blog-date">July 2026</span>
+                        <h3>Textile Selection: Working with Premium Lace</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- View All Redirect -->
+        <div class="blog-action-footer">
+            <button class="blog-view-all-btn" onclick="window.location.href='404.html'">Visit Our Full Magazine</button>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Core Section Structure --- */
+.blog-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach canvas color theme */
+    padding: 100px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.blog-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Title Word-by-Word Scroll Reveal Styling --- */
+.blog-header {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.blog-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D;
+    margin-bottom: 12px;
+}
+
+.blog-main-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Near Black */
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.b-word {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.b-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   ALIGNMENT FIX: STRUCTURAL MASONRY TRACK MATRIX GRID
+   ========================================================================== */
+.blog-masonry-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Equal width symmetric column layouts */
+    gap: 32px;
+    align-items: flex-start; /* CRITICAL FIX: Aligns all left, center, and right track roots on a flat line */
+}
+
+.blog-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 48px; /* Safe structural separation window between stacked cards */
+}
+
+/* Base Card Layout Flex Settings */
+.blog-post-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    cursor: pointer;
+    
+    /* Entry transitions settings */
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Fly entrance vectors mappings */
+.blog-post-card.fly-from-left { transform: translateX(-50px); }
+.blog-post-card.fly-from-right { transform: translateX(50px); }
+.blog-post-card.fly-from-top { transform: translateY(-50px); }
+.blog-post-card.fly-from-bottom { transform: translateY(50px); }
+
+.blog-post-card.fly-active {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   CRITICAL IMAGE CONTAINER RATIO CONSTRAINTS (Guarantees Uniform Straight Line Alignment)
+   -------------------------------------------------------------------------- */
+.blog-image-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #FFEBE5; /* Branding soft placeholder background tint */
+    box-shadow: 0 4px 15px rgba(93, 74, 71, 0.03);
+}
+
+/* FIXED HORIZONTAL ALIGNMENT OVERRIDES: Enforces straight lines across all rows */
+.top-row-height {
+    height: 260px; /* All three top-row images across left, center, and right lock exactly to this path */
+}
+
+.bottom-row-height {
+    height: 320px; /* All three bottom-row images across left, center, and right lock exactly to this path */
+}
+
+.blog-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Forces images to clip nicely inside locked wrappers without layout shift distortion */
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- Creative Frosted Hover Overlays --- */
+.read-more-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 26, 26, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.read-more-btn {
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 20px;
+    transform: translateY(10px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.blog-post-card:hover .blog-image-wrapper img { transform: scale(1.04); }
+.blog-post-card:hover .read-more-overlay { opacity: 1; }
+.blog-post-card:hover .read-more-btn { transform: translateY(0); }
+
+/* --- Metadata Text Layout Alignment --- */
+.blog-meta-content {
+    padding: 18px 2px 0 2px; /* Uniform text padding beneath image frames */
+}
+
+.blog-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8C7672;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.blog-meta-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2A2221;
+    line-height: 1.45;
+    transition: color 0.2s ease;
+}
+
+.blog-post-card:hover h3 {
+    color: #E8998D; /* Brand highlight peach color text toggle */
+}
+
+/* Footer Control Block Actions */
+.blog-action-footer {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.blog-view-all-btn {
+    padding: 14px 36px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.blog-view-all-btn:hover {
+    background-color: #E8998D;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(232, 153, 141, 0.3);
+}
+
+/* ==========================================================================
+   FLUID RESPONSIVE CONSTRAINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .blog-main-title { font-size: 2.8rem; }
+    .blog-masonry-matrix { gap: 20px; }
+    .blog-column { gap: 32px; }
+    
+    .top-row-height { height: 200px; }
+    .bottom-row-height { height: 260px; }
+}
+
+@media (max-width: 768px) {
+    .blog-main-title { font-size: 2.2rem; }
+    
+    /* Collapses columns down into a single linear vertical stream layout seamlessly */
+    .blog-masonry-matrix {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Normalizes image display wrapper scales across mobile screens for uniform optical comfort alignment */
+    .top-row-height,
+    .bottom-row-height {
+        height: 280px;
+    }
+
+    .blog-post-card.fly-from-left,
+    .blog-post-card.fly-from-right,
+    .blog-post-card.fly-from-top {
+        transform: translateY(40px);
+    }
+}
+
+@media (max-width: 480px) {
+    .blog-container { padding: 0 24px; }
+    .blog-main-title { font-size: 1.8rem; gap: 0 8px; }
+    .top-row-height, .bottom-row-height { height: 220px; }
+    .blog-meta-content h3 { font-size: 1rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // Word-by-word reveal sequence scroll trigger observer pipeline
+    const words = document.querySelectorAll(".b-word");
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+    // Staggered layout item fly-in sequences scroll trigger observer pipeline
+    const blogCards = document.querySelectorAll(".blog-post-card");
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                blogCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("fly-active");
+                    }, index * 100);
+                });
+                cardObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+
+    const targetSection = document.getElementById("blogSection");
+    if (targetSection) cardObserver.observe(targetSection);
+});
+
+</script>
+
+<!-- Creative Floating Subscribe CTA Banner Component -->
+<section class="subscribe-section" id="subscribeSection">
+    <div class="subscribe-container">
+        
+        <!-- Elevated Floating Panel Container Shell -->
+        <div class="floating-subscribe-card">
+            
+            <!-- Img Tag Background Media Layer -->
+            <div class="sub-image-wrapper">
+                <img src="path-to-your-newsletter-bg.jpg" alt="Stackly Grand Luxury Event Background" class="sub-bg-img" loading="lazy">
+                <div class="sub-dark-tint-layer"></div>
+            </div>
+
+            <!-- Foreground Interactive Content Frame -->
+            <div class="sub-content-inner">
+                
+                <!-- Bottom-Up Word Staggered Typography Header -->
+                <div class="sub-text-block">
+                    <h2 class="sub-title" id="subscribeTitle">
+                        <span class="s-word">Subscribe</span>
+                        <span class="s-word">To</span>
+                        <span class="s-word">Our</span>
+                        <span class="s-word">Luxury</span>
+                        <span class="s-word">Design</span>
+                        <span class="s-word">Magazine</span>
+                    </h2>
+                    <p class="sub-paragraph" id="subscribePara">
+                        <span class="s-word">Get</span>
+                        <span class="s-word">exclusive</span>
+                        <span class="s-word">wedding</span>
+                        <span class="s-word">decor</span>
+                        <span class="s-word">trends</span>
+                        <span class="s-word">and</span>
+                        <span class="s-word">styling</span>
+                        <span class="s-word">insights</span>
+                        <span class="s-word">delivered</span>
+                        <span class="s-word">monthly.</span>
+                    </p>
+                </div>
+
+                <!-- Input Action Form Field Layer -->
+                <form class="sub-form-block" id="subscribeForm" novalidate>
+                    <div class="sub-input-group">
+                        <input type="email" id="subscriberEmail" placeholder="Enter your email address..." aria-label="Email address">
+                        <button type="submit" class="sub-submit-btn">Subscribe Now</button>
+                        
+                        <!-- Custom Native Tooltip Alert Message Placement -->
+                        <span class="sub-validation-msg" id="subValidationAlert">Please fill out this field.</span>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Configuration --- */
+.subscribe-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Standard branding pale pink theme backdrop */
+    padding: 30px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.subscribe-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Elevated Floating Panel Card Architecture --- */
+.floating-subscribe-card {
+    position: relative;
+    width: 100%;
+    min-height: 280px;
+    border-radius: 24px; /* Highly curved corners to achieve floating look */
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(93, 74, 71, 0.12); /* Deep drop shadow elevation spatial depth */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+/* Background Media Formatting Shell */
+.sub-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.sub-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.floating-subscribe-card:hover .sub-bg-img {
+    transform: scale(1.03);
+}
+
+.sub-dark-tint-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.88) 0%, rgba(93, 74, 71, 0.8) 100%);
+}
+
+/* --- Foreground Main Flex Matrix Layout --- */
+.sub-content-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 50px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.sub-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 550px;
+}
+
+/* --- Word-by-Word Bottom Up Typography Animation Core --- */
+.sub-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+}
+
+.sub-paragraph {
+    font-size: 1rem;
+    color: #FFD3C4; /* Soft branding theme peach accent contrast line text color */
+    line-height: 1.5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+}
+
+/* Individual token state properties configuration */
+.s-word {
+    opacity: 0;
+    transform: translateY(20px); /* Sets initial offset below text alignment paths */
+    display: inline-block;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Trigger classes stamped onto parent layers via intersection scripts */
+.sub-title.reveal-active .s-word,
+.sub-paragraph.reveal-active .s-word {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Interactive Action Form Block --- */
+.sub-form-block {
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+.sub-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    padding: 6px;
+    border-radius: 40px;
+    transition: border-color 0.3s frame, box-shadow 0.3s;
+}
+
+.sub-input-group:focus-within {
+    border-color: #E8998D; /* Brand signature highlight focus accent */
+    box-shadow: 0 0 0 4px rgba(232, 153, 141, 0.15);
+}
+
+.sub-input-group input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    color: #FFFFFF;
+}
+
+.sub-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sub-submit-btn {
+    padding: 14px 28px;
+    background-color: #E8998D; /* Brand primary tone color */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+}
+
+.sub-submit-btn:hover {
+    background-color: #D6867B;
+    transform: translateY(-1px);
+}
+
+/* --- High Performance Validation Alert Tooltip Element --- */
+.sub-validation-msg {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 24px;
+    background-color: #111111; /* Near-black crisp background */
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Triangle indicator clip pointing downward to input fields */
+.sub-validation-msg::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #111111 transparent transparent transparent;
+}
+
+.sub-validation-msg.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINT OVERRIDES
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .sub-content-inner { padding: 40px; gap: 30px; }
+    .sub-title { font-size: 1.9rem; }
+}
+
+@media (max-width: 900px) {
+    .subscribe-section { padding: 40px 0; }
+    .subscribe-container { padding: 0 24px; }
+    
+    /* Collapses standard row architecture down into an organic stacked system layout */
+    .sub-content-inner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 50px 32px;
+        gap: 32px;
+    }
+
+    .sub-title, .sub-paragraph {
+        justify-content: center;
+    }
+
+    .sub-form-block {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-subscribe-card { border-radius: 16px; }
+    .sub-content-inner { padding: 40px 20px; }
+    .sub-title { font-size: 1.5rem; }
+    .sub-paragraph { font-size: 0.9rem; }
+    
+    /* Convert horizontal unified inline group elements to single vertical button forms on mobile viewports */
+    .sub-input-group {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 12px;
+    }
+    
+    .sub-input-group input {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        text-align: center;
+        padding: 14px;
+    }
+
+    .sub-input-group input:focus {
+        border-color: #E8998D;
+    }
+
+    .sub-submit-btn {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .sub-validation-msg {
+        left: 50%;
+        transform: translate(-50%, 10px);
+        bottom: calc(100% + 8px);
+    }
+    
+    .sub-validation-msg::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub-validation-msg.is-visible {
+        transform: translate(-50%, 0);
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const subscribeSection = document.getElementById("subscribeSection");
+    const subTitle = document.getElementById("subscribeTitle");
+    const subPara = document.getElementById("subscribePara");
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const subValidationAlert = document.getElementById("subValidationAlert");
+
+    // --- PART 1: Staggered Dynamic Transition Delays Assignment ---
+    const assignWordAnimationDelays = (parentContainer, startingOffsetMs) => {
+        const words = parentContainer.querySelectorAll(".s-word");
+        words.forEach((word, index) => {
+            // Configures staggered delay timing increments flowing from bottom upwards
+            word.style.transitionDelay = `${startingOffsetMs + (index * 60)}ms`;
+        });
+        return startingOffsetMs + (words.length * 60);
+    };
+
+    // Chain lines sequence maps so text blocks rise sequentially fluidly
+    const line1CompletionDelay = assignWordAnimationDelays(subTitle, 100);
+    assignWordAnimationDelays(subPara, line1CompletionDelay + 50);
+
+
+    // --- PART 2: Scroll Intersection Pipeline Observer ---
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Injects active status classes to initiate transition executions
+                subTitle.classList.add("reveal-active");
+                subPara.classList.add("reveal-active");
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.25 }); // Fires when 25% of the floating card enters display frame
+
+    if (subscribeSection) sectionObserver.observe(subscribeSection);
+
+
+    // --- PART 3: Input Form Client-Side Validation Engine ---
+    subscribeForm.addEventListener("submit", (e) => {
+        e.preventDefault(); // Terminate standard browser transmission
+
+        const cleanEmailValue = subscriberEmail.value.trim();
+
+        if (cleanEmailValue === "") {
+            // Display alert banner tooltip natively
+            subValidationAlert.classList.add("is-visible");
+            subscriberEmail.focus();
+        } else {
+            // Dismiss error banners and seamlessly route user target link path
+            subValidationAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Clean visualization traces instantly once client edits empty characters
+    subscriberEmail.addEventListener("input", () => {
+        if (subValidationAlert.classList.contains("is-visible")) {
+            subValidationAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Safe blur fallback: clears errors when element focus is shifted away
+    subscriberEmail.addEventListener("blur", () => {
+        subValidationAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Elegant Responsive Footer Section -->
+<footer class="main-footer">
+    <div class="footer-top-container">
+        
+        <!-- Column 1: Brand Info & Social Ecosystem -->
+        <div class="footer-column brand-info-col">
+            <div class="footer-logo-wrapper" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" role="button" aria-label="Scroll back to top">
+                <img src="path-to-your-logo.png" alt="Stackly Logo" class="footer-logo-img">
+            </div>
+            <p class="footer-brand-desc">
+                Designing premium immersive event decorations and artisanal stage concepts tailored beautifully to celebrate life's most unforgettable milestones.
+            </p>
+            <div class="footer-socials-row">
+                <!-- Instagram -->
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <!-- Facebook -->
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="404.html" class="social-circle-link" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16zM4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <!-- YouTube -->
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Explore Styling Navigation -->
+        <div class="footer-column">
+            <h3 class="column-title">Explore Concepts</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Royal Mandapams</a></li>
+                <li><a href="404.html">Premium Gala Buffets</a></li>
+                <li><a href="404.html">Floral Installations</a></li>
+                <li><a href="404.html">Bespoke High Tea</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Client Support & Logistics -->
+        <div class="footer-column">
+            <h3 class="column-title">Styling Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Design Parameters</a></li>
+                <li><a href="404.html">Production Tracks</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Headquarters Coordinates -->
+        <div class="footer-column contact-info-col">
+            <h3 class="column-title">Headquarters Location</h3>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="map-anchor-link">
+                    MMR Complex, Periyakollapatty, Chinna Thirupathi, Salem, Tamil Nadu 636008
+                </a>
+            </div>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <a href="tel:+917010792745" class="phone-anchor-link">+91 7010792745</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legal Row Bar -->
+    <div class="footer-bottom-bar">
+        <div class="footer-bottom-container">
+            <span class="copyright-text">&copy; 2026 Stackly Industries. All styling rights reserved.</span>
+            <div class="legal-links-group">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* --- High-Quality Layout Backing Variables --- */
+.main-footer {
+    width: 100%;
+    background-color: #0B090A; /* Elegant, premium pitch-black layout backdrop precisely matched from image */
+    padding-top: 80px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-top-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 60px 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr; /* Balanced proportions matrix */
+    gap: 40px;
+}
+
+/* --- Brand Content Elements --- */
+.brand-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo-wrapper {
+    cursor: pointer;
+    margin-bottom: 24px;
+    display: inline-block;
+    align-self: flex-start;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo-wrapper:hover {
+    transform: translateY(-2px);
+}
+
+.footer-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-brand-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #A39391; /* Soft muted peach-gray tone for clean dark readability */
+    margin-bottom: 28px;
+    max-width: 320px;
+}
+
+/* Vector Social Circles Rows */
+.footer-socials-row {
+    display: flex;
+    gap: 12px;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #A39391;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.social-circle-link:hover {
+    background-color: #E8998D; /* Swaps instantly to our signature brand accent peach color on focus */
+    color: #FFFFFF;
+    border-color: #E8998D;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(232, 153, 141, 0.3);
+}
+
+/* --- Navigation & Links Typography --- */
+.column-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    position: relative;
+    letter-spacing: -0.2px;
+}
+
+/* Subtle accent block underneath link headers exactly from original image design lines */
+.column-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background-color: #E8998D; /* Subtle signature underline separator token */
+}
+
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #A39391;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #E8998D;
+    transform: translateX(3px); /* Interactive horizontal sliding motion on text hover */
+}
+
+/* --- Contact & Coordinates Layout Info Block --- */
+.contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.contact-vector-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D; /* Bright active tracking color highlights */
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.map-anchor-link, 
+.phone-anchor-link {
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #A39391;
+    transition: color 0.2s ease;
+}
+
+.map-anchor-link:hover, 
+.phone-anchor-link:hover {
+    color: #FFFFFF;
+}
+
+/* --- Bottom Legal Bar Section Layout --- */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px 0;
+    background-color: #070607; /* Darkened deep sub-floor strip */
+}
+
+.footer-bottom-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.copyright-text {
+    font-size: 0.85rem;
+    color: #6E6160;
+}
+
+.legal-links-group {
+    display: flex;
+    gap: 28px;
+}
+
+.legal-links-group a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #6E6160;
+    transition: color 0.2s ease;
+}
+
+.legal-links-group a:hover {
+    color: #A39391;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA CONSTRAINTS MATRIX
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .footer-top-container {
+        grid-template-columns: 1fr 1fr; /* Transforms grid into 2x2 symmetry block fields over tablets */
+        gap: 50px 30px;
+    }
+    .footer-brand-desc { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .footer-top-container {
+        padding: 0 24px 50px 24px;
+    }
+    .footer-bottom-container {
+        padding: 0 24px;
+        flex-direction: column; /* Flattens parallel strings on compact smartphone displays */
+        text-align: center;
+        gap: 16px;
+    }
+    .legal-links-group {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px 20px;
+    }
+}
+
+@media (max-width: 540px) {
+    /* Pure clean structural 1-column layout stacking linear flow directly down small screens */
+    .footer-top-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .column-title { margin-bottom: 18px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Frontend - Footer UI Engine
+ * Coordinates smooth scrolling back to viewport roots and analytics logging workflows.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. SMOOTH SCROLL ARCHITECTURE MANAGEMENT ---
+    const topScrollButton = document.getElementById("footerScrollTop");
+
+    if (topScrollButton) {
+        topScrollButton.addEventListener("click", (event) => {
+            // Prevent standard anchor jumping behaviors instantly
+            event.preventDefault();
+
+            // Fire high performance native GPU window scrolling pipelines
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
+
+
+    // --- 2. 404 LOGGING ACTION RADAR (Optional Debug Tracer) ---
+    const footerLinks = document.querySelectorAll(".main-footer a[href='404.html']");
+
+    footerLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Optional: Track which footer links your users are visiting most before reaching the placeholder page
+            const destinationLabel = e.currentTarget.textContent.trim() || e.currentTarget.getAttribute("aria-label");
+            console.log(`[Stackly Tracker]: User navigated to 404 handler via link: "${destinationLabel}"`);
+        });
+    });
+});
+
+</script>
+</body>
+</html>
