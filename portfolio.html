@@ -1,0 +1,3049 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Preloader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+    <!-- Standalone Responsive Preloader Screen -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <!-- Scaling Vector Icon (Abstract Event Arches) -->
+            <div class="logo-icon-wrapper">
+                <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
+                    <path class="arch arch-1" d="M20 90V50C20 33.4315 33.4315 20 50 20C66.5685 20 80 33.4315 80 50V90" stroke="url(#peachGradient)" stroke-width="6" stroke-linecap="round"/>
+                    <path class="arch arch-2" d="M35 90V55C35 46.7157 41.7157 40 50 40C58.2843 40 65 46.7157 65 55V90" stroke="url(#pinkGradient)" stroke-width="5" stroke-linecap="round"/>
+                    <circle class="sparkle" cx="50" cy="15" r="4" fill="#E8998D"/>
+                </svg>
+            </div>
+
+            
+            <h1 class="brand-name">Stackly</h1>
+            <p class="brand-tagline">Curating Moments, Styling Spaces</p>
+
+            <!-- Progress Tracker Components -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <span class="loading-text">Crafting your experience...</span>
+        </div>
+    </div>
+
+    <!-- Global SVG Gradient Definitions -->
+    <svg width="0" height="0" style="position:absolute; visibility: hidden;">
+        <defs>
+            <linearGradient id="peachGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD3C4"/>
+                <stop offset="100%" stop-color="#E8998D"/>
+            </linearGradient>
+            <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF0EC"/>
+                <stop offset="100%" stop-color="#F3B0A6"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const preloader = document.getElementById("preloader");
+    const progressBar = document.getElementById("progress-bar");
+
+    // Instantly begin progress bar loading transition
+    setTimeout(() => {
+        progressBar.style.width = "100%";
+    }, 50);
+
+    // Exact 2000ms delay window before executing clean removal sequence
+    setTimeout(() => {
+        preloader.classList.add("fade-out");
+        document.body.classList.remove("loading");
+        
+        // Remove structural items entirely after fade duration closes
+        setTimeout(() => {
+            preloader.remove();
+        }, 600); 
+    }, 2000);
+});
+
+    </script>
+
+    <!-- Navigation Header Component -->
+<header class="main-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="window.location.reload();" role="button" aria-label="Refresh home page">
+            <img src="path-to-your-logo.png" alt="Stackly Logo" class="brand-logo-img">
+        </div>
+
+        <!-- Center Navigation Menu -->
+       <nav class="nav-menu" id="navMenu">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link ">Home</a></li>
+                <li><a href="services.html" class="nav-link ">Services</a></li>
+                <li><a href="Portfolio.html" class="nav-link active">Portfolio</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <!-- Auth Button duplicated inside mobile drawer for layout flow -->
+       <button class="auth-btn mobile-auth-btn" onclick="window.location.href='login.html'">Sign In</button>
+        </nav>
+
+        <!-- Right Side Auth Button (Desktop View) -->
+        <div class="auth-wrapper">
+          <button class="auth-btn" onclick="window.location.href='login.html'">Sign In</button>
+        </div>
+
+        <!-- Mobile Hamburger Trigger -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+    </div>
+</header>
+
+<!-- Mobile Blur Backdrop Layer -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const navMenu = document.getElementById("navMenu");
+    const menuBackdrop = document.getElementById("menuBackdrop");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    // Unified function to handle open/close states
+    const toggleMenu = () => {
+        const isOpen = navMenu.classList.toggle("is-open");
+        hamburgerBtn.classList.toggle("is-active");
+        menuBackdrop.classList.toggle("is-visible");
+        
+        // Accessibility update
+        hamburgerBtn.setAttribute("aria-expanded", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+    };
+
+    // Trigger toggle on click elements
+    hamburgerBtn.addEventListener("click", toggleMenu);
+    menuBackdrop.addEventListener("click", toggleMenu);
+
+    // Track Navigation Item Interactions and switch visual Active State
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Remove active profile styling classes from all existing links
+            navLinks.forEach(item => item.classList.remove("active"));
+            
+            // Apply focus/active states cleanly onto target item
+            link.classList.add("active");
+
+            // Smooth close logic handling mobile interactions
+            if (navMenu.classList.contains("is-open")) {
+                toggleMenu();
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Sub-Header Actions Utility Bar Section -->
+<section class="action-bar-section">
+    <div class="action-bar-container">
+        
+        <!-- Left Side Dynamic Context Operations -->
+        <div class="left-actions-group">
+            <!-- Validation Protected Search Box -->
+            <form class="action-search-form" id="searchForm" novalidate>
+                <div class="search-input-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search decor styles, events..." aria-label="Search">
+                    <button type="submit" class="search-submit-btn" aria-label="Submit search">
+                        <!-- Search Vector Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <!-- Custom Native Tooltip Alert Placement -->
+                    <span class="validation-message" id="searchAlert">Please fill out this field.</span>
+                </div>
+            </form>
+
+            <!-- Interactive Geolocation Pointer -->
+            <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="location-anchor-link">
+                <!-- Map Pin Vector Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pin-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span class="location-text">Coimbatore, TN</span>
+            </a>
+        </div>
+
+        <!-- Center Flex Spacer (Maintained Horizontally via CSS Flex layout alignment) -->
+        <div class="center-flex-spacer"></div>
+
+        <!-- Right Side Social Ecosystem Layout -->
+        <div class="right-socials-group">
+            <!-- Instagram -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Instagram profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Facebook profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <!-- YouTube -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit YouTube channel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit LinkedIn workspace">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Action Utility Config --- */
+.action-bar-section {
+    width: 100%;
+    background-color: #FFF8F6;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 16px 0;
+    margin-top: 80px; /* Aligns correctly below the fixed header layout offset */
+}
+
+.action-bar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Left Sided Alignment Flex Units --- */
+.left-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Validation Wrapper Box Structure */
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrapper input {
+    width: 260px;
+    padding: 10px 40px 10px 16px;
+    border: 1.5px solid rgba(93, 74, 71, 0.15);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #1A1A1A;
+    background-color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: #E8998D;
+    box-shadow: 0 0 0 3px rgba(232, 153, 141, 0.1);
+}
+
+.search-submit-btn {
+    position: absolute;
+    right: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8C7672;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.search-submit-btn:hover {
+    color: #E8998D;
+}
+
+.search-submit-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Message Box Dynamic Placement CSS */
+.validation-message {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 12px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+/* Clean micro triangle anchor decoration pointing up to input window */
+.validation-message::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 16px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #1A1A1A transparent;
+}
+
+.validation-message.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- Location Map Point Links --- */
+.location-anchor-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #5D4A47;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.location-anchor-link:hover {
+    color: #E8998D;
+}
+
+.location-anchor-link svg.pin-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D;
+}
+
+/* --- Center Segment --- */
+.center-flex-spacer {
+    flex-grow: 1;
+}
+
+/* --- Right Side Vectors --- */
+.right-socials-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.social-icon-link {
+    color: #5D4A47;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.social-icon-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-icon-link:hover {
+    color: #E8998D;
+    transform: translateY(-2px);
+}
+
+/* --- Fully Responsive Breakpoints Viewports Layout --- */
+@media (max-width: 992px) {
+    .action-bar-container {
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .action-bar-section {
+        margin-top: 70px; /* Responsive tracking downscaled configuration step */
+        padding: 14px 0;
+    }
+
+    .action-bar-container {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .left-actions-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .search-input-wrapper input {
+        width: 100%; /* Spans viewport wide cleanly on compact displays */
+    }
+
+    .location-anchor-link {
+        justify-content: center;
+        padding: 4px 0;
+    }
+
+    .center-flex-spacer {
+        display: none; /* Collapses space unit natively when running vertical structures */
+    }
+
+    .right-socials-group {
+        justify-content: center;
+        border-top: 1px solid rgba(232, 153, 141, 0.1);
+        padding-top: 14px;
+        gap: 28px;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    const searchAlert = document.getElementById("searchAlert");
+
+    searchForm.addEventListener("submit", (e) => {
+        // Halt default transmission protocols instantly
+        e.preventDefault();
+
+        // Extract whitespace stripped characters from input layer
+        const queryValue = searchInput.value.trim();
+
+        if (queryValue === "") {
+            // Reveal validation context box banner
+            searchAlert.classList.add("is-visible");
+            searchInput.focus();
+        } else {
+            // Clean active errors out and smoothly direct to targeted broken page path
+            searchAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Dismiss active visible validation boxes if user initiates typing corrections
+    searchInput.addEventListener("input", () => {
+        if (searchAlert.classList.contains("is-visible")) {
+            searchAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Dismiss tooltip box elements cleanly if user shifts layout context/blur focus
+    searchInput.addEventListener("blur", () => {
+        searchAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Elegant Creative Portfolio Hero Section -->
+<section class="portfolio-hero-section" id="portfolioHero">
+    <div class="portfolio-hero-container">
+        
+        <!-- Left Structural Column: Typography Operations -->
+        <div class="hero-left-content fly-from-left">
+            <!-- Subtle category indicator tag -->
+            <span class="portfolio-tag-label">Our Lookbook</span>
+            
+            <!-- Scroll-Animated Word-by-Word Title Header -->
+            <h1 class="portfolio-hero-title" id="portfolioHeroTitle">
+                <span class="ph-word">Showcasing</span>
+                <span class="ph-word">Unforgettable</span>
+                <span class="ph-word">Visual</span>
+                <span class="ph-word-accent">Celebrations</span>
+            </h1>
+
+            <p class="portfolio-hero-desc">
+                Welcome to our curated design catalog. Step inside a visual gallery tracking our most intricate stage production mandapams, premium floral ceiling installations, and breathtaking atmospheric wedding lightscapes built beautifully across Tamil Nadu.
+            </p>
+
+            <!-- Slide Action Control Buttons Linking to 404 Pages -->
+            <div class="portfolio-hero-actions">
+                <button class="ph-btn btn-solid-peach" onclick="window.location.href='404.html'">Book Your Event</button>
+                <button class="ph-btn btn-outline-dark" onclick="window.location.href='404.html'">Download Catalog</button>
+            </div>
+        </div>
+
+        <!-- Right Structural Column: Overlapping Frame Matrices Layout -->
+        <div class="hero-right-graphics fly-from-right">
+            <div class="asymmetric-image-frame">
+                
+                <!-- Main Focal Portrait Image Container Shell -->
+                <div class="ph-main-image-wrapper" onclick="window.location.href='404.html'">
+                    <img src="path-to-main-portfolio-hero.jpg" alt="Stackly Grand Wedding Stage Production" loading="lazy">
+                    <div class="ph-glass-tint-layer"></div>
+                </div>
+
+                <!-- Secondary Overlapping Minimalist Accent Frame -->
+                <div class="ph-accent-image-wrapper" onclick="window.location.href='404.html'">
+                    <img src="path-to-accent-portfolio-detail.jpg" alt="Intricate Floral Close Up Detail Artistry" loading="lazy">
+                </div>
+
+                <!-- Geometric branding frame offset backdrop box decoration -->
+                <div class="ph-geometric-offset-box"></div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Architecture --- */
+/* --- Canvas Framing Architecture --- */
+.portfolio-hero-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain signature pale pink / soft peach canvas color theme */
+    
+    /* REVISION: Optimized top padding boundary to pull text upward tightly */
+    padding: 30px 0 100px 0; 
+    
+    /* REVISION: Set margin-top to 0px to eliminate the duplicate vertical white gap */
+    margin-top: 0px; 
+    
+    overflow: hidden;
+    position: relative;
+}
+
+.portfolio-hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr; /* Parallel track distribution matrix balancing text/images */
+    gap: 60px;
+    align-items: center;
+}
+
+/* --- Left Side Content Area Typography --- */
+.hero-left-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-tag-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand signature primary peach token */
+    
+    /* REVISION: Reduced slightly from 14px to align closely with the bar above */
+    margin-bottom: 8px; 
+}
+
+/* --- Word-by-Word Scroll Headline Reveals --- */
+.portfolio-hero-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    color: #111111; /* Clean High-Contrast Near-Black */
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 14px;
+}
+
+.ph-word, .ph-word-accent {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ph-word-accent {
+    color: #E8998D; /* Highlight color token swap */
+}
+
+/* Activated via dynamic JS scroll pipelines */
+.hero-active-trigger .ph-word,
+.hero-active-trigger .ph-word-accent {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger sequence delay array mappings */
+.hero-active-trigger .ph-word:nth-child(1) { transition-delay: 0.05s; }
+.hero-active-trigger .ph-word:nth-child(2) { transition-delay: 0.18s; }
+.hero-active-trigger .ph-word:nth-child(3) { transition-delay: 0.3s; }
+.hero-active-trigger .ph-word-accent { transition-delay: 0.42s; }
+
+.portfolio-hero-desc {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+    margin-bottom: 36px;
+    max-width: 540px;
+}
+
+/* Action Control Redirect Buttons Group */
+.portfolio-hero-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.ph-btn {
+    padding: 16px 36px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 30px; /* Highly curved rounded edge design aesthetics */
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.btn-solid-peach {
+    background-color: #E8998D;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.25);
+}
+
+.btn-solid-peach:hover {
+    background-color: #D6867B;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(232, 153, 141, 0.4);
+}
+
+.btn-outline-dark {
+    background-color: transparent;
+    color: #1A1A1A;
+    border: 2px solid #1A1A1A;
+}
+
+.btn-outline-dark:hover {
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+/* --- Left / Right Directional Entrance Vector Controls --- */
+.fly-from-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hero-active-trigger .fly-from-left,
+.hero-active-trigger .fly-from-right {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* ==========================================================================
+   CREATIVE OVERLAPPING INTERACTIVE IMAGE MOSAIC ACCENTS LAYER
+   ========================================================================== */
+.hero-right-graphics {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.asymmetric-image-frame {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 520px;
+}
+
+/* Primary Central Vertical Portrait Image Frame */
+.ph-main-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 82%;
+    height: 88%;
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 3;
+    cursor: pointer;
+    box-shadow: 0 15px 45px rgba(93, 74, 71, 0.08);
+}
+
+.ph-main-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ph-glass-tint-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(26,26,26,0) 60%, rgba(26,26,26,0.2) 100%);
+}
+
+/* Secondary Smaller Overlay Element Card Shell */
+.ph-accent-image-wrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 48%;
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 4; /* Floats directly on top of main background frame */
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    border: 3px solid #FFFFFF; /* High-contrast crisp border profile separation */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ph-accent-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Geometric Offset Backdrop Accent Plate */
+.ph-geometric-offset-box {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 40%;
+    height: 40%;
+    background-color: #F3B0A6; /* Pale pink structural block background fill */
+    border-radius: 12px;
+    z-index: 1;
+    opacity: 0.25;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Unified Hover Interactions on Image Area Focus */
+.asymmetric-image-frame:hover .ph-main-image-wrapper img {
+    transform: scale(1.03);
+}
+
+.asymmetric-image-frame:hover .ph-accent-image-wrapper {
+    transform: translate(-10px, -10px) scale(1.02); /* Slides outward subtly on interaction */
+}
+
+.asymmetric-image-frame:hover .ph-geometric-offset-box {
+    transform: translate(8px, -8px);
+}
+
+/* ==========================================================================
+   FLUID RESPONSIVE ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .portfolio-hero-title { font-size: 3rem; }
+    .asymmetric-image-frame { height: 420px; max-width: 420px; }
+}
+
+@media (max-width: 992px) {
+    .portfolio-hero-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+
+    .portfolio-hero-title { justify-content: center; }
+    .portfolio-hero-desc { margin-left: auto; margin-right: auto; }
+    .portfolio-hero-actions { justify-content: center; }
+    .hero-right-graphics { justify-content: center; }
+
+    .fly-from-left, .fly-from-right {
+        transform: translateY(40px) !important;
+    }
+    
+    .ph-geometric-offset-box { display: none; } 
+}
+
+@media (max-width: 576px) {
+    /* REVISION: Balanced mobile padding structures to fix mobile gaps */
+    .portfolio-hero-section { padding: 30px 0 60px 0; margin-top: 0px; }
+    .portfolio-hero-container { padding: 0 24px; }
+    .portfolio-hero-title { font-size: 2.2rem; gap: 0 8px; }
+    .portfolio-hero-desc { font-size: 0.95rem; }
+    .portfolio-hero-actions { flex-direction: column; width: 100%; gap: 12px; }
+    .ph-btn { width: 100%; padding: 14px; }
+    .asymmetric-image-frame { height: 320px; max-width: 320px; }
+}
+
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const portfolioHero = document.getElementById("portfolioHero");
+
+    // --- SCROLL INTERSECTION CONFIGURATION PIPELINE ---
+    const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Stamped global trigger state flags to execute word and block timelines simultaneously
+                portfolioHero.classList.add("hero-active-trigger");
+                heroObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 }); // Fires when 15% of the section card scales inside viewport bounds
+
+    if (portfolioHero) heroObserver.observe(portfolioHero);
+});
+
+</script>
+
+<!-- Fully Aligned Portfolio Grid Component -->
+<section class="portfolio-masonry-section" id="portfolioSection">
+    <div class="masonry-master-container">
+
+        <!-- Header Group with Scroll Word Reveal -->
+        <div class="masonry-header-block">
+            <span class="masonry-small-tag">Our Masterpieces</span>
+            <h2 class="masonry-main-title" id="masonryTitle">
+                <span class="pm-word">Transforming</span>
+                <span class="pm-word">Spaces,</span>
+                <span class="pm-word">Capturing</span>
+                <span class="pm-word">Dreams</span>
+            </h2>
+        </div>
+
+        <!-- Corrected Aligned Grid Matrix -->
+        <div class="portfolio-masonry-grid" id="portfolioGrid">
+
+            <!-- Column 1 -->
+            <div class="masonry-column">
+                <div class="masonry-card-item" onclick="window.location.href='404.html'">
+                    <div class="masonry-image-wrapper row-one-height">
+                        <img src="path-to-wedding-mandapam.jpg" alt="Traditional Royal South Indian Mandapam Setup" loading="lazy">
+                        <div class="masonry-hover-overlay">
+                            <span class="project-category-tag">Wedding / Coimbatore</span>
+                        </div>
+                    </div>
+                    <div class="masonry-text-content">
+                        <h3>The Heritage Royal Canopy Mandapam</h3>
+                        <p>A grand floral-draped structure built seamlessly over open lawns with warm spotlight accents.</p>
+                    </div>
+                </div>
+
+                <div class="masonry-card-item" onclick="window.location.href='404.html'">
+                    <div class="masonry-image-wrapper row-two-height">
+                        <img src="path-to-table-decor.jpg" alt="Luxury Banquet Table Candle Setup" loading="lazy">
+                        <div class="masonry-hover-overlay">
+                            <span class="project-category-tag">Tablescape / Salem</span>
+                        </div>
+                    </div>
+                    <div class="masonry-text-content">
+                        <h3>Boho-Chic Intimate Dining Curation</h3>
+                        <p>Custom direct-sourced linens blended beautifully with pampas glass and amber glassware tracks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="masonry-column">
+                <div class="masonry-card-item" onclick="window.location.href='404.html'">
+                    <div class="masonry-image-wrapper row-one-height">
+                        <img src="path-to-corporate-gala.jpg" alt="Modern Geometric Corporate Gala Stage" loading="lazy">
+                        <div class="masonry-hover-overlay">
+                            <span class="project-category-tag">Corporate / Chennai</span>
+                        </div>
+                    </div>
+                    <div class="masonry-text-content">
+                        <h3>Neon Matrix Tech Awards Stage</h3>
+                        <p>Clean asymmetric layout built cleanly with laser projection channels and intelligent head washes.</p>
+                    </div>
+                </div>
+
+                <div class="masonry-card-item" onclick="window.location.href='404.html'">
+                    <div class="masonry-image-wrapper row-two-height">
+                        <img src="path-to-baby-shower.jpg" alt="Traditional Pastel Theme Baby Shower Decor" loading="lazy">
+                        <div class="masonry-hover-overlay">
+                            <span class="project-category-tag">Milestone / Tiruppur</span>
+                        </div>
+                    </div>
+                    <div class="masonry-text-content">
+                        <h3>Pastel Meadow Seemantham Curation</h3>
+                        <p>A soft floral backdrop setup utilizing fresh local jasmines, roses, and custom name boards.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 3 -->
+            <div class="masonry-column">
+                <div class="masonry-card-item" onclick="window.location.href='404.html'">
+                    <div class="masonry-image-wrapper row-one-height">
+                        <img src="path-to-outdoor-lights.jpg" alt="Atmospheric Canopy String Lights Night Setup" loading="lazy">
+                        <div class="masonry-hover-overlay">
+                            <span class="project-category-tag">Lightscapes / Erode</span>
+                        </div>
+                    </div>
+                    <div class="masonry-text-content">
+                        <h3>Stardust Canopy Outdoor Reception</h3>
+                        <p>Over 1,000 hanging vintage filament bulbs hung cleanly over a transparent luxury reception tent structure.</p>
+                    </div>
+                </div>
+
+                <div class="masonry-card-item" onclick="window.location.href='404.html'">
+                    <div class="masonry-image-wrapper row-two-height">
+                        <img src="path-to-birthday-decor.jpg" alt="Creative Themed Kids Birthday Setup" loading="lazy">
+                        <div class="masonry-hover-overlay">
+                            <span class="project-category-tag">Birthday / Pollachi</span>
+                        </div>
+                    </div>
+                    <div class="masonry-text-content">
+                        <h3>Enchanted Cloud Castles Installation</h3>
+                        <p>Custom 3D prop extensions balanced beautifully with double-stuffed balloon clouds arrays.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing --- */
+.portfolio-masonry-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Signature theme pale pink backdrop background */
+    padding: 30px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.masonry-master-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Headline Setup --- */
+.masonry-header-block {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.masonry-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D;
+    margin-bottom: 12px;
+}
+
+.masonry-main-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.pm-word {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pm-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   ALIGNMENT FIX: FIXED-PROPORTION STRUCTURAL MATRIX GRID
+   ========================================================================== */
+.portfolio-masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 perfectly symmetric equal-width columns */
+    gap: 32px;
+    align-items: flex-start; /* CRITICAL ACCENT: Forces all column starting blocks to line up evenly */
+}
+
+.masonry-column {
+    display: flex;
+    flex-direction: column;
+    gap: 48px; /* Safe space gap separation between stacked rows */
+}
+
+/* --- Card Flex Packaging Configuration --- */
+.masonry-card-item {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.02);
+    cursor: pointer;
+    
+    /* CRITICAL TRANSITION: Setting display to flex column prepares the inner card elements for alignment overrides */
+    display: flex;
+    flex-direction: column; 
+    
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+}
+
+.masonry-card-item.animate-card-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   ALIGNMENT FIX: INDIVIDUAL IMAGE HIGHER LIMITS
+   -------------------------------------------------------------------------- */
+.masonry-image-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+/* Row-level vertical dimension tracking locks the horizontal baseline straight across columns */
+.row-one-height {
+    height: 320px; /* Forces all three top-row card images to share the exact same height boundary */
+}
+
+.row-two-height {
+    height: 240px; /* Forces all three bottom-row card images to share the exact same height boundary */
+}
+
+.masonry-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Clips visual assets inside wrappers smoothly without distortion layout shifts */
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- Overlays & Labels --- */
+.masonry-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 26, 26, 0.15);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-category-tag {
+    padding: 6px 14px;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #1A1A1A;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 30px;
+    transform: translateY(-10px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+/* --------------------------------------------------------------------------
+   ALIGNMENT FIX: MINIMUM TEXT HOOK BOUNDARIES
+   -------------------------------------------------------------------------- */
+.masonry-text-content {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Instructs text box blocks to fill structural empty spaces evenly */
+    
+    /* CRITICAL ACCENT: Setting a fixed minimum vertical height ensures varied description lengths won't misalign buttons */
+    min-height: 160px; 
+}
+
+.masonry-text-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+}
+
+.masonry-text-content p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #5D4A47;
+}
+
+/* --- Card Interactive Hovers --- */
+.masonry-card-item:hover {
+    box-shadow: 0 20px 50px rgba(232, 153, 141, 0.16);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.masonry-card-item:hover .masonry-image-wrapper img { transform: scale(1.04); }
+.masonry-card-item:hover .masonry-hover-overlay { opacity: 1; }
+.masonry-card-item:hover .project-category-tag { transform: translateY(0); }
+.masonry-card-item:hover h3 { color: #E8998D; }
+
+/* ==========================================================================
+   FLUID RESPONSIVE CONSTRAINTS MEDIA OVERRIDES
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .masonry-main-title { font-size: 2.8rem; }
+    .portfolio-masonry-grid { gap: 20px; }
+    .masonry-text-content { padding: 20px; min-height: 180px; }
+    .masonry-card-item { border-radius: 16px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse multi-column tracking grids down safely into standard singular vertical columnar flows */
+    .portfolio-masonry-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+    .masonry-column { gap: 32px; }
+    
+    /* Standardize height metrics across tablet viewport containers to preserve baseline stability */
+    .row-one-height,
+    .row-two-height {
+        height: 280px;
+    }
+    .masonry-text-content { min-height: auto; }
+}
+
+@media (max-width: 576px) {
+    .portfolio-masonry-section { padding: 60px 0; }
+    .masonry-master-container { padding: 0 24px; }
+    .masonry-main-title { font-size: 1.9rem; gap: 0 8px; }
+    .masonry-text-content h3 { font-size: 1.15rem; }
+    .row-one-height, .row-two-height { height: 220px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // Word-by-word reveal sequence scroll trigger observer pipeline
+    const words = document.querySelectorAll(".pm-word");
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+    // Staggered initial layout card entrance scroll trigger observer pipeline
+    const portfolioGrid = document.getElementById("portfolioGrid");
+    const gridCards = document.querySelectorAll(".masonry-card-item");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                gridCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-card-in");
+                    }, index * 100);
+                });
+                gridObserver.unobserve(portfolioGrid);
+            }
+        });
+    }, { threshold: 0.08 });
+
+    if (portfolioGrid) gridObserver.observe(portfolioGrid);
+});
+
+</script>
+
+<!-- Editorial Moodboard & Styling Palette Section -->
+<section class="moodboard-section" id="moodboardSection">
+    <div class="moodboard-container">
+
+        <!-- Word-by-Word Scroll Reveal Header -->
+        <div class="moodboard-header">
+            <span class="mb-tag">Design Ideation</span>
+            <h2 class="moodboard-title" id="moodboardTitle">
+                <span class="mb-word">The</span>
+                <span class="mb-word">Anatomy</span>
+                <span class="mb-word">Of</span>
+                <span class="mb-word">Atmospheric</span>
+                <span class="mb-word-accent">Scenography</span>
+            </h2>
+        </div>
+
+        <!-- Layered Collage Layout Grid Matrix -->
+        <div class="moodboard-collage-matrix" id="moodboardGrid">
+            
+            <!-- Layer 1: Textures & Drapes (Slides from Left) -->
+            <div class="mb-collage-card fly-from-left" onclick="window.location.href='404.html'">
+                <div class="mb-image-shell ratio-portrait">
+                    <img src="path-to-luxurious-velvet-silk.jpg" alt="Premium Silk Fabric Drapes" loading="lazy">
+                    <div class="mb-frosted-overlay">
+                        <div class="mb-vector-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h3>Tactile Foundations</h3>
+                        <p>Layering raw weight silks, seamless tulle flows, and ironed organic cotton runners to build depth backdrop weights.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Layer 2: Botanical Architecture (Slides from Top / Main Center Frame) -->
+            <div class="mb-collage-card fly-from-top focus-hero-card" onclick="window.location.href='404.html'">
+                <div class="mb-image-shell ratio-tall">
+                    <img src="path-to-cascading-orchids.jpg" alt="Premium Botanical Ceiling Cascade" loading="lazy">
+                    <div class="mb-frosted-overlay">
+                        <div class="mb-vector-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h3>Botanical Architecture</h3>
+                        <p>Mapping direct-sourced premium blossoms, fresh jasmine lines, and dynamic structural foliage frameworks perfectly aligned to venue grids.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Layer 3: Luminance Mapping (Slides from Right) -->
+            <div class="mb-collage-card fly-from-right" onclick="window.location.href='404.html'">
+                <div class="mb-image-shell ratio-portrait">
+                    <img src="path-to-vintage-spotlights.jpg" alt="Intelligent Event Light Trailing" loading="lazy">
+                    <div class="mb-frosted-overlay">
+                        <div class="mb-vector-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 20v2M4.22 4.22l1.41 1.41M18.36 18.36l1.42 1.42M1 12h2M20 12h2M4.22 19.78l1.41-1.42M18.36 5.64l1.42-1.41"/></svg>
+                        </div>
+                        <h3>Luminance Mapping</h3>
+                        <p>Calibrating warm wireless uplighting tracks, intelligent moving head beams, and custom dimmers to wash fabrics into stunning night captures.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Global Action Gallery Call -->
+        <div class="moodboard-footer-action">
+            <button class="mb-explore-btn" onclick="window.location.href='404.html'">Deconstruct Our Style ➔</button>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Core Section Structure --- */
+.moodboard-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Signature pale pink/peach canvas theme color */
+    padding: 50px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.moodboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Title Word-by-Word Scroll Reveal Styling --- */
+.moodboard-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.mb-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D;
+    margin-bottom: 12px;
+}
+
+.moodboard-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #111111; /* Near Black */
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 14px;
+}
+
+.mb-word, .mb-word-accent {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.mb-word-accent {
+    color: #E8998D; /* Highlights scenography in peach */
+}
+
+.moodboard-title.reveal-active .mb-word,
+.moodboard-title.reveal-active .mb-word-accent {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   INTERACTIVE COLAGE MATRIX GRID ARCHITECTURE
+   ========================================================================== */
+.moodboard-collage-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr; /* Center Hero card takes visual precedence layout weight */
+    gap: 32px;
+    align-items: center; /* Symmetrical balance across columns */
+}
+
+/* --- Multi-directional Entry Animation Map --- */
+.fly-from-left {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-right {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-top {
+    opacity: 0;
+    transform: translateY(-80px);
+    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.moodboard-collage-matrix.animate-matrix-active .mb-collage-card {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* --- Image Card Proportions Boundary Locks --- */
+.mb-collage-card {
+    width: 100%;
+    cursor: pointer;
+}
+
+.mb-image-shell {
+    position: relative;
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 45px rgba(93, 74, 71, 0.05);
+    background-color: #FFEBE5;
+}
+
+.ratio-portrait { height: 420px; }
+.ratio-tall { height: 520px; } /* Center Portrait stands taller dynamically */
+
+.mb-image-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- Modern Glassmorphic Information Panel Overlays --- */
+.mb-frosted-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0.1) 0%, rgba(26, 26, 26, 0.85) 100%);
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    z-index: 2;
+    transition: background 0.4s ease;
+}
+
+.mb-vector-icon {
+    color: #FFD3C4;
+    width: 28px;
+    height: 28px;
+    margin-bottom: 16px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.mb-vector-icon svg { width: 100%; height: 100%; }
+
+.mb-frosted-overlay h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+    letter-spacing: -0.2px;
+}
+
+.mb-frosted-overlay p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #FFD3C4;
+    max-width: 280px;
+    opacity: 0.85;
+    transition: opacity 0.3s ease, transform 0.4s ease;
+    transform: translateY(5px);
+}
+
+/* ==========================================================================
+   IMMERSIVE HOVER RESPONSES
+   ========================================================================== */
+.mb-collage-card:hover .mb-image-shell img {
+    transform: scale(1.05);
+}
+
+/* Blurs background graphic directly under the data card on text entry focus */
+.mb-collage-card:hover .mb-frosted-overlay {
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0.3) 0%, rgba(26, 26, 26, 0.92) 100%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.mb-collage-card:hover .mb-vector-icon {
+    transform: translateY(-4px) scale(1.1);
+    color: #E8998D;
+}
+
+.mb-collage-card:hover .mb-frosted-overlay p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Footer Element Control CTA */
+.moodboard-footer-action {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.mb-explore-btn {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.mb-explore-btn:hover {
+    color: #E8998D;
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .moodboard-title { font-size: 2.8rem; }
+    .moodboard-collage-matrix { gap: 20px; }
+    .mb-frosted-overlay { padding: 30px 24px; }
+    .mb-frosted-overlay h3 { font-size: 1.2rem; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse multi-directional matrices cleanly into uniform singular column pipelines */
+    .moodboard-collage-matrix {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Standardize adaptive portrait container heights across single tracking display files */
+    .ratio-portrait, .ratio-tall {
+        height: 380px;
+    }
+
+    /* Redirect fly directions to uniform bottom-up movements for mobile scrolling stability */
+    .fly-from-left, .fly-from-right, .fly-from-top {
+        transform: translateY(40px) !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .moodboard-section { padding: 60px 0; }
+    .moodboard-container { padding: 0 24px; }
+    .moodboard-title { font-size: 1.9rem; gap: 0 8px; }
+    .ratio-portrait, .ratio-tall { height: 320px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Intersection Observer ---
+    const words = document.querySelectorAll(".mb-word, .mb-word-accent");
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.parentElement.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: Staggered Multi-directional Entrance Observer ---
+    const matrixGrid = document.getElementById("moodboardGrid");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Stamping active flag class triggers Left, Top, and Right GPU pipelines together
+                matrixGrid.classList.add("animate-matrix-active");
+                gridObserver.unobserve(matrixGrid);
+            }
+        });
+    }, { threshold: 0.12 }); // Fires smoothly when 12% of the row crosses visibility lines
+
+    if (matrixGrid) gridObserver.observe(matrixGrid);
+});
+
+</script>
+
+<!-- Editorial Brand Story Section -->
+<section class="about-brand-section" id="aboutBrandSection">
+    <div class="about-brand-container">
+        
+        <!-- Left Side: Narrative & Milestones -->
+        <div class="about-text-column fly-from-left">
+            <span class="about-mini-tag">Our Identity</span>
+            
+            <!-- Scroll-Triggered Word-by-Word Title Header -->
+            <h2 class="about-main-title" id="aboutTitle">
+                <span class="ab-word">The</span>
+                <span class="ab-word">Creative</span>
+                <span class="ab-word">Mindset</span>
+                <span class="ab-word">Behind</span>
+                <span class="ab-word-accent">Stackly</span>
+            </h2>
+
+            <p class="about-paragraph-primary">
+                Born out of a deep-seated passion for transforming spaces, Stackly is a collective of event designers, floral artisans, and lighting technicians based in Coimbatore. We don’t believe in cookie-cutter templates—we believe every celebration deserves a unique visual landscape.
+            </p>
+
+            <p class="about-paragraph-secondary">
+                Our approach blends traditional cultural roots with clean modern geometry. From local micro-functions to grand luxury destination weddings, we treat every layout vector as a pristine canvas to render your milestone story beautifully.
+            </p>
+
+            <!-- Brand Milestone Statistics Row -->
+            <div class="about-metrics-row">
+                <div class="metric-block" onclick="window.location.href='404.html'">
+                    <span class="metric-number">07+</span>
+                    <span class="metric-label">Years Sourcing</span>
+                </div>
+                <div class="metric-block" onclick="window.location.href='404.html'">
+                    <span class="metric-number">450+</span>
+                    <span class="metric-label">Stages Styled</span>
+                </div>
+                <div class="metric-block" onclick="window.location.href='404.html'">
+                    <span class="metric-number">99%</span>
+                    <span class="metric-label">Vision Match</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Overlapping Image Layer Matrix -->
+        <div class="about-graphics-column fly-from-right">
+            <div class="asymmetric-about-frame">
+                
+                <!-- Main Layer Image Wrapper -->
+                <div class="about-image-wrapper main-frame" onclick="window.location.href='404.html'">
+                    <img src="path-to-stylist-team-working.jpg" alt="Stackly Artisans Curating Floral Arches" loading="lazy">
+                    <div class="about-card-shading"></div>
+                </div>
+
+                <!-- Secondary Offset Floating Detail Image Wrapper -->
+                <div class="about-image-wrapper offset-frame" onclick="window.location.href='404.html'">
+                    <img src="path-to-moodboard-details.jpg" alt="Intricate Texture Fabrics & Color Swatches" loading="lazy">
+                </div>
+
+                <!-- Structural Framing Decoration Backing Box -->
+                <div class="about-decor-backing-box"></div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Architecture --- */
+.about-brand-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach theme canvas background */
+    padding: 120px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.about-brand-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* Asymmetric split prioritizes storytelling copy text */
+    gap: 80px;
+    align-items: center;
+}
+
+/* --- Left Column Narrative Styling --- */
+.about-text-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-mini-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand signature peach token */
+    margin-bottom: 14px;
+}
+
+/* --- Word-by-Word Scroll Headline Reveals --- */
+.about-main-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #111111; /* Near Black */
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 14px;
+}
+
+.ab-word, .ab-word-accent {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ab-word-accent {
+    color: #E8998D; /* Accent highlights brand identity signature color track */
+}
+
+/* Injected via scroll intersection observers */
+.about-active-trigger .ab-word,
+.about-active-trigger .ab-word-accent {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger sequence delay arrays mapping word rendering flow */
+.about-active-trigger .ab-word:nth-child(1) { transition-delay: 0.05s; }
+.about-active-trigger .ab-word:nth-child(2) { transition-delay: 0.15s; }
+.about-active-trigger .ab-word:nth-child(3) { transition-delay: 0.25s; }
+.about-active-trigger .ab-word:nth-child(4) { transition-delay: 0.35s; }
+.about-active-trigger .ab-word-accent { transition-delay: 0.45s; }
+
+.about-paragraph-primary {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #2A2221;
+    margin-bottom: 18px;
+    font-weight: 500;
+}
+
+.about-paragraph-secondary {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+    margin-bottom: 40px;
+}
+
+/* --- Interactive Brand Metrics Elements --- */
+.about-metrics-row {
+    display: flex;
+    gap: 40px;
+    border-top: 1px dashed rgba(232, 153, 141, 0.25);
+    padding-top: 30px;
+}
+
+.metric-block {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.metric-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #111111;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 4px;
+    transition: color 0.3s ease;
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+}
+
+/* Hover metric response highlights */
+.metric-block:hover .metric-number {
+    color: #E8998D;
+}
+
+/* --- Left / Right Directional Entrance Vector Controls --- */
+.fly-from-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.about-active-trigger .fly-from-left,
+.about-active-trigger .fly-from-right {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* ==========================================================================
+   CREATIVE OVERLAPPING INTERACTIVE IMAGE MOSAIC ACCENTS LAYER
+   ========================================================================== */
+.about-graphics-column {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.asymmetric-about-frame {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    height: 500px;
+}
+
+/* Main Central Portrait Frame Box */
+.about-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background-color: #FFEBE5;
+    cursor: pointer;
+    box-shadow: 0 15px 45px rgba(93, 74, 71, 0.06);
+}
+
+.about-image-wrapper.main-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 85%;
+    border-radius: 20px;
+    z-index: 3;
+}
+
+.about-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.about-card-shading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(26,26,26,0) 60%, rgba(26,26,26,0.15) 100%);
+}
+
+/* Secondary Floating Offset Element Frame Card */
+.about-image-wrapper.offset-frame {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 52%;
+    height: 46%;
+    border-radius: 16px;
+    z-index: 4; /* Floats perfectly on top of main graphic layers */
+    border: 4px solid #FFFFFF; /* High-contrast crisp border profile separation lines */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Decorative Backdrop Offset Card Plate */
+.about-decor-backing-box {
+    position: absolute;
+    bottom: -16px;
+    left: -16px;
+    width: 35%;
+    height: 35%;
+    background-color: #F3B0A6; /* Pale pink layout block backer fill coloring */
+    border-radius: 16px;
+    z-index: 1;
+    opacity: 0.25;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Hover Interaction over entire graphics matrix container */
+.asymmetric-about-frame:hover .main-frame img {
+    transform: scale(1.03);
+}
+
+.asymmetric-about-frame:hover .offset-frame {
+    transform: translate(-8px, -8px) scale(1.02);
+}
+
+.asymmetric-about-frame:hover .about-decor-backing-box {
+    transform: translate(6px, 6px);
+}
+
+/* ==========================================================================
+   FLUID RESPONSIVE MEDIA CONSTRAINTS BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .about-main-title { font-size: 2.8rem; }
+    .asymmetric-about-frame { height: 420px; max-width: 420px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapses split row frames down into clean singular vertical stacking channels natively */
+    .about-brand-container {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        text-align: center;
+    }
+
+    .about-main-title { justify-content: center; }
+    .about-metrics-row { justify-content: center; gap: 30px; }
+    .about-graphics-column { justify-content: center; }
+
+    /* Normalizes sliding translations onto safe bottom-up vector flows for screen stability */
+    .fly-from-left, .fly-from-right {
+        transform: translateY(40px) !important;
+    }
+    
+    .about-decor-backing-box { display: none; } /* Strip background block card shapes to balance mobile viewport spacing */
+}
+
+@media (max-width: 576px) {
+    .about-brand-section { padding: 60px 0; }
+    .about-brand-container { padding: 0 24px; }
+    .about-main-title { font-size: 2.2rem; gap: 0 8px; }
+    .about-paragraph-primary { font-size: 1.05rem; }
+    .about-metrics-row { flex-direction: column; align-items: center; gap: 20px; }
+    .asymmetric-about-frame { height: 320px; max-width: 320px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const aboutBrandSection = document.getElementById("aboutBrandSection");
+
+    // --- INTEGRATED INTERSECTION SCROLL PIPELINE ---
+    const brandObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Stamping parent class hook executes typography sequence and block slides simultaneously
+                aboutBrandSection.classList.add("about-active-trigger");
+                brandObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 }); // Triggers smoothly once 15% of container height scales onto viewport frames
+
+    if (aboutBrandSection) brandObserver.observe(aboutBrandSection);
+});
+
+</script>
+
+<!-- Creative Fluid Testimonial Section -->
+<section class="testimonial-section" id="testimonialSection">
+    
+    <!-- Option to set background image via CSS or direct source -->
+    <div class="testimonial-bg-wrapper">
+        <!-- Replace 'luxury-backdrop.jpg' with your actual texture, pattern, or event photo link -->
+        <img src="path-to-luxury-backdrop.jpg" alt="Stackly Aesthetic Background Texture" class="test-bg-img" loading="lazy">
+        <div class="testimonial-overlay-tint"></div>
+    </div>
+
+    <div class="testimonial-container">
+        
+        <!-- Section Header Layout -->
+        <div class="testimonial-header">
+            <span class="testimonial-tag">Kind Words</span>
+            <!-- Scroll-Triggered Letter-by-Letter Title Container -->
+            <h2 class="letter-reveal-title" id="testimonialTitle">Love Letters From Our Couples</h2>
+        </div>
+
+        <!-- Cascading Grid Wrapper Matrix -->
+        <div class="testimonial-cards-grid" id="testimonialGrid">
+            
+            <!-- Review Card 1 -->
+            <div class="testimonial-card flex-stagger-1" onclick="window.location.href='404.html'">
+                <div class="card-quote-mark">“</div>
+                <div class="rating-stars-row">
+                    <!-- 5 Clean Inline Star Vector Paths -->
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-body">
+                    Stackly completely transformed our outdoor pavilion into a fairy-tale dream. The fresh botanical arches and cascading fairy lights left our guests speechless!
+                </p>
+                <div class="user-profile-meta">
+                    <img src="path-to-couple-avatar-1.jpg" alt="Priya and Rahul" class="avatar-img" loading="lazy">
+                    <div class="user-text">
+                        <h3>Priya & Rahul</h3>
+                        <span>Grand Wedding Celebration</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div class="testimonial-card flex-stagger-2" onclick="window.location.href='404.html'">
+                <div class="card-quote-mark">“</div>
+                <div class="rating-stars-row">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-body">
+                    The attention to detail during our custom engagement stage setup was unmatched. They worked tirelessly to map our exact theme down to the linen choices.
+                </p>
+                <div class="user-profile-meta">
+                    <img src="path-to-couple-avatar-2.jpg" alt="Anjali and Vikram" class="avatar-img" loading="lazy">
+                    <div class="user-text">
+                        <h3>Anjali & Vikram</h3>
+                        <span>Heritage Mandapam Ceremony</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 3 -->
+            <div class="testimonial-card flex-stagger-3" onclick="window.location.href='404.html'">
+                <div class="card-quote-mark">“</div>
+                <div class="rating-stars-row">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-body">
+                    Flawless execution! Production management, lighting architecture, and stage design were coordinated flawlessly. Highly professional team!
+                </p>
+                <div class="user-profile-meta">
+                    <img src="path-to-couple-avatar-3.jpg" alt="Deepak and Sneha" class="avatar-img" loading="lazy">
+                    <div class="user-text">
+                        <h3>Deepak & Sneha</h3>
+                        <span>Luxury Reception Gala</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Configuration Base --- */
+.testimonial-section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    overflow: hidden;
+    background-color: #1A1A1A; /* Dark fallback backing */
+}
+
+/* Background Img Tag Options Container Framework */
+.testimonial-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.test-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-overlay-tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient mapping blends branding tones while preserving depth visibility */
+    background: linear-gradient(to bottom, rgba(255, 248, 246, 0.96) 0%, rgba(255, 235, 229, 0.94) 100%);
+}
+
+.testimonial-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Section Headers & Letter Reveal Typography --- */
+.testimonial-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 70px auto;
+}
+
+.testimonial-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand Signature Peach Tint */
+    margin-bottom: 12px;
+}
+
+.letter-reveal-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #111111; /* Clean High-Contrast Near-Black */
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+/* Character metrics injected natively via JavaScript pipelines */
+.letter-reveal-title .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.letter-reveal-title .char.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- Review Grid Component Structure --- */
+.testimonial-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: stretch;
+}
+
+.testimonial-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 24px;
+    padding: 40px 36px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.03);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll Animation Initializations State Hooks */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+.testimonial-card.animate-card-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card Hover Responses */
+.testimonial-card:hover {
+    box-shadow: 0 20px 50px rgba(232, 153, 141, 0.15);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+
+/* Stylized Decorative Giant Floating Quote */
+.card-quote-mark {
+    position: absolute;
+    top: 15px;
+    right: 32px;
+    font-size: 5rem;
+    font-family: serif;
+    line-height: 1;
+    color: rgba(243, 176, 166, 0.25);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Rating Vector Stars Matrix Elements */
+.rating-stars-row {
+    display: flex;
+    gap: 4px;
+    color: #F4B0A6; /* Pale pink branding star vector accent coloring */
+    margin-bottom: 24px;
+}
+
+.rating-stars-row svg {
+    width: 18px;
+    height: 18px;
+}
+
+.testimonial-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4A3E3D;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+/* User Identity Bio Row Placement */
+.user-profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-top: 1px dashed rgba(232, 153, 141, 0.2);
+    padding-top: 20px;
+}
+
+.avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFF8F6;
+    background-color: #FFEBE5;
+}
+
+.user-text h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 2px;
+}
+
+.user-text span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #8C7672;
+}
+
+/* --- Rigid Fluid Responsive Overrides --- */
+@media (max-width: 1100px) {
+    .letter-reveal-title { font-size: 2.8rem; }
+    .testimonial-cards-grid { gap: 20px; }
+    .testimonial-card { padding: 32px 24px; }
+}
+
+@media (max-width: 992px) {
+    /* Safely realigns row architectures into single column pipelines over vertical viewports */
+    .testimonial-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-section { padding: 60px 0; }
+    .testimonial-container { padding: 0 24px; }
+    .letter-reveal-title { font-size: 1.9rem; }
+    .testimonial-card { border-radius: 20px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Dynamic Letter-by-Letter Dom Token Generation ---
+    const titleElement = document.getElementById("testimonialTitle");
+    const rawText = titleElement.textContent;
+    titleElement.textContent = ""; // Clear current plain text element frame
+
+    // Parse every text block character code node into single animated visibility tokens
+    [...rawText].forEach(char => {
+        const tokenSpan = document.createElement("span");
+        tokenSpan.classList.add("char");
+        tokenSpan.innerHTML = char === " " ? "&nbsp;" : char; // Handle blank space elements cleanly
+        titleElement.appendChild(tokenSpan);
+    });
+
+    const individualCharacters = titleElement.querySelectorAll(".char");
+
+
+    // --- PART 2: High Performance Scroll Intersection Pipeline ---
+    const testimonialGrid = document.getElementById("testimonialGrid");
+    const reviewCards = document.querySelectorAll(".testimonial-card");
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                
+                // Pipeline 1: Letter-by-letter drawing speed sequencing
+                individualCharacters.forEach((char, index) => {
+                    setTimeout(() => {
+                        char.classList.add("revealed");
+                    }, index * 30); // 30ms running stagger spacing
+                });
+
+                // Pipeline 2: Staggered card container entry cascades
+                reviewCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-card-in");
+                    }, index * 150); // 150ms incremental sequence offset timeline tracking
+                });
+
+                // Dismiss layout tracking mechanisms to optimize script memory loops
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 }); // Triggers when 12% of the panel crosses visible display limits
+
+    const targetSection = document.getElementById("testimonialSection");
+    if (targetSection) scrollObserver.observe(targetSection);
+});
+
+</script>
+
+<!-- Creative Floating Subscribe CTA Banner Component -->
+<section class="subscribe-section" id="subscribeSection">
+    <div class="subscribe-container">
+        
+        <!-- Elevated Floating Panel Container Shell -->
+        <div class="floating-subscribe-card">
+            
+            <!-- Img Tag Background Media Layer -->
+            <div class="sub-image-wrapper">
+                <img src="path-to-your-newsletter-bg.jpg" alt="Stackly Grand Luxury Event Background" class="sub-bg-img" loading="lazy">
+                <div class="sub-dark-tint-layer"></div>
+            </div>
+
+            <!-- Foreground Interactive Content Frame -->
+            <div class="sub-content-inner">
+                
+                <!-- Bottom-Up Word Staggered Typography Header -->
+                <div class="sub-text-block">
+                    <h2 class="sub-title" id="subscribeTitle">
+                        <span class="s-word">Subscribe</span>
+                        <span class="s-word">To</span>
+                        <span class="s-word">Our</span>
+                        <span class="s-word">Luxury</span>
+                        <span class="s-word">Design</span>
+                        <span class="s-word">Magazine</span>
+                    </h2>
+                    <p class="sub-paragraph" id="subscribePara">
+                        <span class="s-word">Get</span>
+                        <span class="s-word">exclusive</span>
+                        <span class="s-word">wedding</span>
+                        <span class="s-word">decor</span>
+                        <span class="s-word">trends</span>
+                        <span class="s-word">and</span>
+                        <span class="s-word">styling</span>
+                        <span class="s-word">insights</span>
+                        <span class="s-word">delivered</span>
+                        <span class="s-word">monthly.</span>
+                    </p>
+                </div>
+
+                <!-- Input Action Form Field Layer -->
+                <form class="sub-form-block" id="subscribeForm" novalidate>
+                    <div class="sub-input-group">
+                        <input type="email" id="subscriberEmail" placeholder="Enter your email address..." aria-label="Email address">
+                        <button type="submit" class="sub-submit-btn">Subscribe Now</button>
+                        
+                        <!-- Custom Native Tooltip Alert Message Placement -->
+                        <span class="sub-validation-msg" id="subValidationAlert">Please fill out this field.</span>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Configuration --- */
+.subscribe-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Standard branding pale pink theme backdrop */
+    padding: 30px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.subscribe-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Elevated Floating Panel Card Architecture --- */
+.floating-subscribe-card {
+    position: relative;
+    width: 100%;
+    min-height: 280px;
+    border-radius: 24px; /* Highly curved corners to achieve floating look */
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(93, 74, 71, 0.12); /* Deep drop shadow elevation spatial depth */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+/* Background Media Formatting Shell */
+.sub-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.sub-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.floating-subscribe-card:hover .sub-bg-img {
+    transform: scale(1.03);
+}
+
+.sub-dark-tint-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.88) 0%, rgba(93, 74, 71, 0.8) 100%);
+}
+
+/* --- Foreground Main Flex Matrix Layout --- */
+.sub-content-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 50px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.sub-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 550px;
+}
+
+/* --- Word-by-Word Bottom Up Typography Animation Core --- */
+.sub-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+}
+
+.sub-paragraph {
+    font-size: 1rem;
+    color: #FFD3C4; /* Soft branding theme peach accent contrast line text color */
+    line-height: 1.5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+}
+
+/* Individual token state properties configuration */
+.s-word {
+    opacity: 0;
+    transform: translateY(20px); /* Sets initial offset below text alignment paths */
+    display: inline-block;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Trigger classes stamped onto parent layers via intersection scripts */
+.sub-title.reveal-active .s-word,
+.sub-paragraph.reveal-active .s-word {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Interactive Action Form Block --- */
+.sub-form-block {
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+.sub-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    padding: 6px;
+    border-radius: 40px;
+    transition: border-color 0.3s frame, box-shadow 0.3s;
+}
+
+.sub-input-group:focus-within {
+    border-color: #E8998D; /* Brand signature highlight focus accent */
+    box-shadow: 0 0 0 4px rgba(232, 153, 141, 0.15);
+}
+
+.sub-input-group input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    color: #FFFFFF;
+}
+
+.sub-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sub-submit-btn {
+    padding: 14px 28px;
+    background-color: #E8998D; /* Brand primary tone color */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+}
+
+.sub-submit-btn:hover {
+    background-color: #D6867B;
+    transform: translateY(-1px);
+}
+
+/* --- High Performance Validation Alert Tooltip Element --- */
+.sub-validation-msg {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 24px;
+    background-color: #111111; /* Near-black crisp background */
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Triangle indicator clip pointing downward to input fields */
+.sub-validation-msg::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #111111 transparent transparent transparent;
+}
+
+.sub-validation-msg.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINT OVERRIDES
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .sub-content-inner { padding: 40px; gap: 30px; }
+    .sub-title { font-size: 1.9rem; }
+}
+
+@media (max-width: 900px) {
+    .subscribe-section { padding: 40px 0; }
+    .subscribe-container { padding: 0 24px; }
+    
+    /* Collapses standard row architecture down into an organic stacked system layout */
+    .sub-content-inner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 50px 32px;
+        gap: 32px;
+    }
+
+    .sub-title, .sub-paragraph {
+        justify-content: center;
+    }
+
+    .sub-form-block {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-subscribe-card { border-radius: 16px; }
+    .sub-content-inner { padding: 40px 20px; }
+    .sub-title { font-size: 1.5rem; }
+    .sub-paragraph { font-size: 0.9rem; }
+    
+    /* Convert horizontal unified inline group elements to single vertical button forms on mobile viewports */
+    .sub-input-group {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 12px;
+    }
+    
+    .sub-input-group input {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        text-align: center;
+        padding: 14px;
+    }
+
+    .sub-input-group input:focus {
+        border-color: #E8998D;
+    }
+
+    .sub-submit-btn {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .sub-validation-msg {
+        left: 50%;
+        transform: translate(-50%, 10px);
+        bottom: calc(100% + 8px);
+    }
+    
+    .sub-validation-msg::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub-validation-msg.is-visible {
+        transform: translate(-50%, 0);
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const subscribeSection = document.getElementById("subscribeSection");
+    const subTitle = document.getElementById("subscribeTitle");
+    const subPara = document.getElementById("subscribePara");
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const subValidationAlert = document.getElementById("subValidationAlert");
+
+    // --- PART 1: Staggered Dynamic Transition Delays Assignment ---
+    const assignWordAnimationDelays = (parentContainer, startingOffsetMs) => {
+        const words = parentContainer.querySelectorAll(".s-word");
+        words.forEach((word, index) => {
+            // Configures staggered delay timing increments flowing from bottom upwards
+            word.style.transitionDelay = `${startingOffsetMs + (index * 60)}ms`;
+        });
+        return startingOffsetMs + (words.length * 60);
+    };
+
+    // Chain lines sequence maps so text blocks rise sequentially fluidly
+    const line1CompletionDelay = assignWordAnimationDelays(subTitle, 100);
+    assignWordAnimationDelays(subPara, line1CompletionDelay + 50);
+
+
+    // --- PART 2: Scroll Intersection Pipeline Observer ---
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Injects active status classes to initiate transition executions
+                subTitle.classList.add("reveal-active");
+                subPara.classList.add("reveal-active");
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.25 }); // Fires when 25% of the floating card enters display frame
+
+    if (subscribeSection) sectionObserver.observe(subscribeSection);
+
+
+    // --- PART 3: Input Form Client-Side Validation Engine ---
+    subscribeForm.addEventListener("submit", (e) => {
+        e.preventDefault(); // Terminate standard browser transmission
+
+        const cleanEmailValue = subscriberEmail.value.trim();
+
+        if (cleanEmailValue === "") {
+            // Display alert banner tooltip natively
+            subValidationAlert.classList.add("is-visible");
+            subscriberEmail.focus();
+        } else {
+            // Dismiss error banners and seamlessly route user target link path
+            subValidationAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Clean visualization traces instantly once client edits empty characters
+    subscriberEmail.addEventListener("input", () => {
+        if (subValidationAlert.classList.contains("is-visible")) {
+            subValidationAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Safe blur fallback: clears errors when element focus is shifted away
+    subscriberEmail.addEventListener("blur", () => {
+        subValidationAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Elegant Responsive Footer Section -->
+<footer class="main-footer">
+    <div class="footer-top-container">
+        
+        <!-- Column 1: Brand Info & Social Ecosystem -->
+        <div class="footer-column brand-info-col">
+            <div class="footer-logo-wrapper" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" role="button" aria-label="Scroll back to top">
+                <img src="path-to-your-logo.png" alt="Stackly Logo" class="footer-logo-img">
+            </div>
+            <p class="footer-brand-desc">
+                Designing premium immersive event decorations and artisanal stage concepts tailored beautifully to celebrate life's most unforgettable milestones.
+            </p>
+            <div class="footer-socials-row">
+                <!-- Instagram -->
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <!-- Facebook -->
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="404.html" class="social-circle-link" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16zM4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <!-- YouTube -->
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Explore Styling Navigation -->
+        <div class="footer-column">
+            <h3 class="column-title">Explore Concepts</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Royal Mandapams</a></li>
+                <li><a href="404.html">Premium Gala Buffets</a></li>
+                <li><a href="404.html">Floral Installations</a></li>
+                <li><a href="404.html">Bespoke High Tea</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Client Support & Logistics -->
+        <div class="footer-column">
+            <h3 class="column-title">Styling Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Design Parameters</a></li>
+                <li><a href="404.html">Production Tracks</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Headquarters Coordinates -->
+        <div class="footer-column contact-info-col">
+            <h3 class="column-title">Headquarters Location</h3>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="map-anchor-link">
+                    MMR Complex, Periyakollapatty, Chinna Thirupathi, Salem, Tamil Nadu 636008
+                </a>
+            </div>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <a href="tel:+917010792745" class="phone-anchor-link">+91 7010792745</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legal Row Bar -->
+    <div class="footer-bottom-bar">
+        <div class="footer-bottom-container">
+            <span class="copyright-text">&copy; 2026 Stackly Industries. All styling rights reserved.</span>
+            <div class="legal-links-group">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* --- High-Quality Layout Backing Variables --- */
+.main-footer {
+    width: 100%;
+    background-color: #0B090A; /* Elegant, premium pitch-black layout backdrop precisely matched from image */
+    padding-top: 80px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-top-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 60px 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr; /* Balanced proportions matrix */
+    gap: 40px;
+}
+
+/* --- Brand Content Elements --- */
+.brand-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo-wrapper {
+    cursor: pointer;
+    margin-bottom: 24px;
+    display: inline-block;
+    align-self: flex-start;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo-wrapper:hover {
+    transform: translateY(-2px);
+}
+
+.footer-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-brand-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #A39391; /* Soft muted peach-gray tone for clean dark readability */
+    margin-bottom: 28px;
+    max-width: 320px;
+}
+
+/* Vector Social Circles Rows */
+.footer-socials-row {
+    display: flex;
+    gap: 12px;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #A39391;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.social-circle-link:hover {
+    background-color: #E8998D; /* Swaps instantly to our signature brand accent peach color on focus */
+    color: #FFFFFF;
+    border-color: #E8998D;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(232, 153, 141, 0.3);
+}
+
+/* --- Navigation & Links Typography --- */
+.column-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    position: relative;
+    letter-spacing: -0.2px;
+}
+
+/* Subtle accent block underneath link headers exactly from original image design lines */
+.column-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background-color: #E8998D; /* Subtle signature underline separator token */
+}
+
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #A39391;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #E8998D;
+    transform: translateX(3px); /* Interactive horizontal sliding motion on text hover */
+}
+
+/* --- Contact & Coordinates Layout Info Block --- */
+.contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.contact-vector-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D; /* Bright active tracking color highlights */
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.map-anchor-link, 
+.phone-anchor-link {
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #A39391;
+    transition: color 0.2s ease;
+}
+
+.map-anchor-link:hover, 
+.phone-anchor-link:hover {
+    color: #FFFFFF;
+}
+
+/* --- Bottom Legal Bar Section Layout --- */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px 0;
+    background-color: #070607; /* Darkened deep sub-floor strip */
+}
+
+.footer-bottom-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.copyright-text {
+    font-size: 0.85rem;
+    color: #6E6160;
+}
+
+.legal-links-group {
+    display: flex;
+    gap: 28px;
+}
+
+.legal-links-group a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #6E6160;
+    transition: color 0.2s ease;
+}
+
+.legal-links-group a:hover {
+    color: #A39391;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA CONSTRAINTS MATRIX
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .footer-top-container {
+        grid-template-columns: 1fr 1fr; /* Transforms grid into 2x2 symmetry block fields over tablets */
+        gap: 50px 30px;
+    }
+    .footer-brand-desc { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .footer-top-container {
+        padding: 0 24px 50px 24px;
+    }
+    .footer-bottom-container {
+        padding: 0 24px;
+        flex-direction: column; /* Flattens parallel strings on compact smartphone displays */
+        text-align: center;
+        gap: 16px;
+    }
+    .legal-links-group {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px 20px;
+    }
+}
+
+@media (max-width: 540px) {
+    /* Pure clean structural 1-column layout stacking linear flow directly down small screens */
+    .footer-top-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .column-title { margin-bottom: 18px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Frontend - Footer UI Engine
+ * Coordinates smooth scrolling back to viewport roots and analytics logging workflows.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. SMOOTH SCROLL ARCHITECTURE MANAGEMENT ---
+    const topScrollButton = document.getElementById("footerScrollTop");
+
+    if (topScrollButton) {
+        topScrollButton.addEventListener("click", (event) => {
+            // Prevent standard anchor jumping behaviors instantly
+            event.preventDefault();
+
+            // Fire high performance native GPU window scrolling pipelines
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
+
+
+    // --- 2. 404 LOGGING ACTION RADAR (Optional Debug Tracer) ---
+    const footerLinks = document.querySelectorAll(".main-footer a[href='404.html']");
+
+    footerLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Optional: Track which footer links your users are visiting most before reaching the placeholder page
+            const destinationLabel = e.currentTarget.textContent.trim() || e.currentTarget.getAttribute("aria-label");
+            console.log(`[Stackly Tracker]: User navigated to 404 handler via link: "${destinationLabel}"`);
+        });
+    });
+});
+
+</script>
+</body>
+</html>

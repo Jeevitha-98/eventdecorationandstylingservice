@@ -1,0 +1,3541 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Preloader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+    <!-- Standalone Responsive Preloader Screen -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <!-- Scaling Vector Icon (Abstract Event Arches) -->
+            <div class="logo-icon-wrapper">
+                <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
+                    <path class="arch arch-1" d="M20 90V50C20 33.4315 33.4315 20 50 20C66.5685 20 80 33.4315 80 50V90" stroke="url(#peachGradient)" stroke-width="6" stroke-linecap="round"/>
+                    <path class="arch arch-2" d="M35 90V55C35 46.7157 41.7157 40 50 40C58.2843 40 65 46.7157 65 55V90" stroke="url(#pinkGradient)" stroke-width="5" stroke-linecap="round"/>
+                    <circle class="sparkle" cx="50" cy="15" r="4" fill="#E8998D"/>
+                </svg>
+            </div>
+
+            
+            <h1 class="brand-name">Stackly</h1>
+            <p class="brand-tagline">Curating Moments, Styling Spaces</p>
+
+            <!-- Progress Tracker Components -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <span class="loading-text">Crafting your experience...</span>
+        </div>
+    </div>
+
+    <!-- Global SVG Gradient Definitions -->
+    <svg width="0" height="0" style="position:absolute; visibility: hidden;">
+        <defs>
+            <linearGradient id="peachGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD3C4"/>
+                <stop offset="100%" stop-color="#E8998D"/>
+            </linearGradient>
+            <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF0EC"/>
+                <stop offset="100%" stop-color="#F3B0A6"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const preloader = document.getElementById("preloader");
+    const progressBar = document.getElementById("progress-bar");
+
+    // Instantly begin progress bar loading transition
+    setTimeout(() => {
+        progressBar.style.width = "100%";
+    }, 50);
+
+    // Exact 2000ms delay window before executing clean removal sequence
+    setTimeout(() => {
+        preloader.classList.add("fade-out");
+        document.body.classList.remove("loading");
+        
+        // Remove structural items entirely after fade duration closes
+        setTimeout(() => {
+            preloader.remove();
+        }, 600); 
+    }, 2000);
+});
+
+    </script>
+
+    <!-- Navigation Header Component -->
+<header class="main-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="window.location.reload();" role="button" aria-label="Refresh home page">
+            <img src="path-to-your-logo.png" alt="Stackly Logo" class="brand-logo-img">
+        </div>
+
+        <!-- Center Navigation Menu -->
+       <nav class="nav-menu" id="navMenu">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link ">Home</a></li>
+                <li><a href="services.html" class="nav-link active">Services</a></li>
+                <li><a href="Portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <!-- Auth Button duplicated inside mobile drawer for layout flow -->
+       <button class="auth-btn mobile-auth-btn" onclick="window.location.href='login.html'">Sign In</button>
+        </nav>
+
+        <!-- Right Side Auth Button (Desktop View) -->
+        <div class="auth-wrapper">
+          <button class="auth-btn" onclick="window.location.href='login.html'">Sign In</button>
+        </div>
+
+        <!-- Mobile Hamburger Trigger -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+    </div>
+</header>
+
+<!-- Mobile Blur Backdrop Layer -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const navMenu = document.getElementById("navMenu");
+    const menuBackdrop = document.getElementById("menuBackdrop");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    // Unified function to handle open/close states
+    const toggleMenu = () => {
+        const isOpen = navMenu.classList.toggle("is-open");
+        hamburgerBtn.classList.toggle("is-active");
+        menuBackdrop.classList.toggle("is-visible");
+        
+        // Accessibility update
+        hamburgerBtn.setAttribute("aria-expanded", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+    };
+
+    // Trigger toggle on click elements
+    hamburgerBtn.addEventListener("click", toggleMenu);
+    menuBackdrop.addEventListener("click", toggleMenu);
+
+    // Track Navigation Item Interactions and switch visual Active State
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Remove active profile styling classes from all existing links
+            navLinks.forEach(item => item.classList.remove("active"));
+            
+            // Apply focus/active states cleanly onto target item
+            link.classList.add("active");
+
+            // Smooth close logic handling mobile interactions
+            if (navMenu.classList.contains("is-open")) {
+                toggleMenu();
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Sub-Header Actions Utility Bar Section -->
+<section class="action-bar-section">
+    <div class="action-bar-container">
+        
+        <!-- Left Side Dynamic Context Operations -->
+        <div class="left-actions-group">
+            <!-- Validation Protected Search Box -->
+            <form class="action-search-form" id="searchForm" novalidate>
+                <div class="search-input-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search decor styles, events..." aria-label="Search">
+                    <button type="submit" class="search-submit-btn" aria-label="Submit search">
+                        <!-- Search Vector Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <!-- Custom Native Tooltip Alert Placement -->
+                    <span class="validation-message" id="searchAlert">Please fill out this field.</span>
+                </div>
+            </form>
+
+            <!-- Interactive Geolocation Pointer -->
+            <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="location-anchor-link">
+                <!-- Map Pin Vector Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pin-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span class="location-text">Coimbatore, TN</span>
+            </a>
+        </div>
+
+        <!-- Center Flex Spacer (Maintained Horizontally via CSS Flex layout alignment) -->
+        <div class="center-flex-spacer"></div>
+
+        <!-- Right Side Social Ecosystem Layout -->
+        <div class="right-socials-group">
+            <!-- Instagram -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Instagram profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Facebook profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <!-- YouTube -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit YouTube channel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit LinkedIn workspace">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Action Utility Config --- */
+.action-bar-section {
+    width: 100%;
+    background-color: #FFF8F6;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 16px 0;
+    margin-top: 80px; /* Aligns correctly below the fixed header layout offset */
+}
+
+.action-bar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Left Sided Alignment Flex Units --- */
+.left-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Validation Wrapper Box Structure */
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrapper input {
+    width: 260px;
+    padding: 10px 40px 10px 16px;
+    border: 1.5px solid rgba(93, 74, 71, 0.15);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #1A1A1A;
+    background-color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: #E8998D;
+    box-shadow: 0 0 0 3px rgba(232, 153, 141, 0.1);
+}
+
+.search-submit-btn {
+    position: absolute;
+    right: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8C7672;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.search-submit-btn:hover {
+    color: #E8998D;
+}
+
+.search-submit-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Message Box Dynamic Placement CSS */
+.validation-message {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 12px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+/* Clean micro triangle anchor decoration pointing up to input window */
+.validation-message::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 16px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #1A1A1A transparent;
+}
+
+.validation-message.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- Location Map Point Links --- */
+.location-anchor-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #5D4A47;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.location-anchor-link:hover {
+    color: #E8998D;
+}
+
+.location-anchor-link svg.pin-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D;
+}
+
+/* --- Center Segment --- */
+.center-flex-spacer {
+    flex-grow: 1;
+}
+
+/* --- Right Side Vectors --- */
+.right-socials-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.social-icon-link {
+    color: #5D4A47;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.social-icon-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-icon-link:hover {
+    color: #E8998D;
+    transform: translateY(-2px);
+}
+
+/* --- Fully Responsive Breakpoints Viewports Layout --- */
+@media (max-width: 992px) {
+    .action-bar-container {
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .action-bar-section {
+        margin-top: 70px; /* Responsive tracking downscaled configuration step */
+        padding: 14px 0;
+    }
+
+    .action-bar-container {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .left-actions-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .search-input-wrapper input {
+        width: 100%; /* Spans viewport wide cleanly on compact displays */
+    }
+
+    .location-anchor-link {
+        justify-content: center;
+        padding: 4px 0;
+    }
+
+    .center-flex-spacer {
+        display: none; /* Collapses space unit natively when running vertical structures */
+    }
+
+    .right-socials-group {
+        justify-content: center;
+        border-top: 1px solid rgba(232, 153, 141, 0.1);
+        padding-top: 14px;
+        gap: 28px;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    const searchAlert = document.getElementById("searchAlert");
+
+    searchForm.addEventListener("submit", (e) => {
+        // Halt default transmission protocols instantly
+        e.preventDefault();
+
+        // Extract whitespace stripped characters from input layer
+        const queryValue = searchInput.value.trim();
+
+        if (queryValue === "") {
+            // Reveal validation context box banner
+            searchAlert.classList.add("is-visible");
+            searchInput.focus();
+        } else {
+            // Clean active errors out and smoothly direct to targeted broken page path
+            searchAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Dismiss active visible validation boxes if user initiates typing corrections
+    searchInput.addEventListener("input", () => {
+        if (searchAlert.classList.contains("is-visible")) {
+            searchAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Dismiss tooltip box elements cleanly if user shifts layout context/blur focus
+    searchInput.addEventListener("blur", () => {
+        searchAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Premium Event Services Hero Section -->
+<section class="services-hero-section" id="servicesHero">
+    <div class="services-hero-container">
+        
+        <!-- Left Column: Branding Content & Controls -->
+        <div class="hero-left-content">
+            <!-- Breadcrumb Navigation Element -->
+            <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+                <a href="404.html" class="bc-home-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+                <span class="bc-separator">/</span>
+                <span class="bc-current">Services</span>
+            </nav>
+
+            <!-- Scroll-Triggered Word-by-Word Typography Header -->
+            <h1 class="services-hero-title" id="heroTitle">
+                <span class="sh-word">Decoration</span>
+                <span class="sh-word">Solutions</span>
+                <span class="sh-word">by</span>
+                <span class="sh-word-brand">Stackly</span>
+            </h1>
+
+            <p class="hero-interactive-para">
+                At Stackly, every styling project begins with a clear creative purpose and is driven entirely by artistic passion. We don’t just decorate spaces—we create lasting luxury environments that perfectly mirror our clients' milestone goals and elegant values.
+            </p>
+
+            <!-- Side Sliding Action Call-To-Action Button Layer -->
+            <div class="hero-cta-wrapper" id="heroCTA">
+                <button class="hero-btn primary-peach" onclick="window.location.href='404.html'">Get Started</button>
+            </div>
+        </div>
+
+        <!-- Right Column: Asymmetric Mosaic Layout Panel Frame -->
+        <div class="hero-right-mosaic" id="imageMosaic">
+            <div class="mosaic-outer-frame">
+                
+                <!-- Mosaic Card 1 (Top Left - Slides from Top) -->
+                <div class="mosaic-tile tile-top-left fly-in-top">
+                    <img src="path-to-decor-blueprint.jpg" alt="Event Design Blueprint & Color Palette planning" loading="lazy">
+                </div>
+
+                <!-- Mosaic Card 2 (Top Right - Slides from Right) -->
+                <div class="mosaic-tile tile-top-right fly-in-right">
+                    <img src="path-to-floral-arranging.jpg" alt="Artisanal fresh floral stage creation" loading="lazy">
+                </div>
+
+                <!-- Mosaic Card 3 (Bottom Left - Slides from Left) -->
+                <div class="mosaic-tile tile-bottom-left fly-in-left">
+                    <img src="path-to-lighting-setup.jpg" alt="Ambient lighting structure installation" loading="lazy">
+                </div>
+
+                <!-- Mosaic Card 4 (Bottom Right - Slides from Bottom) -->
+                <div class="mosaic-tile tile-bottom-right fly-in-bottom">
+                    <img src="path-to-completed-stage.jpg" alt="Completed luxury event stage presentation" loading="lazy">
+                </div>
+
+                <!-- Central Accent Geometric Core Badge (Directly from reference architecture) -->
+                <div class="mosaic-center-diamond fly-in-center">
+                    <div class="diamond-inner">
+                        <img src="path-to-brand-icon.jpg" alt="Stackly Signature Styling Token" loading="lazy">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+/* --- Canvas Configuration Base --- */
+.services-hero-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Standard branding pale pink theme backdrop canvas */
+    
+    /* REVISION: Drastically optimized the padding boundaries to remove excess vertical space */
+    padding: 40px 0 80px 0; 
+    
+    /* REVISION: Normalized the layout offset margin to perfectly anchor directly beneath the bar */
+    margin-top: 0px; 
+    
+    overflow: hidden;
+    position: relative;
+}
+
+.services-hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr; /* Symmetrical balance mapping text and layout art */
+    gap: 60px;
+    align-items: center;
+}
+
+/* --- Left Sided Narrative Blocks Elements --- */
+.hero-left-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Breadcrumb Navigation Track System */
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    /* REVISION: Trimmed down from 24px to prevent pushing the main heading further down */
+    margin-bottom: 12px; 
+}
+
+.bc-home-icon {
+    color: #8C7672;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.bc-home-icon svg { width: 16px; height: 16px; }
+.bc-home-icon:hover { color: #E8998D; }
+.bc-separator { color: #D6C7C5; font-size: 0.85rem; }
+.bc-current { color: #111111; font-weight: 700; font-size: 0.9rem; }
+
+/* --- Word-by-Word Scroll Headings --- */
+.services-hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #111111; /* Near Black */
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -1.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 14px;
+}
+
+.sh-word, .sh-word-brand {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sh-word-brand {
+    color: #E8998D; /* Brand signature theme peach accent POP tracking text color */
+}
+
+/* Activated state class triggered via JavaScript pipelines */
+.services-hero-title.reveal-active .sh-word,
+.services-hero-title.reveal-active .sh-word-brand {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delay timeline arrays for word stream drawing */
+.services-hero-title.reveal-active .sh-word:nth-child(1) { transition-delay: 0.05s; }
+.services-hero-title.reveal-active .sh-word:nth-child(2) { transition-delay: 0.15s; }
+.services-hero-title.reveal-active .sh-word:nth-child(3) { transition-delay: 0.25s; }
+.services-hero-title.reveal-active .sh-word-brand { transition-delay: 0.35s; }
+
+/* Micro-Scaling Interactive Paragraph */
+.hero-interactive-para {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #5D4A47;
+    margin-bottom: 40px;
+    max-width: 540px;
+    cursor: default;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+    transform-origin: left center;
+}
+
+.hero-interactive-para:hover {
+    transform: scale(1.02);
+    color: #111111;
+}
+
+/* --- Horizontal Side-Sliding Action CTA Buttons --- */
+.hero-cta-wrapper {
+    overflow: hidden; /* Mask boundaries ensure sleek sliding appearance profiles */
+    padding: 4px;
+}
+
+.hero-btn {
+    padding: 16px 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 12px; /* Soft block corner styling exactly matched from user reference image */
+    cursor: pointer;
+    border: none;
+    
+    /* Animation initialization settings sliding out from the left boundary */
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.hero-cta-wrapper.slide-active .hero-btn {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.primary-peach {
+    background-color: #E8998D; /* Brand Primary Theme Accent Color */
+    color: #FFFFFF;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.25);
+}
+
+.primary-peach:hover {
+    background-color: #D6867B;
+    box-shadow: 0 8px 25px rgba(232, 153, 141, 0.4);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   CREATIVE SIDE FLY-IN GEOMETRIC MOSAIC IMAGE COLLAGE
+   ========================================================================== */
+.hero-right-mosaic {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mosaic-outer-frame {
+    position: relative;
+    width: 540px;
+    height: 540px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    background-color: #FFFFFF; /* Inner card canvas fill borders */
+    padding: 24px;
+    border-radius: 40px; /* Outer frame curvature outline from image */
+    box-shadow: 0 20px 60px rgba(93, 74, 71, 0.05);
+}
+
+/* Universal Mosaic Image Tiles Parameters Configuration */
+.mosaic-tile {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #FFEBE5;
+    
+    /* Base directional displacement vectors maps for fly-in initialization */
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.mosaic-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.mosaic-tile:hover img {
+    transform: scale(1.05);
+}
+
+/* Custom individual tile shape corner clipping rules from user photo matrix */
+.tile-top-left { border-radius: 30px 10px 10px 10px; }
+.tile-top-right { border-radius: 10px 30px 10px 10px; }
+.tile-bottom-left { border-radius: 10px 10px 10px 30px; }
+.tile-bottom-right { border-radius: 10px 10px 30px 10px; }
+
+/* --------------------------------------------------------------------------
+   MULTI-DIRECTIONAL ALL-SIDES FLY-IN ENTRANCE MAP
+   -------------------------------------------------------------------------- */
+.mosaic-tile.fly-in-top { transform: translateY(-80px); }
+.mosaic-tile.fly-in-right { transform: translateX(80px); }
+.mosaic-tile.fly-in-left { transform: translateX(-80px); }
+.mosaic-tile.fly-in-bottom { transform: translateY(80px); }
+
+/* Central core diamond floating layer element */
+.mosaic-center-diamond {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: #FFFFFF;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0.6); /* Blends geometry rotation axes */
+    padding: 8px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+}
+
+.diamond-inner {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.diamond-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Inverts rotation axis back to straight display lines for internal visual graphics */
+    transform: rotate(-45deg) scale(1.4); 
+}
+
+/* Activated entrance execution flag injected via JavaScript scroll intersections */
+.hero-right-mosaic.animate-mosaic-in .mosaic-tile,
+.hero-right-mosaic.animate-mosaic-in .mosaic-center-diamond {
+    opacity: 1;
+}
+
+.hero-right-mosaic.animate-mosaic-in .mosaic-tile.fly-in-top { transform: translateY(0); }
+.hero-right-mosaic.animate-mosaic-in .mosaic-tile.fly-in-right { transform: translateX(0); }
+.hero-right-mosaic.animate-mosaic-in .mosaic-tile.fly-in-left { transform: translateX(0); }
+.hero-right-mosaic.animate-mosaic-in .mosaic-tile.fly-in-bottom { transform: translateY(0); }
+.hero-right-mosaic.animate-mosaic-in .mosaic-center-diamond {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1); /* Popped out smoothly on timeline entry */
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA BREAKPOINT MATRIX OVERRIDES
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .services-hero-title { font-size: 3.2rem; }
+    .mosaic-outer-frame { width: 440px; height: 440px; }
+    .mosaic-center-diamond { width: 85px; height: 85px; }
+}
+
+@media (max-width: 992px) {
+    .services-hero-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+    
+    .services-hero-title { justify-content: center; }
+    .hero-interactive-para { margin-left: auto; margin-right: auto; }
+    .breadcrumb-nav { justify-content: center; }
+    
+    .hero-btn { transform: translateY(30px); }
+    .hero-cta-wrapper.slide-active .hero-btn { transform: translateY(0); }
+}
+
+@media (max-width: 576px) {
+    /* REVISION: Fluid scaling to maintain clean margins on mobile viewports */
+    .services-hero-section { padding: 40px 0 60px 0; margin-top: 0px; }
+    .services-hero-container { padding: 0 24px; }
+    .services-hero-title { font-size: 2.3rem; gap: 0 10px; }
+    .hero-interactive-para { font-size: 1rem; }
+    
+    .mosaic-outer-frame {
+        width: 320px;
+        height: 320px;
+        padding: 12px;
+        border-radius: 24px;
+        gap: 12px;
+    }
+    .mosaic-center-diamond { width: 70px; height: 70px; }
+}
+
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const heroTitle = document.getElementById("heroTitle");
+    const heroCTA = document.getElementById("heroCTA");
+    const imageMosaic = document.getElementById("imageMosaic");
+
+    // --- HIGH-PERFORMANCE INTERSECTION OBSERVER PIPELINE ---
+    const heroAnimationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                
+                // Pipeline 1: Trigger word-by-word headline layout drawing
+                heroTitle.classList.add("reveal-active");
+
+                // Pipeline 2: Trigger left-side button action entry sliding motion after text builds up
+                setTimeout(() => {
+                    heroCTA.classList.add("slide-active");
+                }, 400);
+
+                // Pipeline 3: Trigger right-side all-directions collage flying animation panels
+                setTimeout(() => {
+                    imageMosaic.classList.add("animate-mosaic-in");
+                }, 200);
+
+                // Dismiss observer checking routines to maximize active memory pipelines
+                heroAnimationObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 }); // Fires when 15% of the hero container area scales into the viewport boundaries
+
+    const targetHeroSection = document.getElementById("servicesHero");
+    if (targetHeroSection) heroAnimationObserver.observe(targetHeroSection);
+});
+
+</script>
+
+<!-- Alternating Service Features Section -->
+<section class="service-features-section" id="featuresSection">
+    <div class="features-master-container">
+
+        <!-- Feature Row 1: Image Left, Content Right -->
+        <div class="feature-row-matrix" id="featureRow1">
+            <!-- Left Side Image Frame -->
+            <div class="feature-image-block fly-from-left">
+                <div class="luxury-image-frame">
+                    <img src="path-to-luxury-mandapam.jpg" alt="Grand Royal Mandapam Setups" loading="lazy">
+                    <!-- Elegant branding background frame offset decoration -->
+                    <div class="frame-offset-backing"></div>
+                </div>
+            </div>
+            <!-- Right Side Content -->
+            <div class="feature-text-block fly-from-right">
+                <span class="feature-index-tag">01 / Concepts</span>
+                <h2 class="feature-row-title">
+                    <span class="sf-word">Grand</span>
+                    <span class="sf-word">Royal</span>
+                    <span class="sf-word">Mandapams</span>
+                </h2>
+                <p class="feature-description">
+                    We specialize in constructing magnificent cultural stages and structural pavilions. Using premium silk fabrics, fresh regional flora drapes, and precise ambient up-lighting, we build an architectural centerpiece that anchors your sacred vows.
+                </p>
+                <button class="feature-explore-btn" onclick="window.location.href='404.html'">Explore Designs ➔</button>
+            </div>
+        </div>
+
+        <!-- Feature Row 2: Content Left, Image Right (Alternating Layout) -->
+        <div class="feature-row-matrix alternate-row" id="featureRow2">
+            <!-- Left Side Content -->
+            <div class="feature-text-block fly-from-left">
+                <span class="feature-index-tag">02 / Artistry</span>
+                <h2 class="feature-row-title">
+                    <span class="sf-word">Luxury</span>
+                    <span class="sf-word">Floral</span>
+                    <span class="sf-word">Installations</span>
+                </h2>
+                <p class="feature-description">
+                    From cascading overhead ceiling runners to organic entrance arches, our botanical artisans source premium local blooms to map stunning palettes. Every layout is calibrated to maintain perfect freshness and fragrance.
+                </p>
+                <button class="feature-explore-btn" onclick="window.location.href='404.html'">View Gallery ➔</button>
+            </div>
+            <!-- Right Side Image Frame -->
+            <div class="feature-image-block fly-from-right">
+                <div class="luxury-image-frame">
+                    <img src="path-to-floral-design.jpg" alt="Luxury Botanical Ceiling Installation" loading="lazy">
+                    <div class="frame-offset-backing"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas & Structural Base --- */
+.service-features-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink theme canvas background */
+    padding: 30px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.features-master-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 120px; /* Generous vertical spacing between alternating layout streams */
+}
+
+/* --- Alternating Row Grid Architecture --- */
+.feature-row-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/* --- Left / Right Fluid Entry Vectors --- */
+.fly-from-left {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-right {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Injected via scroll intersection observers */
+.row-active .fly-from-left,
+.row-active .fly-from-right {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --- Word-by-Word Headline Construction --- */
+.feature-row-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #111111; /* High-Contrast Near-Black */
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+}
+
+.sf-word {
+    opacity: 0.15;
+    transform: translateY(10px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.row-active .sf-word {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger arrays to sequence word draw timelines */
+.row-active .sf-word:nth-child(1) { transition-delay: 0.2s; }
+.row-active .sf-word:nth-child(2) { transition-delay: 0.35s; }
+.row-active .sf-word:nth-child(3) { transition-delay: 0.5s; }
+
+/* --- Content Component Text Styling --- */
+.feature-text-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.feature-index-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #E8998D; /* Brand Signature Peach Tint */
+    margin-bottom: 12px;
+}
+
+.feature-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #5D4A47;
+    margin-bottom: 30px;
+    transition: color 0.3s ease;
+}
+
+/* Subtle textual paragraph focus response */
+.feature-text-block:hover .feature-description {
+    color: #111111;
+}
+
+.feature-explore-btn {
+    background: transparent;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.feature-explore-btn:hover {
+    color: #E8998D;
+    transform: translateX(5px);
+}
+
+/* --- Luxury Dual-Frame Image Overlays & Hover FX --- */
+.feature-image-block {
+    width: 100%;
+}
+
+.luxury-image-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    z-index: 2;
+}
+
+.luxury-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    position: relative;
+    z-index: 3;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 15px 40px rgba(93, 74, 71, 0.08);
+}
+
+/* Artistic Background Offset Geometric backing plate */
+.frame-offset-backing {
+    position: absolute;
+    top: 20px;
+    left: -20px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(232, 153, 141, 0.3);
+    border-radius: 16px;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s;
+}
+
+/* Alternate row positioning variables shift offset plates symmetrically */
+.alternate-row .frame-offset-backing {
+    left: 20px;
+}
+
+/* Immersive Interactive Hover Triggers on entire block intercept */
+.feature-row-matrix:hover .luxury-image-frame img {
+    transform: scale(1.02) translate(5px, -5px);
+}
+
+.feature-row-matrix:hover .frame-offset-backing {
+    transform: translate(-10px, 10px);
+    border-color: #E8998D;
+}
+
+.alternate-row:hover .luxury-image-frame img {
+    transform: scale(1.02) translate(-5px, -5px);
+}
+
+.alternate-row:hover .frame-offset-backing {
+    transform: translate(10px, 10px);
+}
+
+/* ==========================================================================
+   FULLY SMOOTH RESPONSIVE BREAKPOINT CONTROLS
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .feature-row-matrix { gap: 40px; }
+    .feature-row-title { font-size: 2.2rem; }
+    .features-master-container { gap: 80px; }
+}
+
+@media (max-width: 768px) {
+    .service-features-section { padding: 60px 0; }
+    
+    /* Collapse side-by-side matrices into clean stacked vertical profiles natively */
+    .feature-row-matrix {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    /* Force mobile columns to process chronologically (Image always acts as top anchor block) */
+    .alternate-row .feature-text-block {
+        order: 1;
+    }
+    
+    .feature-text-block {
+        align-items: center;
+    }
+
+    .feature-row-title { justify-content: center; }
+
+    /* Normalize translation metrics to basic bottom-up slides for viewport safety */
+    .fly-from-left, .fly-from-right {
+        transform: translateY(40px) !important;
+    }
+
+    .frame-offset-backing {
+        display: none; /* Strip overlapping frames off tablets to clean space boundaries */
+    }
+
+    .feature-row-matrix:hover .luxury-image-frame img {
+        transform: scale(1.03); /* Simple responsive zoom fallback scales */
+    }
+}
+
+@media (max-width: 480px) {
+    .features-master-container { padding: 0 24px; }
+    .feature-row-title { font-size: 1.8rem; }
+    .feature-description { font-size: 0.95rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // Select both distinct alternating feature rows from the DOM
+    const featureRows = document.querySelectorAll(".feature-row-matrix");
+
+    // Configure precision intersection limits
+    const rowObserverOptions = {
+        root: null,
+        threshold: 0.2, // Fires smoothly when 20% of the row breaches viewport parameters
+        rootMargin: "0px 0px -5% 0px"
+    };
+
+    const rowObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Apply global parent layout animation status flag class tokens
+                entry.target.classList.add("row-active");
+                
+                // Cease watching once layout triggers sequence to optimize operational memory loops
+                rowObserver.unobserve(entry.target);
+            }
+        });
+    }, rowObserverOptions);
+
+    featureRows.forEach(row => rowObserver.observe(row));
+});
+
+</script>
+
+<!-- Services Slider with Navigation Arrows Component -->
+<section class="services-carousel-section" id="servicesCarouselSection">
+    <div class="sc-master-container">
+
+        <!-- Header Group with Scroll Word Reveal -->
+        <div class="sc-header-block">
+            <span class="sc-small-tag">Our Specialities</span>
+            <h2 class="sc-main-title" id="scTitle">
+                <span class="sc-word">Explore</span>
+                <span class="sc-word">Our</span>
+                <span class="sc-word">Signature</span>
+                <span class="sc-word">Decor</span>
+                <span class="sc-word">Offerings</span>
+            </h2>
+        </div>
+
+        <!-- Carousel Frame Wrapper with Controls -->
+        <div class="sc-carousel-wrapper">
+            
+            <!-- Left Arrow Button -->
+            <button class="nav-arrow prev-btn" id="prevBtn" aria-label="Previous Slide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            <!-- Slider Viewport Window -->
+            <div class="sc-viewport-wrapper" id="scViewport">
+                <div class="sc-slider-track" id="scSliderTrack">
+
+                    <!-- Service Card 1 -->
+                    <div class="sc-card-item" onclick="window.location.href='404.html'">
+                        <div class="sc-image-wrapper">
+                            <img src="path-to-wedding-decor.jpg" alt="Luxury Wedding Decor Styling" loading="lazy">
+                            <div class="sc-hover-tint"></div>
+                        </div>
+                        <div class="sc-text-meta">
+                            <h3>Wedding Decor</h3>
+                            <p>Grand cultural stages, mandapams, and entryways.</p>
+                            <span class="sc-action-link">Learn More ➔</span>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 2 -->
+                    <div class="sc-card-item" onclick="window.location.href='404.html'">
+                        <div class="sc-image-wrapper">
+                            <img src="path-to-corporate-gala.jpg" alt="Corporate Gala Spatial Styling" loading="lazy">
+                            <div class="sc-hover-tint"></div>
+                        </div>
+                        <div class="sc-text-meta">
+                            <h3>Corporate Galas</h3>
+                            <p>Sleek, modern geometric structures and branding layouts.</p>
+                            <span class="sc-action-link">Learn More ➔</span>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 3 -->
+                    <div class="sc-card-item" onclick="window.location.href='404.html'">
+                        <div class="sc-image-wrapper">
+                            <img src="path-to-birthday-theme.jpg" alt="Themed Birthday Party Installations" loading="lazy">
+                            <div class="sc-hover-tint"></div>
+                        </div>
+                        <div class="sc-text-meta">
+                            <h3>Themed Celebrations</h3>
+                            <p>Immersive backdrops and vibrant custom balloon frames.</p>
+                            <span class="sc-action-link">Learn More ➔</span>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 4 -->
+                    <div class="sc-card-item" onclick="window.location.href='404.html'">
+                        <div class="sc-image-wrapper">
+                            <img src="path-to-private-shower.jpg" alt="Intimate Baby Shower / Puberty Functions" loading="lazy">
+                            <div class="sc-hover-tint"></div>
+                        </div>
+                        <div class="sc-text-meta">
+                            <h3>Milestone Functions</h3>
+                            <p>Traditional floral presentations and home transformations.</p>
+                            <span class="sc-action-link">Learn More ➔</span>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 5 -->
+                    <div class="sc-card-item" onclick="window.location.href='404.html'">
+                        <div class="sc-image-wrapper">
+                            <img src="path-to-outdoor-reception.jpg" alt="Premium Outdoor Canopy Lights" loading="lazy">
+                            <div class="sc-hover-tint"></div>
+                        </div>
+                        <div class="sc-text-meta">
+                            <h3>Outdoor Lightscapes</h3>
+                            <p>Atmospheric canopy lighting tracks and tent rigging sets.</p>
+                            <span class="sc-action-link">Learn More ➔</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Arrow Button -->
+            <button class="nav-arrow next-btn" id="nextBtn" aria-label="Next Slide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing --- */
+.services-carousel-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Soft branding peach backdrop theme */
+    padding: 100px 0;
+    position: relative;
+}
+
+.sc-master-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Header Component --- */
+.sc-header-block {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.sc-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D;
+    margin-bottom: 12px;
+}
+
+.sc-main-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.sc-word {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sc-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   CAROUSEL WRAPPER WITH NAVIGATION ARROWS
+   ========================================================================== */
+.sc-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sc-viewport-wrapper {
+    width: 100%;
+    overflow: hidden; /* Clips boundaries cleanly */
+    padding: 20px 0;
+}
+
+.sc-slider-track {
+    display: flex;
+    gap: 32px; /* Fixed space width between cards */
+    width: max-content;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth navigation sliding transitions */
+    will-change: transform;
+}
+
+/* --- Navigation Arrow Skins --- */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+    color: #1A1A1A;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(93, 74, 71, 0.08);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.prev-btn { left: -24px; }
+.next-btn { right: -24px; }
+
+.nav-arrow svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+/* Hover Responses */
+.nav-arrow:hover {
+    background-color: #E8998D; /* Brand Peach accent color */
+    color: #FFFFFF;
+    border-color: #E8998D;
+    box-shadow: 0 8px 20px rgba(232, 153, 141, 0.3);
+}
+
+.prev-btn:hover svg { transform: translateX(-2px); }
+.next-btn:hover svg { transform: translateX(2px); }
+
+/* Disabled button state */
+.nav-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background-color: #F5F5
+    F5;
+    color: #999999;
+    border-color: rgba(0,0,0,0.05);
+    box-shadow: none;
+}
+
+/* --- Card Components Layout Flex Settings --- */
+.sc-card-item {
+    width: 300px; /* Locked explicit width for perfect structural stability alignment */
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(93, 74, 71, 0.03);
+    border: 1px solid rgba(232, 153, 141, 0.1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll initialization variables */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+.sc-card-item.animate-card-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Image Containers --- */
+.sc-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+.sc-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sc-hover-tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 26, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* --- Alignment Fixed Flex Text Block --- */
+.sc-text-meta {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    min-height: 180px; 
+}
+
+.sc-text-meta h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+}
+
+.sc-text-meta p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #5D4A47;
+    margin-bottom: 16px;
+    flex-grow: 1; 
+}
+
+.sc-action-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease, transform 0.2s ease;
+    margin-top: auto; 
+    display: inline-block;
+}
+
+.sc-card-item:hover {
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.15);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.sc-card-item:hover .sc-image-wrapper img { transform: scale(1.04); }
+.sc-card-item:hover .sc-hover-tint { opacity: 1; }
+.sc-card-item:hover .sc-text-meta h3 { color: #E8998D; }
+.sc-card-item:hover .sc-action-link { color: #E8998D; transform: translateX(4px); }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .prev-btn { left: -12px; }
+    .next-btn { right: -12px; }
+}
+
+@media (max-width: 992px) {
+    .sc-main-title { font-size: 2.6rem; }
+    .sc-card-item { width: 260px; }
+    .sc-image-wrapper { height: 190px; }
+    .sc-text-meta { min-height: 200px; }
+}
+
+@media (max-width: 768px) {
+    /* Hide native arrow buttons on minor viewports and rely on swipe metrics */
+    .nav-arrow { display: none; }
+    .sc-viewport-wrapper { overflow-x: auto; scroll-snap-type: x mandatory; }
+    .sc-card-item { scroll-snap-align: start; }
+}
+
+@media (max-width: 600px) {
+    .services-carousel-section { padding: 60px 0; }
+    .sc-master-container { padding: 0 24px; }
+    .sc-main-title { font-size: 1.9rem; gap: 0 8px; }
+    .sc-card-item { width: 230px; }
+    .sc-text-meta { padding: 20px; min-height: auto; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Intersection Observer ---
+    const words = document.querySelectorAll(".sc-word");
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: One-by-One Initial Scroll Card Entrance ---
+    const track = document.getElementById("scSliderTrack");
+    const cards = document.querySelectorAll(".sc-card-item");
+
+    const cardsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-card-in");
+                    }, index * 120);
+                });
+                cardsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    if (track) cardsObserver.observe(track);
+
+
+    // --- PART 3: ARROW NAVIGATION SLIDING LOGIC ---
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const viewport = document.getElementById("scViewport");
+
+    let currentTranslation = 0;
+
+    const updateSliderPosition = () => {
+        const cardWidth = cards[0].getBoundingClientRect().width;
+        const gapValue = 32; // Matches global CSS gap setting values
+        const stepShift = cardWidth + gapValue;
+        
+        const maxTranslation = -(track.getBoundingClientRect().width - viewport.getBoundingClientRect().width);
+
+        // Control arrow visibility states at bounds
+        prevBtn.disabled = currentTranslation === 0;
+        nextBtn.disabled = currentTranslation <= maxTranslation;
+
+        // Apply slide transition width transforms
+        track.style.transform = `translateX(${currentTranslation}px)`;
+    };
+
+    // Next Action Click Handler
+    nextBtn.addEventListener("click", () => {
+        const cardWidth = cards[0].getBoundingClientRect().width;
+        const gapValue = 32;
+        const stepShift = cardWidth + gapValue;
+        
+        const maxTranslation = -(track.getBoundingClientRect().width - viewport.getBoundingClientRect().width);
+
+        currentTranslation -= stepShift;
+        if (currentTranslation < maxTranslation) {
+            currentTranslation = maxTranslation; // Clamp at right boundary line
+        }
+        updateSliderPosition();
+    });
+
+    // Previous Action Click Handler
+    prevBtn.addEventListener("click", () => {
+        const cardWidth = cards[0].getBoundingClientRect().width;
+        const gapValue = 32;
+        const stepShift = cardWidth + gapValue;
+
+        currentTranslation += stepShift;
+        if (currentTranslation > 0) {
+            currentTranslation = 0; // Clamp at left boundary line
+        }
+        updateSliderPosition();
+    });
+
+    // Run dynamic baseline check step on loading sequence
+    window.addEventListener("resize", updateSliderPosition);
+    setTimeout(updateSliderPosition, 600); // Give cards time to load and enter view before reading widths
+});
+
+</script>
+
+<!-- Aesthetic Service Tiers Component -->
+<section class="service-tiers-section" id="serviceTiersSection">
+    <div class="tiers-master-container">
+
+        <!-- Header Group with Scroll Word Reveal -->
+        <div class="tiers-header-block">
+            <span class="tiers-small-tag">Our Collections</span>
+            <h2 class="tiers-main-title" id="tiersTitle">
+                <span class="tiers-word">Curated</span>
+                <span class="tiers-word">Event</span>
+                <span class="tiers-word">Styling</span>
+                <span class="tiers-word">Packages</span>
+            </h2>
+        </div>
+
+        <!-- Asymmetric Staggered Grid Matrix -->
+        <div class="tiers-interactive-grid" id="tiersGrid">
+
+            <!-- Tier Card 1 (Classic Elegance) -->
+            <div class="tier-card-item" onclick="window.location.href='404.html'">
+                <div class="tier-image-wrapper">
+                    <img src="path-to-classic-decor.jpg" alt="Classic Minimalist Event Decoration" loading="lazy">
+                    <div class="tier-hover-overlay"></div>
+                </div>
+                <div class="tier-text-content">
+                    <div class="tier-badge">Essential</div>
+                    <h3>Classic Elegance</h3>
+                    <p>Perfect for intimate home ceremonies, engagements, and milestone family moments. Includes traditional fabric drapery, warm accent lighting, and custom flower presentations.</p>
+                    <span class="tier-action-btn">View Package ➔</span>
+                </div>
+            </div>
+
+            <!-- Tier Card 2 (Bespoke Luxury - Staggered Center Focus) -->
+            <div class="tier-card-item central-highlight-tier" onclick="window.location.href='404.html'">
+                <div class="tier-image-wrapper">
+                    <img src="path-to-luxury-wedding.jpg" alt="Bespoke Luxury Wedding Stage" loading="lazy">
+                    <div class="tier-hover-overlay"></div>
+                </div>
+                <div class="tier-text-content">
+                    <div class="tier-badge gold-badge">Premium Pick</div>
+                    <h3>Bespoke Luxury</h3>
+                    <p>Our signature scale wedlock production tracking structure. Complete luxury South Indian mandapam setups, heavy botanical ceiling installations, intelligent uplighting, and full conceptual tablescapes.</p>
+                    <span class="tier-action-btn">View Package ➔</span>
+                </div>
+            </div>
+
+            <!-- Tier Card 3 (Elite Grandeur) -->
+            <div class="tier-card-item" onclick="window.location.href='404.html'">
+                <div class="tier-image-wrapper">
+                    <img src="path-to-grand-gala.jpg" alt="Elite Grand Scale Reception Design" loading="lazy">
+                    <div class="tier-hover-overlay"></div>
+                </div>
+                <div class="tier-text-content">
+                    <div class="tier-badge">Signature</div>
+                    <h3>Elite Grandeur</h3>
+                    <p>Engineered to transform massive venues and open lawns safely. Features complex German truss integration, panoramic cinematic LED backdrops, crystal chandelier drapes, and high-end experiential styling tracks.</p>
+                    <span class="tier-action-btn">View Package ➔</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Configuration --- */
+.service-tiers-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Soft branding peach canvas backdrop */
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.tiers-master-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Header Word-by-Word Scroll Reveal --- */
+.tiers-header-block {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.tiers-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand Peach Primary Accent color */
+    margin-bottom: 12px;
+}
+
+.tiers-main-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Near Black */
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.tiers-word {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.tiers-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   ASYMMETRIC GRID STRUCTURE STAGGERING
+   ========================================================================== */
+.tiers-interactive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: flex-start; /* Grounds rows symmetrically to a straight line */
+}
+
+/* Base Card Content Structuring */
+.tier-card-item {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.02);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll initialization entries */
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+}
+
+.tier-card-item.animate-card-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ASYMMETRICAL OFFSET: Central premium card sits slightly raised to stand out */
+.central-highlight-tier {
+    border-color: rgba(232, 153, 141, 0.4);
+    box-shadow: 0 15px 45px rgba(232, 153, 141, 0.08);
+}
+
+@media (min-width: 993px) {
+    .central-highlight-tier {
+        transform: translateY(-15px); /* Visual elevation shift on desktops */
+    }
+    .central-highlight-tier.animate-card-in {
+        transform: translateY(-15px);
+    }
+}
+
+/* --- Image Bounding Frames --- */
+.tier-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 240px; /* Locked explicit aspect ratios height */
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+.tier-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.tier-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(26,26,26,0) 40%, rgba(26,26,26,0.2) 100%);
+    transition: background 0.3s ease;
+}
+
+/* --- Content Metadata Overlays --- */
+.tier-text-content {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tier-badge {
+    align-self: flex-start;
+    padding: 6px 14px;
+    background-color: #FFF0EC;
+    color: #E8998D;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.gold-badge {
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+}
+
+.tier-text-content h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 12px;
+    transition: color 0.2s ease;
+}
+
+.tier-text-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+    margin-bottom: 28px;
+    flex-grow: 1;
+}
+
+.tier-action-btn {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-top: auto; /* Forces action button to perfectly line up along baseline tracks */
+}
+
+/* --- Interactive Hover Focus Micro-Effects --- */
+.tier-card-item:hover {
+    box-shadow: 0 20px 50px rgba(232, 153, 141, 0.16);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+
+.tier-card-item:hover .tier-image-wrapper img {
+    transform: scale(1.04);
+}
+
+.tier-card-item:hover .tier-text-content h3 {
+    color: #E8998D;
+}
+
+.tier-card-item:hover .tier-action-btn {
+    color: #E8998D;
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT CONSTRAINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .tiers-main-title { font-size: 2.8rem; }
+    .tier-text-content { padding: 24px; }
+    .tier-card-item { border-radius: 16px; }
+}
+
+@media (max-width: 992px) {
+    /* Compress grid fields down cleanly to vertical singular column channels seamlessly */
+    .tiers-interactive-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .central-highlight-tier {
+        order: -1; /* Pushes signature premium card stack option natively up to the top focal point */
+    }
+}
+
+@media (max-width: 576px) {
+    .service-tiers-section { padding: 60px 0; }
+    .tiers-master-container { padding: 0 24px; }
+    .tiers-main-title { font-size: 1.9rem; gap: 0 8px; }
+    .tier-image-wrapper { height: 200px; }
+    .tier-text-content h3 { font-size: 1.2rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Intersection Observer ---
+    const words = document.querySelectorAll(".tiers-word");
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: One-by-One Staggered Card Entrance Sequence ---
+    const tiersGrid = document.getElementById("tiersGrid");
+    const tierCards = document.querySelectorAll(".tier-card-item");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Loop cards inside target layout and introduce delayed entries based on indexing
+                tierCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-card-in");
+                    }, index * 150); // 150ms clean cascading delay timing windows
+                });
+                gridObserver.unobserve(tiersGrid);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    if (tiersGrid) gridObserver.observe(tiersGrid);
+});
+
+</script>
+
+<!-- Creative Service Detail Overlapping Section -->
+<section class="detail-breakdown-section" id="detailSection">
+    <div class="detail-master-container">
+
+        <!-- Section Header with Word-by-Word Reveal -->
+        <div class="detail-header-block">
+            <span class="detail-small-tag">The Stackly Process</span>
+            <h2 class="detail-main-title" id="detailTitle">
+                <span class="dt-word">Impeccable</span>
+                <span class="dt-word">Execution</span>
+                <span class="dt-word">In</span>
+                <span class="dt-word">Every</span>
+                <span class="dt-word">Layer</span>
+            </h2>
+        </div>
+
+        <!-- Overlapping Matrix Layout -->
+        <div class="detail-matrix-grid">
+            
+            <!-- Left Side: Overlapping Luxury Image Frame with Offset Backdrop -->
+            <div class="detail-image-side fly-from-left">
+                <div class="overlapping-image-frame">
+                    <img src="path-to-luxury-backstage-styling.jpg" alt="Stackly Artisanal Decor Production" loading="lazy">
+                    <!-- Modern geometric background block from original reference images -->
+                    <div class="geometric-offset-backdrop"></div>
+                </div>
+            </div>
+
+            <!-- Right Side: Content Blocks Sliding In Symmetrically -->
+            <div class="detail-content-side fly-from-right">
+                
+                <!-- Detail Row 1 -->
+                <div class="breakdown-item-card" onclick="window.location.href='404.html'">
+                    <div class="item-number-node">01</div>
+                    <div class="item-text-node">
+                        <h3>Spatial Blueprint Mapping</h3>
+                        <p>We don’t just sketch templates; we run complete architectural layout tests to balance high-end furniture clusters, grand entry truss pathways, and center stage dimensions accurately.</p>
+                    </div>
+                </div>
+
+                <!-- Detail Row 2 -->
+                <div class="breakdown-item-card" onclick="window.location.href='404.html'">
+                    <div class="item-number-node">02</div>
+                    <div class="item-text-node">
+                        <h3>Chromatographic Fabric Selection</h3>
+                        <p>Sourcing premium textured textiles, silk flows, and lace fabrics tailored to match your specific lighting colors. Every fabric layout is ironed on-site for pristine, line-free presentation.</p>
+                    </div>
+                </div>
+
+                <!-- Detail Row 3 -->
+                <div class="breakdown-item-card" onclick="window.location.href='404.html'">
+                    <div class="item-number-node">03</div>
+                    <div class="item-text-node">
+                        <h3>Atmospheric Luminance Controls</h3>
+                        <p>Calibrating intelligent moving head washes, custom tracking spotlights, and warm vintage filament chains to blend beautifully with the fresh floral settings throughout your celebration.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Configuration Base --- */
+.detail-breakdown-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach theme canvas color */
+    padding: 120px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.detail-master-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Header Word-by-Word Scroll Reveal --- */
+.detail-header-block {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.detail-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand Peach Color */
+    margin-bottom: 12px;
+}
+
+.detail-main-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Near Black */
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.dt-word {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.dt-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   INTERACTIVE OVERLAPPING MATRIX GRID
+   ========================================================================== */
+.detail-matrix-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr; /* Precise proportional horizontal ratio */
+    gap: 80px;
+    align-items: center;
+}
+
+/* --- Directional Fly-In Movement Mappings --- */
+.fly-from-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.detail-matrix-grid.animate-grid-active .fly-from-left,
+.detail-matrix-grid.animate-grid-active .fly-from-right {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* --- Left Side: Luxury Image Frame & Hover FX --- */
+.detail-image-side {
+    position: relative;
+    width: 100%;
+}
+
+.overlapping-image-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Locked elegant portrait aspect ratio */
+    z-index: 2;
+}
+
+.overlapping-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 24px;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 20px 50px rgba(93, 74, 71, 0.08);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Artistic Geometric Background Block Frame */
+.geometric-offset-backdrop {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 70%;
+    height: 70%;
+    background-color: #F3B0A6; /* Pale pink theme accent backing plate block */
+    border-radius: 24px;
+    z-index: 1;
+    opacity: 0.3;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
+}
+
+/* Hover Interaction on Left side block link */
+.detail-image-side:hover img {
+    transform: translate(-10px, -10px);
+}
+
+.detail-image-side:hover .geometric-offset-backdrop {
+    transform: translate(15px, 15px);
+    opacity: 0.6;
+}
+
+/* --- Right Side: Detailed Content Column --- */
+.detail-content-side {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.breakdown-item-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    gap: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+/* Number Node Circles */
+.item-number-node {
+    width: 44px;
+    height: 44px;
+    background-color: #FFF0EC;
+    color: #E8998D;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.item-text-node h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+}
+
+.item-text-node p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+}
+
+/* Card Row Hover Responses */
+.breakdown-item-card:hover {
+    transform: translateX(10px); /* Elegant horizontal sliding emphasis precisely from layout */
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+
+.breakdown-item-card:hover .item-number-node {
+    background-color: #E8998D;
+    color: #FFFFFF;
+}
+
+.breakdown-item-card:hover .item-text-node h3 {
+    color: #E8998D;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .detail-main-title { font-size: 2.8rem; }
+    .detail-matrix-grid { gap: 40px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapses structural row splitting matrices into clean vertical column streams natively */
+    .detail-matrix-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    
+    .detail-image-side {
+        max-width: 440px;
+        margin: 0 auto;
+    }
+
+    .geometric-offset-backdrop {
+        display: none; /* Strip overlapping asset frames off tablets to balance white space */
+    }
+
+    /* Standardizes responsive displacement lines onto safe bottom-up vector flows */
+    .fly-from-left, .fly-from-right {
+        transform: translateY(40px) !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .detail-breakdown-section { padding: 60px 0; }
+    .detail-master-container { padding: 0 24px; }
+    .detail-main-title { font-size: 1.9rem; gap: 0 8px; }
+    .breakdown-item-card { flex-direction: column; gap: 14px; padding: 20px; }
+    .item-text-node h3 { font-size: 1.15rem; }
+    .item-text-node p { font-size: 0.9rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Intersection Observer ---
+    const words = document.querySelectorAll(".dt-word");
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: Side Sliding Content Grid Alignment Scroll Trigger ---
+    const matrixGrid = document.querySelector(".detail-matrix-grid");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Apply global active flag to initiate multi-directional side slide timelines
+                matrixGrid.classList.add("animate-grid-active");
+                gridObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    if (matrixGrid) gridObserver.observe(matrixGrid);
+});
+
+</script>
+
+<section class="faq-section" id="faqSection">
+    
+    <!-- Ambient Floating Background Design Units -->
+    <div class="faq-bg-vectors">
+        <svg class="faq-spark s-1" viewBox="0 0 24 24" fill="none" stroke="rgba(232, 153, 141, 0.15)" stroke-width="2"><path d="M12 2v20M2 12h20M5.93 5.93l12.14 12.14M5.93 18.07l12.14-12.14"/></svg>
+        <svg class="faq-spark s-2" viewBox="0 0 24 24" fill="none" stroke="rgba(243, 176, 166, 0.15)" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+    </div>
+
+    <div class="faq-container">
+        
+        <!-- Header Container with Scroll Word Reveal -->
+        <div class="faq-header-block">
+            <span class="faq-small-tag">FAQ</span>
+            <h2 class="faq-title" id="faqTitle">
+                <span class="f-word">Popular</span>
+                <span class="f-word">Wedding</span>
+                <span class="f-word">Questions</span>
+            </h2>
+        </div>
+
+        <!-- 2-Column Responsive Accordion Grid Layout Matrix -->
+        <div class="faq-grid-wrapper" id="faqGrid">
+            
+            <!-- Column 1 -->
+            <div class="faq-column">
+                
+                <!-- FAQ Item 1 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">How do I plan a wedding in one month?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>Planning a compressed timeline wedding requires clear execution priorities. We assist by securing premier micro-venues, coordinating custom pre-styled decorative frameworks, and managing fast-track invitations within your timeline constraints.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Do we need a wedding planner?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>While optional, an expert decorator and planner ensures full visual continuity, handles layout design vectors, coordinates stage installations, and resolves logistical on-site vendor issues so you can relax completely.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">How do you plan a destination wedding?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>We begin destination tracking with digital spatial mapping and remote site analysis, followed by secure transport logistics for custom floral staging arrays and localized vendor micro-management setups.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Column 2 -->
+            <div class="faq-column">
+                
+                <!-- FAQ Item 4 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Can children attend our wedding?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>That choice is entirely up to you. If children are attending, we can design matching low-height activity seating clusters, safe dessert presentation bars, and interactive kids-zone decor elements.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Are wedding planners insured?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>Yes, Stackly carries comprehensive liability and operational production insurance coverages across all venue staging operations, structural frame engineering setups, and site design logistics installations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-accordion-card" role="region" aria-expanded="false">
+                    <button class="faq-trigger-btn">
+                        <span class="faq-question-text">Do you plan marquee weddings?</span>
+                        <div class="faq-chevron-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-panel">
+                        <div class="faq-answer-content">
+                            <p>Absolutely. We specialize in transforming outdoor marquee tents and grand German structures with internal ceiling fabrics, heavy botanical drapes, custom lighting tracks, and integrated floor layout designs.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Configuration Base --- */
+.faq-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach theme canvas color */
+    padding: 10px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.faq-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Floating Design Vectors --- */
+.faq-bg-vectors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.faq-spark {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+.s-1 { top: 12%; left: 6%; animation: spinSlow 12s linear infinite; }
+.s-2 { bottom: 15%; right: 6%; animation: floatDelta 6s ease-in-out infinite; }
+
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+@keyframes floatDelta {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* --- Word-by-Word Scroll Headings --- */
+.faq-header-block {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.faq-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #8C7672;
+    margin-bottom: 12px;
+}
+
+.faq-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Clean High-Contrast Near-Black requested */
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.f-word {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.f-word.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Symmetric Dual-Column Matrix Grid --- */
+.faq-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 32px;
+    position: relative;
+    z-index: 2;
+    align-items: flex-start;
+}
+
+.faq-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* --- Accordion Card Styling --- */
+.faq-accordion-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15); /* Light branding theme contour lines */
+    border-radius: 12px; /* Soft rectangular radius matching reference photo */
+    box-shadow: 0 4px 15px rgba(93, 74, 71, 0.02);
+    overflow: hidden;
+    
+    /* Scroll Animation Base Targets */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+.faq-accordion-card.animate-card-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card Hover Elevation Effect */
+.faq-accordion-card:hover {
+    box-shadow: 0 10px 30px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+
+/* Card Layout Trigger Button */
+.faq-trigger-btn {
+    width: 100%;
+    padding: 24px 28px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+}
+
+.faq-question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2A2221;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.faq-accordion-card:hover .faq-question-text {
+    color: #111111;
+}
+
+/* Round Badge Vector Containment Circle matching image precisely */
+.faq-chevron-badge {
+    width: 38px;
+    height: 38px;
+    background-color: #A3756B; /* Soft brown-tint peach tone from user reference layout photo */
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+}
+
+.faq-chevron-badge svg {
+    width: 16px;
+    height: 16px;
+}
+
+.faq-accordion-card:hover .faq-chevron-badge {
+    background-color: #E8998D; /* Shifts to signature vivid branding color tone on focus */
+}
+
+/* --- Expanding Answer Panel Mechanics via CSS max-height transitions --- */
+.faq-answer-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.faq-answer-content {
+    padding: 0 28px 28px 28px;
+}
+
+.faq-answer-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+    border-top: 1px dashed rgba(232, 153, 141, 0.15);
+    padding-top: 16px;
+}
+
+/* --- Interactive Active Toggle States mapping from JS actions --- */
+.faq-accordion-card.is-expanded {
+    border-color: rgba(232, 153, 141, 0.5);
+    box-shadow: 0 10px 30px rgba(232, 153, 141, 0.08);
+}
+
+.faq-accordion-card.is-expanded .faq-question-text {
+    color: #E8998D; /* Brand text highlight on expanded cards */
+}
+
+.faq-accordion-card.is-expanded .faq-chevron-badge {
+    transform: rotate(180deg); /* Flips arrow up symmetrically */
+    background-color: #1A1A1A; /* Inverts color block */
+}
+
+/* --- Fully Fluid Responsive Breakpoint Layout Matrix Overrides --- */
+@media (max-width: 992px) {
+    .faq-title { font-size: 2.6rem; }
+    
+    /* Safely collapses dual columns down into an ergonomic single vertical column stack stream */
+    .faq-grid-wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+    .faq-column { gap: 20px; }
+}
+
+@media (max-width: 576px) {
+    .faq-section { padding: 60px 0; }
+    .faq-container { padding: 0 24px; }
+    .faq-title { font-size: 1.9rem; gap: 0, 8px; }
+    .faq-trigger-btn { padding: 20px; }
+    .faq-answer-content { padding: 0 20px 20px 20px; }
+    .faq-question-text { font-size: 1rem; }
+    .faq-chevron-badge { width: 32px; height: 32px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Controller Pipeline ---
+    const words = document.querySelectorAll(".f-word");
+    
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: Staggered Item-by-Item Scroll Trigger Entry ---
+    const faqGrid = document.getElementById("faqGrid");
+    const faqCards = document.querySelectorAll(".faq-accordion-card");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Loop the cards inside your grid system and stagger entry sequences smoothly
+                faqCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("animate-card-in");
+                    }, index * 120); // 120ms staggered timeline gaps
+                });
+                gridObserver.unobserve(faqGrid);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    if (faqGrid) gridObserver.observe(faqGrid);
+
+
+    // --- PART 3: Interactive Smooth Accordion Expansion Logic ---
+    faqCards.forEach(card => {
+        const triggerBtn = card.querySelector(".faq-trigger-btn");
+        const answerPanel = card.querySelector(".faq-answer-panel");
+
+        triggerBtn.addEventListener("click", () => {
+            const isCurrentlyExpanded = card.classList.contains("is-expanded");
+
+            // OPTIONAL UX OPTIMIZATION: Close all other open cards when a new one opens
+            faqCards.forEach(otherCard => {
+                if (otherCard !== card && otherCard.classList.contains("is-expanded")) {
+                    otherCard.classList.remove("is-expanded");
+                    otherCard.querySelector(".faq-answer-panel").style.maxHeight = "0px";
+                    otherCard.setAttribute("aria-expanded", "false");
+                }
+            });
+
+            // Toggle selected item panel target states
+            if (isCurrentlyExpanded) {
+                card.classList.remove("is-expanded");
+                answerPanel.style.maxHeight = "0px";
+                card.setAttribute("aria-expanded", "false");
+            } else {
+                card.classList.add("is-expanded");
+                // Computes the raw fluid internal padding boundaries and updates max-height pixel maps accurately
+                answerPanel.style.maxHeight = answerPanel.scrollHeight + "px";
+                card.setAttribute("aria-expanded", "true");
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Creative Floating Subscribe CTA Banner Component -->
+<section class="subscribe-section" id="subscribeSection">
+    <div class="subscribe-container">
+        
+        <!-- Elevated Floating Panel Container Shell -->
+        <div class="floating-subscribe-card">
+            
+            <!-- Img Tag Background Media Layer -->
+            <div class="sub-image-wrapper">
+                <img src="path-to-your-newsletter-bg.jpg" alt="Stackly Grand Luxury Event Background" class="sub-bg-img" loading="lazy">
+                <div class="sub-dark-tint-layer"></div>
+            </div>
+
+            <!-- Foreground Interactive Content Frame -->
+            <div class="sub-content-inner">
+                
+                <!-- Bottom-Up Word Staggered Typography Header -->
+                <div class="sub-text-block">
+                    <h2 class="sub-title" id="subscribeTitle">
+                        <span class="s-word">Subscribe</span>
+                        <span class="s-word">To</span>
+                        <span class="s-word">Our</span>
+                        <span class="s-word">Luxury</span>
+                        <span class="s-word">Design</span>
+                        <span class="s-word">Magazine</span>
+                    </h2>
+                    <p class="sub-paragraph" id="subscribePara">
+                        <span class="s-word">Get</span>
+                        <span class="s-word">exclusive</span>
+                        <span class="s-word">wedding</span>
+                        <span class="s-word">decor</span>
+                        <span class="s-word">trends</span>
+                        <span class="s-word">and</span>
+                        <span class="s-word">styling</span>
+                        <span class="s-word">insights</span>
+                        <span class="s-word">delivered</span>
+                        <span class="s-word">monthly.</span>
+                    </p>
+                </div>
+
+                <!-- Input Action Form Field Layer -->
+                <form class="sub-form-block" id="subscribeForm" novalidate>
+                    <div class="sub-input-group">
+                        <input type="email" id="subscriberEmail" placeholder="Enter your email address..." aria-label="Email address">
+                        <button type="submit" class="sub-submit-btn">Subscribe Now</button>
+                        
+                        <!-- Custom Native Tooltip Alert Message Placement -->
+                        <span class="sub-validation-msg" id="subValidationAlert">Please fill out this field.</span>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Configuration --- */
+.subscribe-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Standard branding pale pink theme backdrop */
+    padding: 30px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.subscribe-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Elevated Floating Panel Card Architecture --- */
+.floating-subscribe-card {
+    position: relative;
+    width: 100%;
+    min-height: 280px;
+    border-radius: 24px; /* Highly curved corners to achieve floating look */
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(93, 74, 71, 0.12); /* Deep drop shadow elevation spatial depth */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+/* Background Media Formatting Shell */
+.sub-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.sub-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.floating-subscribe-card:hover .sub-bg-img {
+    transform: scale(1.03);
+}
+
+.sub-dark-tint-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.88) 0%, rgba(93, 74, 71, 0.8) 100%);
+}
+
+/* --- Foreground Main Flex Matrix Layout --- */
+.sub-content-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 50px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.sub-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 550px;
+}
+
+/* --- Word-by-Word Bottom Up Typography Animation Core --- */
+.sub-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+}
+
+.sub-paragraph {
+    font-size: 1rem;
+    color: #FFD3C4; /* Soft branding theme peach accent contrast line text color */
+    line-height: 1.5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+}
+
+/* Individual token state properties configuration */
+.s-word {
+    opacity: 0;
+    transform: translateY(20px); /* Sets initial offset below text alignment paths */
+    display: inline-block;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Trigger classes stamped onto parent layers via intersection scripts */
+.sub-title.reveal-active .s-word,
+.sub-paragraph.reveal-active .s-word {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Interactive Action Form Block --- */
+.sub-form-block {
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+.sub-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    padding: 6px;
+    border-radius: 40px;
+    transition: border-color 0.3s frame, box-shadow 0.3s;
+}
+
+.sub-input-group:focus-within {
+    border-color: #E8998D; /* Brand signature highlight focus accent */
+    box-shadow: 0 0 0 4px rgba(232, 153, 141, 0.15);
+}
+
+.sub-input-group input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    color: #FFFFFF;
+}
+
+.sub-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sub-submit-btn {
+    padding: 14px 28px;
+    background-color: #E8998D; /* Brand primary tone color */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+}
+
+.sub-submit-btn:hover {
+    background-color: #D6867B;
+    transform: translateY(-1px);
+}
+
+/* --- High Performance Validation Alert Tooltip Element --- */
+.sub-validation-msg {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 24px;
+    background-color: #111111; /* Near-black crisp background */
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Triangle indicator clip pointing downward to input fields */
+.sub-validation-msg::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #111111 transparent transparent transparent;
+}
+
+.sub-validation-msg.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINT OVERRIDES
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .sub-content-inner { padding: 40px; gap: 30px; }
+    .sub-title { font-size: 1.9rem; }
+}
+
+@media (max-width: 900px) {
+    .subscribe-section { padding: 40px 0; }
+    .subscribe-container { padding: 0 24px; }
+    
+    /* Collapses standard row architecture down into an organic stacked system layout */
+    .sub-content-inner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 50px 32px;
+        gap: 32px;
+    }
+
+    .sub-title, .sub-paragraph {
+        justify-content: center;
+    }
+
+    .sub-form-block {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-subscribe-card { border-radius: 16px; }
+    .sub-content-inner { padding: 40px 20px; }
+    .sub-title { font-size: 1.5rem; }
+    .sub-paragraph { font-size: 0.9rem; }
+    
+    /* Convert horizontal unified inline group elements to single vertical button forms on mobile viewports */
+    .sub-input-group {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 12px;
+    }
+    
+    .sub-input-group input {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        text-align: center;
+        padding: 14px;
+    }
+
+    .sub-input-group input:focus {
+        border-color: #E8998D;
+    }
+
+    .sub-submit-btn {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .sub-validation-msg {
+        left: 50%;
+        transform: translate(-50%, 10px);
+        bottom: calc(100% + 8px);
+    }
+    
+    .sub-validation-msg::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub-validation-msg.is-visible {
+        transform: translate(-50%, 0);
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const subscribeSection = document.getElementById("subscribeSection");
+    const subTitle = document.getElementById("subscribeTitle");
+    const subPara = document.getElementById("subscribePara");
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const subValidationAlert = document.getElementById("subValidationAlert");
+
+    // --- PART 1: Staggered Dynamic Transition Delays Assignment ---
+    const assignWordAnimationDelays = (parentContainer, startingOffsetMs) => {
+        const words = parentContainer.querySelectorAll(".s-word");
+        words.forEach((word, index) => {
+            // Configures staggered delay timing increments flowing from bottom upwards
+            word.style.transitionDelay = `${startingOffsetMs + (index * 60)}ms`;
+        });
+        return startingOffsetMs + (words.length * 60);
+    };
+
+    // Chain lines sequence maps so text blocks rise sequentially fluidly
+    const line1CompletionDelay = assignWordAnimationDelays(subTitle, 100);
+    assignWordAnimationDelays(subPara, line1CompletionDelay + 50);
+
+
+    // --- PART 2: Scroll Intersection Pipeline Observer ---
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Injects active status classes to initiate transition executions
+                subTitle.classList.add("reveal-active");
+                subPara.classList.add("reveal-active");
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.25 }); // Fires when 25% of the floating card enters display frame
+
+    if (subscribeSection) sectionObserver.observe(subscribeSection);
+
+
+    // --- PART 3: Input Form Client-Side Validation Engine ---
+    subscribeForm.addEventListener("submit", (e) => {
+        e.preventDefault(); // Terminate standard browser transmission
+
+        const cleanEmailValue = subscriberEmail.value.trim();
+
+        if (cleanEmailValue === "") {
+            // Display alert banner tooltip natively
+            subValidationAlert.classList.add("is-visible");
+            subscriberEmail.focus();
+        } else {
+            // Dismiss error banners and seamlessly route user target link path
+            subValidationAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Clean visualization traces instantly once client edits empty characters
+    subscriberEmail.addEventListener("input", () => {
+        if (subValidationAlert.classList.contains("is-visible")) {
+            subValidationAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Safe blur fallback: clears errors when element focus is shifted away
+    subscriberEmail.addEventListener("blur", () => {
+        subValidationAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Elegant Responsive Footer Section -->
+<footer class="main-footer">
+    <div class="footer-top-container">
+        
+        <!-- Column 1: Brand Info & Social Ecosystem -->
+        <div class="footer-column brand-info-col">
+            <div class="footer-logo-wrapper" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" role="button" aria-label="Scroll back to top">
+                <img src="path-to-your-logo.png" alt="Stackly Logo" class="footer-logo-img">
+            </div>
+            <p class="footer-brand-desc">
+                Designing premium immersive event decorations and artisanal stage concepts tailored beautifully to celebrate life's most unforgettable milestones.
+            </p>
+            <div class="footer-socials-row">
+                <!-- Instagram -->
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <!-- Facebook -->
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="404.html" class="social-circle-link" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16zM4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <!-- YouTube -->
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Explore Styling Navigation -->
+        <div class="footer-column">
+            <h3 class="column-title">Explore Concepts</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Royal Mandapams</a></li>
+                <li><a href="404.html">Premium Gala Buffets</a></li>
+                <li><a href="404.html">Floral Installations</a></li>
+                <li><a href="404.html">Bespoke High Tea</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Client Support & Logistics -->
+        <div class="footer-column">
+            <h3 class="column-title">Styling Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Design Parameters</a></li>
+                <li><a href="404.html">Production Tracks</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Headquarters Coordinates -->
+        <div class="footer-column contact-info-col">
+            <h3 class="column-title">Headquarters Location</h3>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="map-anchor-link">
+                    MMR Complex, Periyakollapatty, Chinna Thirupathi, Salem, Tamil Nadu 636008
+                </a>
+            </div>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <a href="tel:+917010792745" class="phone-anchor-link">+91 7010792745</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legal Row Bar -->
+    <div class="footer-bottom-bar">
+        <div class="footer-bottom-container">
+            <span class="copyright-text">&copy; 2026 Stackly Industries. All styling rights reserved.</span>
+            <div class="legal-links-group">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* --- High-Quality Layout Backing Variables --- */
+.main-footer {
+    width: 100%;
+    background-color: #0B090A; /* Elegant, premium pitch-black layout backdrop precisely matched from image */
+    padding-top: 80px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-top-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 60px 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr; /* Balanced proportions matrix */
+    gap: 40px;
+}
+
+/* --- Brand Content Elements --- */
+.brand-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo-wrapper {
+    cursor: pointer;
+    margin-bottom: 24px;
+    display: inline-block;
+    align-self: flex-start;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo-wrapper:hover {
+    transform: translateY(-2px);
+}
+
+.footer-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-brand-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #A39391; /* Soft muted peach-gray tone for clean dark readability */
+    margin-bottom: 28px;
+    max-width: 320px;
+}
+
+/* Vector Social Circles Rows */
+.footer-socials-row {
+    display: flex;
+    gap: 12px;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #A39391;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.social-circle-link:hover {
+    background-color: #E8998D; /* Swaps instantly to our signature brand accent peach color on focus */
+    color: #FFFFFF;
+    border-color: #E8998D;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(232, 153, 141, 0.3);
+}
+
+/* --- Navigation & Links Typography --- */
+.column-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    position: relative;
+    letter-spacing: -0.2px;
+}
+
+/* Subtle accent block underneath link headers exactly from original image design lines */
+.column-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background-color: #E8998D; /* Subtle signature underline separator token */
+}
+
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #A39391;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #E8998D;
+    transform: translateX(3px); /* Interactive horizontal sliding motion on text hover */
+}
+
+/* --- Contact & Coordinates Layout Info Block --- */
+.contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.contact-vector-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D; /* Bright active tracking color highlights */
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.map-anchor-link, 
+.phone-anchor-link {
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #A39391;
+    transition: color 0.2s ease;
+}
+
+.map-anchor-link:hover, 
+.phone-anchor-link:hover {
+    color: #FFFFFF;
+}
+
+/* --- Bottom Legal Bar Section Layout --- */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px 0;
+    background-color: #070607; /* Darkened deep sub-floor strip */
+}
+
+.footer-bottom-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.copyright-text {
+    font-size: 0.85rem;
+    color: #6E6160;
+}
+
+.legal-links-group {
+    display: flex;
+    gap: 28px;
+}
+
+.legal-links-group a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #6E6160;
+    transition: color 0.2s ease;
+}
+
+.legal-links-group a:hover {
+    color: #A39391;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA CONSTRAINTS MATRIX
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .footer-top-container {
+        grid-template-columns: 1fr 1fr; /* Transforms grid into 2x2 symmetry block fields over tablets */
+        gap: 50px 30px;
+    }
+    .footer-brand-desc { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .footer-top-container {
+        padding: 0 24px 50px 24px;
+    }
+    .footer-bottom-container {
+        padding: 0 24px;
+        flex-direction: column; /* Flattens parallel strings on compact smartphone displays */
+        text-align: center;
+        gap: 16px;
+    }
+    .legal-links-group {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px 20px;
+    }
+}
+
+@media (max-width: 540px) {
+    /* Pure clean structural 1-column layout stacking linear flow directly down small screens */
+    .footer-top-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .column-title { margin-bottom: 18px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Frontend - Footer UI Engine
+ * Coordinates smooth scrolling back to viewport roots and analytics logging workflows.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. SMOOTH SCROLL ARCHITECTURE MANAGEMENT ---
+    const topScrollButton = document.getElementById("footerScrollTop");
+
+    if (topScrollButton) {
+        topScrollButton.addEventListener("click", (event) => {
+            // Prevent standard anchor jumping behaviors instantly
+            event.preventDefault();
+
+            // Fire high performance native GPU window scrolling pipelines
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
+
+
+    // --- 2. 404 LOGGING ACTION RADAR (Optional Debug Tracer) ---
+    const footerLinks = document.querySelectorAll(".main-footer a[href='404.html']");
+
+    footerLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Optional: Track which footer links your users are visiting most before reaching the placeholder page
+            const destinationLabel = e.currentTarget.textContent.trim() || e.currentTarget.getAttribute("aria-label");
+            console.log(`[Stackly Tracker]: User navigated to 404 handler via link: "${destinationLabel}"`);
+        });
+    });
+});
+
+</script>
+</body>
+</html>
