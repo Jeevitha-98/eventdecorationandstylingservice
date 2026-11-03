@@ -1,0 +1,2701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly | Client Milestone Celebration Dashboard</title>
+    <link rel="stylesheet" href="client-dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <div class="dashboard-grid-layout">
+        <!-- Mobile Sidebar Background Blur Overlay -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+        
+        <!-- ==========================================================================
+           LEFT SIDEBAR NAVIGATION MODULE (With Hamburger Collapse States)
+           ========================================================================== -->
+        <aside class="db-sidebar" id="dbSidebar">
+            <div class="sidebar-header-branding">
+                <!-- Clickable Logo Refreshes Dashboard Viewports Comfortably -->
+              <div class="sidebar-logo-wrap" onclick="refreshDashboard()" role="button" aria-label="Refresh Dashboard">
+    <img src="./assests/footer event logo.webp" alt="Stackly Industry Logo" class="sidebar-logo-img">
+</div>
+                <!-- Mobile Sidebar Close Trigger Toggle -->
+                <button class="mobile-menu-close-btn" id="mobileCloseBtn">✕</button>
+            </div>
+
+            <!-- Tab Layout Tracking Menus Stack -->
+            <nav class="sidebar-nav-menu">
+                <button class="nav-item-btn active-tab" data-target="my-event-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <span>My Celebration</span>
+                </button>
+                <button class="nav-item-btn" data-target="lookbook-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <span>Mood Board Curation</span>
+                </button>
+                <button class="nav-item-btn" data-target="selected-packages-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <span>Package Inclusions</span>
+                </button>
+                <button class="nav-item-btn" data-target="billing-ledgers-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    <span>Payment Retainers</span>
+                </button>
+                <button class="nav-item-btn" data-target="chat-stylist-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span>Chat With Stylist</span>
+                </button>
+            </nav>
+
+            <!-- Bottom Anchored Session Dismiss Button -->
+            <div class="sidebar-footer-row">
+                <button class="sidebar-logout-btn" id="logoutBtn">
+                    <svg class="logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ==========================================================================
+           MAIN CONTENT DISPLAY FRAME WORKSPACE
+           ========================================================================== -->
+        <main class="db-main-viewport">
+            
+            <!-- UPPER UTILITY UTILS ACTION BAR HEADER -->
+            <header class="db-header-bar">
+                <div class="header-left-toggle-row">
+                    <!-- Mobile Hamburger Menu Button Toggle Layout -->
+                    <button class="mobile-hamburger-btn" id="hamburgerBtn" aria-label="Open Sidebar Menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    
+                    <span class="header-brand-link" onclick="window.location.reload();">Stackly Client Space</span>
+                </div>
+
+                <!-- Right Side Profile Greet & Alert Notifications -->
+                <div class="header-right-meta-row">
+                    
+                    <!-- Interactive Notification Bell Trigger -->
+                    <button class="header-bell-badge" aria-label="View notifications" onclick="window.location.href='404.html'">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <span class="bell-active-indicator-dot"></span>
+                    </button>
+
+                    <!-- Profile Profile Dynamic User Text Box Block Label -->
+                    <div class="header-profile-box" onclick="window.location.href='404.html'">
+                        <div class="profile-avatar-circle">🥂</div>
+                        <div class="profile-greeting">
+                            <span class="user-greeting-label">Welcome,</span>
+                            <span class="dynamic-username" id="dashboardUserLabel">Milestone Client</span>
+                        </div>
+                    </div>
+
+                </div>
+            </header>
+
+            <!-- ==========================================================================
+               SECTION ROUTING TRACK CONTENT LAYER PANELS
+               ========================================================================== -->
+            <div class="viewport-content-canvas">
+                
+                <!-- Section 1: My Celebration Home Core Overview -->
+               <section id="my-event-section" class="content-panel active-panel">
+    <div class="tracker-canvas-wrapper">
+        
+        <!-- ROW 1: Panoramic Banner & Live Countdown Ticker Tracking Bar -->
+        <div class="tracker-hero-banner">
+            <div class="banner-glass-tint"></div>
+            <div class="banner-content-inner">
+                <span class="banner-mini-tag">Milestone Workspace</span>
+                <h2>Your Grand Celebration Is Coming To Life</h2>
+                
+                <!-- Dynamic Live Geometric Countdown Widget Row -->
+                <div class="banner-countdown-row">
+                    <div class="countdown-node">
+                        <span class="c-val" id="daysTrack">24</span>
+                        <span class="c-lbl">Days</span>
+                    </div>
+                    <div class="countdown-sep">:</div>
+                    <div class="countdown-node">
+                        <span class="c-val" id="hoursTrack">08</span>
+                        <span class="c-lbl">Hours</span>
+                    </div>
+                    <div class="countdown-sep">:</div>
+                    <div class="countdown-node">
+                        <span class="c-val" id="minsTrack">45</span>
+                        <span class="c-lbl">Mins</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Asymmetric Split Grid Layout Matrix (Specification Overviews & Checklists) -->
+        <div class="tracker-details-matrix">
+            
+            <!-- LEFT AREA COLUMN: Detailed Core Blueprint Design Status Cards -->
+            <div class="tracker-cards-column">
+                <h3 class="column-block-heading">✦ Curated Styling Coordinates</h3>
+                
+                <div class="spec-grid-layout">
+                    <!-- Project Card 1: Stage Architecture -->
+                    <div class="spec-status-card" onclick="window.location.href='404.html'">
+                        <div class="card-icon-avatar">🏛️</div>
+                        <div class="card-data-nodes">
+                            <span class="spec-label">Stage Architecture</span>
+                            <h4>Royal Heritage Mandapam</h4>
+                            <p>3D Spatial Blueprint Confirmed & Load-In Rigging Track Locked.</p>
+                            <span class="status-indicator pill-green">Approved</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2: Floral Palette -->
+                    <div class="spec-status-card" onclick="window.location.href='404.html'">
+                        <div class="card-icon-avatar">🌸</div>
+                        <div class="card-data-nodes">
+                            <span class="spec-label">Floral Palette</span>
+                            <h4>Pastel Meadow Cascade</h4>
+                            <p>Sourcing premium regional fresh jasmines, roses, and ceiling drapes.</p>
+                            <span class="status-indicator pill-orange">Sourcing</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3: Luminance Mapping -->
+                    <div class="spec-status-card" onclick="window.location.href='404.html'">
+                        <div class="card-icon-avatar">💡</div>
+                        <div class="card-data-nodes">
+                            <span class="spec-label">Luminance Mapping</span>
+                            <h4>Intelligent Ambient Wash</h4>
+                            <p>Calibrating DMX moving heads and dimming wireless uplighting paths.</p>
+                            <span class="status-indicator pill-green">Approved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT AREA COLUMN: Interactive Checklists Verification Module -->
+            <div class="tracker-checklist-column">
+                <h3 class="column-block-heading">✦ Production Checklist Progress</h3>
+                
+                <div class="checklist-interactive-box">
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-labels-row">
+                            <span>Tasks Clearances</span>
+                            <span id="progressPercentageText">66%</span>
+                        </div>
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progressBarFill" style="width: 66.6%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Task Checklist Row Elements -->
+                    <div class="checklist-items-stack">
+                        <label class="check-row-item completed-task">
+                            <input type="checkbox" checked disabled>
+                            <span class="custom-check-box">✓</span>
+                            <div class="task-label-text">
+                                <strong>Lock Active Staging Site Vectors</strong>
+                                <p>Verified dimensions on Google Maps layout limits.</p>
+                            </div>
+                        </label>
+
+                        <label class="check-row-item completed-task">
+                            <input type="checkbox" checked disabled>
+                            <span class="custom-check-box">✓</span>
+                            <div class="task-label-text">
+                                <strong>Clear Advancement Payment Retainer</strong>
+                                <p>30% Initial security advancement locked down.</p>
+                            </div>
+                        </label>
+
+                        <label class="check-row-item">
+                            <input type="checkbox" id="blueprintTaskCheck">
+                            <span class="custom-check-box"></span>
+                            <div class="task-label-text">
+                                <strong>Review Finalized 3D Blueprint Proofs</strong>
+                                <p>Awaiting client sign-off inside the lookbook pane.</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<style>
+    /* ==========================================================================
+   ENHANCED CELEBRATION TRACKER SYSTEM LAYOUT
+   ========================================================================== */
+.tracker-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- ROW 1: Panoramic Banner Cover Card --- */
+.tracker-hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 240px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #1A1A1A; /* Dark premium structural anchor backing */
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.04);
+    display: flex;
+    align-items: center;
+}
+
+.banner-glass-tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Layer gradient creates branding palette blend atmosphere over images backings */
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.92) 0%, rgba(93, 74, 71, 0.8) 100%);
+}
+
+.banner-content-inner {
+    position: relative;
+    z-index: 5;
+    padding: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 28px;
+}
+
+.banner-mini-tag {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #E8998D; /* Brand core signature peach token accent */
+    margin-bottom: 8px;
+}
+
+.banner-content-inner h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    max-width: 500px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+}
+
+/* Dynamic countdown elements row widgets */
+.banner-countdown-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 16px 28px;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.countdown-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+}
+
+.c-val {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.1;
+}
+
+.c-lbl {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #FFD3C4; /* Light tone pastel text */
+}
+
+.countdown-sep {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: -14px;
+}
+
+/* --- ROW 2: Asymmetric Split Grid Matrix Layout --- */
+.tracker-details-matrix {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* Asymmetric grid splits specs left / tasks checklist right */
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.column-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 20px;
+    letter-spacing: -0.2px;
+}
+
+.tracker-cards-column, 
+.tracker-checklist-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Specification Content Status Cards Left Columns Layout */
+.spec-grid-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spec-status-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+.card-icon-avatar {
+    width: 46px;
+    height: 46px;
+    background-color: #FFF0EC;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+}
+
+.card-data-nodes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.spec-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+    margin-bottom: 4px;
+}
+
+.card-data-nodes h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 6px;
+    transition: color 0.2s;
+}
+
+.card-data-nodes p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #5D4A47;
+    margin-bottom: 14px;
+}
+
+/* Progress highlight badges status indicators */
+.status-indicator {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+}
+.pill-green { background-color: #E2F6EC; color: #1E7E34; }
+.pill-orange { background-color: #FFF2E6; color: #D97706; }
+
+/* Focus card transformations on client mouse hovering events focus */
+.spec-status-card:hover {
+    transform: translateX(6px); /* Interactive horizontal sliding layout signature emphasis */
+    box-shadow: 0 15px 35px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.spec-status-card:hover h4 { color: #E8998D; }
+
+/* --- RIGHT COLUMNS MODULES DESIGN: Checklist Module Containers --- */
+.checklist-interactive-box {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+/* Linear progress trackers scales bar layout metrics */
+.progress-bar-wrapper {
+    margin-bottom: 32px;
+}
+
+.progress-labels-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+    margin-bottom: 10px;
+}
+
+#progressPercentageText { color: #E8998D; }
+
+.progress-bar-track {
+    width: 100%;
+    height: 8px;
+    background-color: #FFF0EC;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #E8998D; /* Brand core peach primary color tracks progress lines filling */
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Task checklist inputs wrapper rows */
+.checklist-items-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.check-row-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+.check-row-item input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Custom pillow-curved interactive check-box token squares visual designs */
+.custom-check-box {
+    width: 22px;
+    height: 22px;
+    background-color: #FFFFFF;
+    border: 1.5px solid rgba(93, 74, 71, 0.25);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: transparent;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.2s ease;
+}
+
+.check-row-item:hover .custom-check-box {
+    border-color: #E8998D;
+}
+
+/* Checked Status properties overrides visual mapping layout indicators */
+.check-row-item input:checked ~ .custom-check-box {
+    background-color: #E8998D;
+    border-color: #E8998D;
+    color: #FFFFFF;
+}
+
+.task-label-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.task-label-text strong {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    transition: color 0.2s ease;
+}
+
+.task-label-text p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #8C7672;
+}
+
+/* Dim down and format locked cleared tasks lines natively from reference formats */
+.completed-task {
+    cursor: not-allowed;
+}
+.completed-task .task-label-text strong {
+    text-decoration: line-through;
+    color: #A3908E;
+}
+.completed-task .task-label-text p { color: #C2B4B2; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINTS ADAPTER Adaptive FLOWS
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .banner-content-inner h2 { font-size: 1.6rem; max-width: 400px; }
+    .tracker-details-matrix { gap: 24px; }
+    .checklist-interactive-box { padding: 24px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse split columns rows arrays down seamlessly into singular vertical stacking channels flow layouts */
+    .tracker-details-matrix {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 680px) {
+    .banner-content-inner { padding: 32px 24px; text-align: center; justify-content: center; }
+    .banner-content-inner h2 { max-width: 100%; font-size: 1.5rem; }
+    .banner-countdown-row { width: 100%; justify-content: center; padding: 12px 20px; }
+}
+
+@media (max-width: 480px) {
+    .tracker-hero-banner { min-height: auto; }
+    .spec-status-card { padding: 20px; gap: 14px; }
+    .card-data-nodes h4 { font-size: 1.05rem; }
+    .card-data-nodes p { font-size: 0.85rem; }
+}
+
+</style>
+<script>
+    // --- PART 5: CLIENT EVENT OVERVIEW PROGRESS CALCULATION ACTION ---
+const blueprintTaskCheck = document.getElementById("blueprintTaskCheck");
+const progressBarFill = document.getElementById("progressBarFill");
+const progressPercentageText = document.getElementById("progressPercentageText");
+
+if (blueprintTaskCheck && progressBarFill && progressPercentageText) {
+    blueprintTaskCheck.addEventListener("change", () => {
+        const isChecked = blueprintTaskCheck.checked;
+        
+        // Compute and update scale parameters dynamically based on active node checks state toggles
+        if (isChecked) {
+            progressBarFill.style.width = "100%";
+            progressPercentageText.textContent = "100%";
+            blueprintTaskCheck.closest(".check-row-item").classList.add("completed-task");
+        } else {
+            progressBarFill.style.width = "66.6%";
+            progressPercentageText.textContent = "66%";
+            blueprintTaskCheck.closest(".check-row-item").classList.remove("completed-task");
+        }
+    });
+}
+
+</script>
+                <!-- Section 2: Lookboard Moodboards Curations -->
+          <section id="lookbook-section" class="content-panel">
+    <div class="lookbook-canvas-wrapper">
+        
+        <!-- Section Curated Overview Prompt Banner -->
+        <div class="lookbook-intro-row">
+            <div class="intro-text-block">
+                <span class="lb-canvas-tag">Design Ideation Lab</span>
+                <h2>Co-Curate Your Aesthetic Scenography</h2>
+                <p>Review the bespoke color swatches, structural background rendering proofs, and premium botanical layouts maps uploaded by your artisan lead stylist.</p>
+            </div>
+        </div>
+
+        <!-- Corrected Matrix Grid Framework (Forces Clean Row Level Parallel Track Alignment) -->
+        <div class="lookbook-swatches-matrix" id="lookbookGrid">
+
+            <!-- Card Swatch 1 (Aligned Structural Stage) -->
+            <div class="swatch-card-item">
+                <div class="swatch-image-shell">
+                    <img src="./assests/bridal showcase.webp" alt="3D Mandapam Stage Structural Proof Rendering" loading="lazy">
+                    <div class="swatch-badge">Proof Rendering</div>
+                </div>
+                <div class="swatch-meta-content">
+                    <span class="swatch-category">01 / Structural Stage</span>
+                    <h3>The Royal Heritage Canopy Mandapam</h3>
+                    <p>Bespoke South Indian pillars carved cleanly with geometric baseline lines and top fabric canopy integration paths.</p>
+                    
+                    <div class="swatch-vote-action-bar">
+                        <button class="vote-btn approve-trigger" data-votes="1" aria-label="Approve this design proof">
+                            <span class="vote-icon">✓</span> Approve Design (<span class="vote-count">1</span>)
+                        </button>
+                        <button class="vote-btn revision-trigger" aria-label="Request revision for this design proof">
+                            <span class="vote-icon">📝</span> Request Revision
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Swatch 2 (Aligned Fabrics & Linens) -->
+            <div class="swatch-card-item">
+                <div class="swatch-image-shell">
+                    <img src="./assests/wedding decor.webp" alt="Premium Silk Fabric Drapes Swatch Texture" loading="lazy">
+                    <div class="swatch-badge">Textile Swatch</div>
+                </div>
+                <div class="swatch-meta-content">
+                    <span class="swatch-category">02 / Fabrics & Linens</span>
+                    <h3>Blush Silk Drapes & Tulle Runners</h3>
+                    <p>Heavy-weight raw silk backdrops mixed with semi-transparent pale pink tulle flows, calibrated to match ambient uplighting colors.</p>
+                    
+                    <div class="swatch-vote-action-bar">
+                        <button class="vote-btn approve-trigger voted-active" data-votes="2" aria-label="Approve this textile swatch">
+                            <span class="vote-icon">✓</span> Approved (<span class="vote-count">2</span>)
+                        </button>
+                        <button class="vote-btn revision-trigger" aria-label="Request revision for this textile swatch">
+                            <span class="vote-icon">📝</span> Request Revision
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Swatch 3 (Aligned Botanical Map) -->
+            <div class="swatch-card-item">
+                <div class="swatch-image-shell">
+                    <img src="./assests/flower decor.webp" alt="Premium Floral Ceiling Runner Map Arrangement" loading="lazy">
+                    <div class="swatch-badge">Botanical Map</div>
+                </div>
+                <div class="swatch-meta-content">
+                    <span class="swatch-category">03 / Floral Florals</span>
+                    <h3>Cascading Pastel Meadow Ceiling Track</h3>
+                    <p>Overhead organic floral installations mapping fresh regional white jasmines, soft roses, and eucalyptus hanging runners vines.</p>
+                    
+                    <div class="swatch-vote-action-bar">
+                        <button class="vote-btn approve-trigger" data-votes="0" aria-label="Approve this botanical map">
+                            <span class="vote-icon">✓</span> Approve Design (<span class="vote-count">0</span>)
+                        </button>
+                        <button class="vote-btn revision-trigger" aria-label="Request revision for this botanical map">
+                            <span class="vote-icon">📝</span> Request Revision
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<style>
+ /* ==========================================================================
+   ALIGNMENT FIX: MOOD BOARD CURATION DESK
+   ========================================================================== */
+.lookbook-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+.lookbook-intro-row {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.01);
+}
+
+.intro-text-block {
+    max-width: 800px;
+}
+
+.lb-canvas-tag {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #E8998D;
+    margin-bottom: 8px;
+}
+
+.intro-text-block h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111111;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.intro-text-block p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+}
+
+/* --- RIGID STRUCTURAL GRID MATRIX --- */
+.lookbook-swatches-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 perfectly symmetric parallel tracks */
+    gap: 32px;
+    align-items: flex-start; /* Grounds rows symmetrically to a straight line */
+}
+
+.swatch-card-item {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(93, 74, 71, 0.02);
+    
+    /* CRITICAL FIX: Preps card wrapper box for uniform flex expansion tracking */
+    display: flex;
+    flex-direction: column; 
+    
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   ALIGNMENT FIX: EXPLICIT UNIFORM ASPECT-RATIO WINDOW
+   -------------------------------------------------------------------------- */
+.swatch-image-shell {
+    position: relative;
+    width: 100%;
+    
+    /* CRITICAL FIX: Replaces tall/portrait variations with a fixed landscape aspect ratio window */
+    aspect-ratio: 4 / 3; 
+    
+    overflow: hidden;
+    background-color: #FFEBE5; /* Soft Peach branding fallback color */
+}
+
+.swatch-image-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Clips image files inside wrappers smoothly without distortion shifts */
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.swatch-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #1A1A1A;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 6px;
+    z-index: 5;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   ALIGNMENT FIX: MINIMUM METRICS TEXT CONSTRAINTS
+   -------------------------------------------------------------------------- */
+.swatch-meta-content {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    
+    /* CRITICAL FIX: Instructs the text card blocks to expand to fill empty track space evenly */
+    flex-grow: 1; 
+    
+    /* Sets a rigid baseline height block so vary word counts won't misalign button lines */
+    min-height: 280px; 
+}
+
+.swatch-category {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+    margin-bottom: 6px;
+}
+
+.swatch-meta-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.35;
+    margin-bottom: 8px;
+}
+
+.swatch-meta-content p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #5D4A47;
+    margin-bottom: 24px;
+    
+    /* Extends paragraph bounds down to push button tools to the baseline automatically */
+    flex-grow: 1; 
+}
+
+/* --- Interactive Action Controls --- */
+.swatch-vote-action-bar {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    
+    /* CRITICAL FIX: Locks the button bar rows perfectly to the absolute card base grid line */
+    margin-top: auto; 
+    
+    border-top: 1px dashed rgba(232, 153, 141, 0.2);
+    padding-top: 20px;
+}
+
+.vote-btn {
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    white-space: nowrap;
+}
+
+.approve-trigger {
+    background-color: #FFF0EC;
+    color: #E8998D;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+    flex-grow: 2;
+}
+.approve-trigger:hover { background-color: #E8998D; color: #FFFFFF; border-color: #E8998D; }
+.approve-trigger.voted-active { background-color: #128C54; color: #FFFFFF; border-color: #128C54; }
+
+.revision-trigger {
+    background-color: transparent;
+    color: #8C7672;
+    border: 1px solid rgba(93, 74, 71, 0.15);
+    flex-grow: 1;
+}
+.revision-trigger:hover { background-color: #0F141C; color: #FFFFFF; border-color: #0F141C; }
+
+/* Swatch Card Hover Responses */
+.swatch-card-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.swatch-card-item:hover .swatch-image-shell img { transform: scale(1.03); }
+.swatch-card-item:hover h3 { color: #E8998D; }
+
+/* ==========================================================================
+   FLUID RESPONSIVE ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .lookbook-intro-row { padding: 32px; }
+    .intro-text-block h2 { font-size: 1.6rem; }
+    .lookbook-swatches-matrix { gap: 20px; }
+    .swatch-meta-content { padding: 20px; min-height: 320px; }
+    .swatch-meta-content h3 { font-size: 1.15rem; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse layout tracks down smoothly into standard 1-column vertical flows */
+    .lookbook-swatches-matrix {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+    .swatch-meta-content { min-height: auto; }
+}
+
+@media (max-width: 576px) {
+    .lookbook-intro-row { padding: 24px 20px; border-radius: 16px; }
+    .intro-text-block h2 { font-size: 1.35rem; }
+    .intro-text-block p { font-size: 0.95rem; }
+    .swatch-card-item { border-radius: 16px; }
+    .swatch-vote-action-bar { flex-direction: column; align-items: stretch; gap: 10px; }
+    .vote-btn { width: 100%; }
+}
+
+</style>
+
+<script>
+    // --- PART 6: INTERACTIVE MOOD BOARD VOTING COUNTERS PIPELINE ---
+const approveActionButtons = document.querySelectorAll(".approve-trigger");
+
+approveActionButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const isAlreadyVoted = button.classList.contains("voted-active");
+        const countSpanNode = button.querySelector(".vote-count");
+        
+        // Fetch raw string integer value map records natively
+        let currentVotesCount = parseInt(button.getAttribute("data-votes"), 10) || 0;
+
+        if (isAlreadyVoted) {
+            // Rollback pathway: Undo verification vote records safely
+            button.classList.remove("voted-active");
+            currentVotesCount--;
+            countSpanNode.textContent = currentVotesCount;
+            button.setAttribute("data-votes", currentVotesCount);
+            
+            // Re-assign basic text feedback
+            if (currentVotesCount === 0) {
+                button.innerHTML = `<span class="vote-icon">✓</span> Approve Design (<span class="vote-count">0</span>)`;
+            } else {
+                button.innerHTML = `<span class="vote-icon">✓</span> Approve Design (<span class="vote-count">${currentVotesCount}</span>)`;
+            }
+        } else {
+            // Approval pathway: Increment vote count integer record
+            button.classList.add("voted-active");
+            currentVotesCount++;
+            countSpanNode.textContent = currentVotesCount;
+            button.setAttribute("data-votes", currentVotesCount);
+            
+            // Re-assign active approved feedback structures
+            button.innerHTML = `<span class="vote-icon">✓</span> Approved (<span class="vote-count">${currentVotesCount}</span>)`;
+        }
+    });
+});
+
+// Revision action redirection handler link shortcut routing rules
+const revisionButtons = document.querySelectorAll(".revision-trigger");
+revisionButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        console.log("[Stackly Moodboard]: Client initiated revision query tracking path, routing chat thread link...");
+        
+        // Auto-switch navigation target focus seamlessly over onto the live Chat with Stylist section tab
+        const chatMenuTabBtn = document.querySelector(".nav-item-btn[data-target='chat-stylist-section']");
+        if (chatMenuTabBtn) chatMenuTabBtn.click();
+    });
+});
+
+</script>
+
+                <!-- Section 3: Chosen Package Plan Parameters -->
+              <section id="selected-packages-section" class="content-panel">
+    <div class="inclusions-canvas-wrapper">
+        
+        <!-- Status Row: Current Package Tier Summary Banner -->
+        <div class="inclusions-status-banner">
+            <div class="status-banner-content">
+                <div class="status-left-meta">
+                    <span class="status-mini-label">Active Setup Protocol</span>
+                    <h2>Bespoke Luxury Tier Selection</h2>
+                    <p class="status-summary-text">Your blueprint is currently assigned to our flagship middle tier. Sourcing schedules, DMX control mappings, and floral canvas structures are fully locked into active production tracks.</p>
+                </div>
+                <div class="status-right-badge-box">
+                    <div class="active-tier-badge">
+                        <span class="badge-icon">👑</span>
+                        <div class="badge-text-nodes">
+                            <strong>Premium Pick</strong>
+                            <span>Tier Locked</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric Limits Layout Cards Row (Rigid Spatial Parameters) -->
+        <div class="inclusions-parameters-row">
+            <div class="param-metric-card" onclick="window.location.href='404.html'">
+                <span class="param-lbl">Stage Width Boundaries</span>
+                <h3>40ft x 16ft</h3>
+                <p>Engineered to balance maximum venue floor sightlines symmetrically.</p>
+            </div>
+            <div class="param-metric-card" onclick="window.location.href='404.html'">
+                <span class="param-lbl">German Truss Capacity</span>
+                <h3>1.5 Metric Tons</h3>
+                <p>Heavy-load overhead aluminum rigging framework locked safely.</p>
+            </div>
+            <div class="param-metric-card" onclick="window.location.href='404.html'">
+                <span class="param-lbl">DMX Intelligent Channels</span>
+                <h3>32 Active Node Units</h3>
+                <p>Calibrated to wash back drapes seamlessly without color run-ins.</p>
+            </div>
+        </div>
+
+        <!-- Technical Asset Grid Matrix (Detailed Specification Cards) -->
+        <h3 class="inclusions-block-heading">✦ Structural & Decorative Inclusions Blueprint</h3>
+        <div class="inclusions-assets-grid">
+            
+            <!-- Inclusion 1 -->
+            <div class="asset-detail-card" onclick="window.location.href='404.html'">
+                <div class="asset-img-shell">
+                    <img src="./assests/wedding hall decor.webp" alt="German Truss Rigging Installation Setup" loading="lazy">
+                </div>
+                <div class="asset-meta-text">
+                    <div class="asset-pill-tag">Rigging Engineering</div>
+                    <h3>Heavy Aluminum Truss Rigging</h3>
+                    <p>Includes complete overhead box truss frames to suspend cascading floral ceiling drapes and heavy accent crystal lighting arrays safely.</p>
+                </div>
+            </div>
+
+            <!-- Inclusion 2 -->
+            <div class="asset-detail-card" onclick="window.location.href='404.html'">
+                <div class="asset-img-shell">
+                    <img src="./assests/wedding detail closeup.webp" alt="Premium Silk Backdrops Fabric Drapes" loading="lazy">
+                </div>
+                <div class="asset-meta-text">
+                    <div class="asset-pill-tag">Textile Selection</div>
+                    <h3>Chromatographic Fabric Drapes</h3>
+                    <p>Layering premium seamless raw silks and transparent tulle runners color-matched to your theme. All fabrics ironed on-site for crisp captures.</p>
+                </div>
+            </div>
+
+            <!-- Inclusion 3 -->
+            <div class="asset-detail-card" onclick="window.location.href='404.html'">
+                <div class="asset-img-shell">
+                    <img src="./assests/church.webp" alt="Moving Head Spotlights Setup" loading="lazy">
+                </div>
+                <div class="asset-meta-text">
+                    <div class="asset-pill-tag">Luminance Mapping</div>
+                    <h3>Intelligent Moving Head Washes</h3>
+                    <p>Calibrating 12 computer-controlled DMX spotlights, active tracking spotlights, and warm vintage ambient wireless filament strands.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ==========================================================================
+   ENHANCED PACKAGE INCLUSIONS BREAKDOWN DESIGN
+   ========================================================================== */
+.inclusions-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- Status Summary Banner Cover --- */
+.inclusions-status-banner {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.01);
+}
+
+.status-banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.status-left-meta {
+    max-width: 700px;
+}
+
+.status-mini-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #E8998D; /* Brand signature peach token accent */
+    margin-bottom: 8px;
+}
+
+.status-left-meta h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111111; /* Near Black */
+    line-height: 1.25;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.status-summary-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+}
+
+.status-right-badge-box {
+    flex-shrink: 0;
+}
+
+.active-tier-badge {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background-color: #0F141C; /* Dark luxury solid slate backing */
+    padding: 14px 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(15, 20, 28, 0.15);
+}
+
+.badge-icon {
+    font-size: 1.3rem;
+}
+
+.badge-text-nodes {
+    display: flex;
+    flex-direction: column;
+}
+
+.badge-text-nodes strong {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.badge-text-nodes span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #FFD3C4; /* Soft peach accent contrast line text color */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* --- Metric Parameters Row (Rigid Spatial Parameters Layout) --- */
+.inclusions-parameters-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.param-metric-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.12);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(93, 74, 71, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+.param-lbl {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+    margin-bottom: 6px;
+}
+
+.param-metric-card h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    transition: color 0.2s ease;
+}
+
+.param-metric-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #5D4A47;
+}
+
+/* Metric card hover transformations */
+.param-metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(232, 153, 141, 0.1);
+    border-color: rgba(232, 153, 141, 0.3);
+}
+.param-metric-card:hover h3 { color: #E8998D; }
+
+/* --- Technical Asset Grid Matrix Layout --- */
+.inclusions-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: -16px; /* Balance spacing down the asset card grids fields */
+    letter-spacing: -0.2px;
+}
+
+.inclusions-assets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 column symmetric track matrix split layout */
+    gap: 32px;
+    align-items: stretch;
+}
+
+.asset-detail-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 25px rgba(93, 74, 71, 0.01);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease;
+}
+
+.asset-img-shell {
+    width: 100%;
+    aspect-ratio: 16 / 10; /* Fixed structural aspect ratio window prevents misalignment */
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+.asset-img-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.asset-meta-text {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.asset-pill-tag {
+    align-self: flex-start;
+    padding: 4px 10px;
+    background-color: #FFF0EC;
+    color: #E8998D;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    margin-bottom: 14px;
+}
+
+.asset-meta-text h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+}
+
+.asset-meta-text p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #5D4A47;
+}
+
+/* Universal Asset Card Hover Transformations Focus Responses */
+.asset-detail-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.asset-detail-card:hover .asset-img-shell img { transform: scale(1.03); }
+.asset-detail-card:hover h3 { color: #E8998D; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .status-banner-content { padding: 32px; }
+    .status-left-meta h2 { font-size: 1.6rem; }
+    .inclusions-parameters-row { gap: 16px; }
+    .param-metric-card { padding: 20px; }
+    .param-metric-card h3 { font-size: 1.3rem; }
+    .inclusions-assets-grid { gap: 20px; }
+    .asset-meta-text { padding: 20px; }
+    .asset-meta-text h3 { font-size: 1.1rem; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse side-by-side matrices into clean stacked vertical profiles natively */
+    .inclusions-parameters-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .inclusions-assets-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .status-banner-content { text-align: center; justify-content: center; gap: 20px; }
+    .status-left-meta h2 { font-size: 1.4rem; }
+    .status-summary-text { font-size: 0.95rem; }
+    .active-tier-badge { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .inclusions-status-banner { padding: 24px 20px; border-radius: 16px; }
+    .param-metric-card { border-radius: 12px; }
+    .asset-detail-card { border-radius: 12px; }
+}
+
+</style>
+
+                <!-- Section 4: Billing Ledgers Retainers Statements -->
+              <section id="billing-ledgers-section" class="content-panel">
+    <div class="ledger-canvas-wrapper">
+        
+        <!-- ROW 1: Financial Summary Cards Matrix -->
+        <div class="ledger-summary-row">
+            <!-- Metric 1 -->
+            <div class="ledger-summary-card" onclick="window.location.href='404.html'">
+                <span class="ledger-metric-lbl">Total Styling Value</span>
+                <h3>₹1,25,000</h3>
+                <p>Bespoke Luxury Tier Locked Contract Base.</p>
+            </div>
+            <!-- Metric 2 -->
+            <div class="ledger-summary-card balance-paid-card" onclick="window.location.href='404.html'">
+                <span class="ledger-metric-lbl">Total Cleared Fund</span>
+                <h3>₹1,00,000</h3>
+                <p>Initial Retainer & Core Progress Cleared.</p>
+                <span class="ledger-status-tag-inline status-green">80% Cleared</span>
+            </div>
+            <!-- Metric 3 -->
+            <div class="ledger-summary-card balance-due-card" onclick="window.location.href='404.html'">
+                <span class="ledger-metric-lbl">Retainer Balance Due</span>
+                <h3>₹25,000</h3>
+                <p>Final Release Scheduled for Launch Morning.</p>
+                <span class="ledger-status-tag-inline status-orange">Pending Release</span>
+            </div>
+        </div>
+
+        <!-- ROW 2: Upcoming Payment Milestone Timeline Track -->
+        <div class="ledger-timeline-block">
+            <h3 class="ledger-block-heading">✦ Payment Clearance Schedule Timeline</h3>
+            <div class="ledger-timeline-track">
+                
+                <!-- Step 1 -->
+                <div class="timeline-step step-complete">
+                    <div class="step-marker">✓</div>
+                    <div class="step-info">
+                        <strong>30% Date Locking Advancement</strong>
+                        <span class="step-date">Cleared on Booking Date</span>
+                        <p class="step-value-text">₹37,500 — Secured venue date block slots.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step step-complete">
+                    <div class="step-marker">✓</div>
+                    <div class="step-info">
+                        <strong>50% Mid-Production Clearance</strong>
+                        <span class="step-date">Cleared on Blueprint Sign-off</span>
+                        <p class="step-value-text">₹62,500 — Initiated floral sourcing and rigging logistics.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step step-pending">
+                    <div class="step-marker">🕒</div>
+                    <div class="step-info">
+                        <strong>20% Final Launch Morning Settlement</strong>
+                        <span class="step-date">Due on Launch Morning</span>
+                        <p class="step-value-text">₹25,000 — Awaiting final production handover.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ROW 3: Detailed Receipts Transaction Table Matrix -->
+        <div class="ledger-table-block">
+            <h3 class="ledger-block-heading">✦ Verified Settlements Ledger</h3>
+            <div class="ledger-table-responsive-wrapper">
+                <table class="ledger-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Description Code</th>
+                            <th>Clearance Date</th>
+                            <th>Settlement Method</th>
+                            <th>Amount Settle</th>
+                            <th>Status Tag</th>
+                            <th>Receipt Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-mono">TXN-2026-8941</td>
+                            <td>30% Booking Retainer</td>
+                            <td>Sep 14, 2026</td>
+                            <td>Razorpay UPI</td>
+                            <td class="font-bold">₹37,500</td>
+                            <td><span class="badge-status-pill green-pill">Settled</span></td>
+                            <td><a href="404.html" class="receipt-download-anchor">Download 📋</a></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">TXN-2026-9210</td>
+                            <td>50% Blueprint Release</td>
+                            <td>Oct 28, 2026</td>
+                            <td>NEFT Bank Transfer</td>
+                            <td class="font-bold">₹62,500</td>
+                            <td><span class="badge-status-pill green-pill">Settled</span></td>
+                            <td><a href="404.html" class="receipt-download-anchor">Download 📋</a></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">TXN-2026-PEND</td>
+                            <td>20% Setup Handover</td>
+                            <td>Launch Morning</td>
+                            <td>Awaiting Gateway</td>
+                            <td class="font-bold gray-text">₹25,000</td>
+                            <td><span class="badge-status-pill orange-pill">Pending</span></td>
+                            <td><span class="disabled-receipt">Locked 🔒</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ==========================================================================
+   ENHANCED PAYMENT RETAINERS & FINANCIAL LEDGER DESIGN
+   ========================================================================== */
+.ledger-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- ROW 1: Financial Summary Cards Layout --- */
+.ledger-summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.ledger-summary-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.ledger-metric-lbl {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+    margin-bottom: 6px;
+}
+
+.ledger-summary-card h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    transition: color 0.2s ease;
+}
+
+.ledger-summary-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #5D4A47;
+    margin-bottom: 12px;
+}
+
+/* In-card small status badge loops */
+.ledger-status-tag-inline {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+}
+.status-green { background-color: #E2F6EC; color: #1E7E34; }
+.status-orange { background-color: #FFF2E6; color: #D97706; }
+
+/* Focus transformations responses */
+.ledger-summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.ledger-summary-card:hover h3 { color: #E8998D; }
+.balance-paid-card:hover h3 { color: #128C54; }
+.balance-due-card:hover h3 { color: #D97706; }
+
+/* --- ROW 2: Upcoming Milestones Timeline Track --- */
+.ledger-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 20px;
+    letter-spacing: -0.2px;
+}
+
+.ledger-timeline-block {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 36px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+.ledger-timeline-track {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Continuous straight line tracking connector rules */
+    position: relative;
+    padding-left: 20px;
+}
+
+/* Timeline Vertical Rail Connector Link */
+.ledger-timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 31px;
+    width: 2px;
+    height: calc(100% - 45px);
+    background-color: rgba(93, 74, 71, 0.15);
+    z-index: 1;
+}
+
+.timeline-step {
+    display: flex;
+    gap: 24px;
+    padding-bottom: 28px;
+    position: relative;
+    z-index: 2;
+}
+.timeline-step:last-child { padding-bottom: 0; }
+
+.step-marker {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    margin-top: 2px;
+    border: 1.5px solid transparent;
+}
+
+.step-complete .step-marker { background-color: #128C54; color: #FFFFFF; border-color: #128C54; }
+.step-pending .step-marker { background-color: #FFF2E6; color: #D97706; border-color: rgba(217, 119, 6, 0.3); }
+
+.step-info { display: flex; flex-direction: column; gap: 4px; }
+.step-info strong { font-size: 1rem; font-weight: 700; color: #1A1A1A; }
+.step-date { font-size: 0.75rem; font-weight: 700; color: #8C7672; text-transform: uppercase; letter-spacing: 0.05em; }
+.step-value-text { font-size: 0.9rem; color: #5D4A47; line-height: 1.4; }
+
+.step-complete .step-info strong { color: #5D4A47; }
+.step-complete .step-value-text { color: #8C7672; }
+
+/* --- ROW 3: Receipts Transaction Table Matrix Grid --- */
+.ledger-table-block {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+.ledger-table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Guarantees layout matrix won't burst out screen dimensions limits on phone screens */
+    -webkit-overflow-scrolling: touch;
+}
+
+.ledger-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 750px; /* Safe bounds mapping locks table width layout constraints from text runs */
+}
+
+.ledger-matrix-table th {
+    background-color: #FFF8F6;
+    padding: 14px 18px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+}
+
+.ledger-matrix-table td {
+    padding: 16px 18px;
+    font-size: 0.9rem;
+    color: #5D4A47;
+    border-bottom: 1px solid rgba(93, 74, 71, 0.05);
+}
+
+.ledger-matrix-table tbody tr:last-child td { border-bottom: none; }
+
+.font-mono { font-family: 'Courier New', Courier, monospace; font-weight: 700; font-size: 0.85rem !important; }
+.font-bold { font-weight: 700; color: #1A1A1A !important; }
+.gray-text { color: #A3908E !important; font-weight: 500 !important; }
+
+/* Custom Badge Status Pills Skins */
+.badge-status-pill {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    display: inline-block;
+}
+.green-pill { background-color: #E2F6EC; color: #1E7E34; }
+.orange-pill { background-color: #FFF2E6; color: #D97706; }
+
+.receipt-download-anchor {
+    color: #E8998D;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.receipt-download-anchor:hover { color: #D6867B; text-decoration: underline; }
+.disabled-receipt { color: #C2B4B2; font-size: 0.82rem; font-weight: 600; cursor: not-allowed; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINTS HAMBURGER FLOW MATRICES
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .ledger-summary-row { gap: 16px; }
+    .ledger-summary-card { padding: 20px; }
+    .ledger-summary-card h3 { font-size: 1.5rem; }
+    .ledger-timeline-block, .ledger-table-block { padding: 24px; }
+}
+
+@media (max-width: 992px) {
+    /* Compress horizontal layout cards row down to clean linear vertical stream tracks natively */
+    .ledger-summary-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ledger-summary-card { border-radius: 12px; }
+    .ledger-timeline-block, .ledger-table-block { border-radius: 16px; padding: 20px 16px; }
+    .ledger-timeline-track { padding-left: 0; }
+    .ledger-timeline-track::before { left: 11px; }
+    .timeline-step { gap: 16px; }
+    .step-info strong { font-size: 0.95rem; }
+    .step-value-text { font-size: 0.85rem; }
+    .ledger-matrix-table th, .ledger-matrix-table td { padding: 12px; }
+}
+
+</style>
+
+                <!-- Section 5: Real-time Stylist Chat Channel -->
+             <section id="chat-stylist-section" class="content-panel">
+    <div class="chat-canvas-wrapper">
+        
+        <!-- Chat Application Component Frame -->
+        <div class="chat-app-container">
+            
+            <!-- Active Stylist Profile Utility Bar Header -->
+            <header class="chat-profile-header">
+                <div class="stylist-meta-profile">
+                    <div class="stylist-avatar-wrapper">
+                        <!-- Stylist Avatar Token Graphic -->
+                        <div class="stylist-avatar">🎨</div>
+                        <span class="stylist-online-dot"></span>
+                    </div>
+                    <div class="stylist-text-nodes">
+                        <h3>Ananya Sharma</h3>
+                        <p>Lead Creative Artisan Stylist</p>
+                    </div>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="chat-utility-btn" onclick="window.location.href='404.html'" aria-label="Call Stylist">📞</button>
+                    <button class="chat-utility-btn" onclick="window.location.href='404.html'" aria-label="View Project Lookbook">📋</button>
+                </div>
+            </header>
+
+            <!-- Scrollable Conversational Message Logs Window Canvas -->
+            <div class="chat-messages-log" id="chatMessageLog">
+                
+                <!-- Stylist Welcome Greeting Prompt Message Bubble -->
+                <div class="chat-bubble-row stylist-msg">
+                    <div class="bubble-avatar-dot">🎨</div>
+                    <div class="msg-bubble-wrapper">
+                        <p class="msg-text">Hello! Welcome back to your custom workspace chat track. I just finalized your **Royal Heritage Mandapam** 3D blueprint parameters blueprint models. Have you had a chance to cast your verification vote inside your lookbook ideation tab yet?</p>
+                        <span class="msg-timestamp">10:24 AM</span>
+                    </div>
+                </div>
+
+                <!-- Client Response Message Bubble Example -->
+                <div class="chat-bubble-row client-msg">
+                    <div class="msg-bubble-wrapper">
+                        <p class="msg-text">Hi Ananya! Yes, we just reviewed it and absolutely love the setup drapes lines. However, we were wondering if we could slightly shift the fresh floral accent tracks palette more toward pale blush pinks to match the venue drapes better?</p>
+                        <span class="msg-timestamp">11:15 AM</span>
+                    </div>
+                </div>
+
+                <!-- Stylist Answer Message Bubble Example -->
+                <div class="chat-bubble-row stylist-msg">
+                    <div class="bubble-avatar-dot">🎨</div>
+                    <div class="msg-bubble-wrapper">
+                        <p class="msg-text">That is a beautiful chromatic adjustment! I will update our sourcing ledger instantly to loop blush pink roses into the meadow vines ceiling track right away. Let me know if you have any sudden logistics changes for our Salem production crew!</p>
+                        <span class="msg-timestamp">11:18 AM</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Instant Message Transmission Action Form Footer -->
+            <form class="chat-action-footer-form" id="chatActionForm" novalidate>
+                <div class="chat-input-wrapper-group">
+                    <!-- File upload mock hook button icon vector -->
+                    <button type="button" class="chat-attachment-btn" onclick="window.location.href='404.html'" aria-label="Upload file blueprint attachment">📎</button>
+                    
+                    <!-- Message text query character fields field input -->
+                    <input type="text" id="chatInputMessage" placeholder="Type your instruction or styling note here..." aria-label="Message text query">
+                    
+                    <!-- Form transmission activation click submit trigger button icon -->
+                    <button type="submit" class="chat-send-submit-btn" aria-label="Transmit message strings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ==========================================================================
+   ENHANCED REAL-TIME CHAT WITH STYLIST CHANNEL DESIGN
+   ========================================================================== */
+.chat-canvas-wrapper {
+    width: 100%;
+    height: calc(100vh - 160px); /* Rigid vertical locking anchors chat window cleanly over dashboard viewports boundaries */
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-app-container {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.02);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- Active Stylist Profile Utility Bar Header --- */
+.chat-profile-header {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.stylist-meta-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stylist-avatar-wrapper {
+    position: relative;
+    width: 42px;
+    height: 42px;
+}
+
+.stylist-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #FFF0EC;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+}
+
+.stylist-online-dot {
+    position: absolute;
+    bottom: 0;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #128C54; /* Live connection tracking indicators green */
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+}
+
+.stylist-text-nodes h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.2;
+}
+
+.stylist-text-nodes p {
+    font-size: 0.8rem;
+    color: #8C7672;
+    font-weight: 500;
+}
+
+.chat-header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-utility-btn {
+    width: 36px;
+    height: 36px;
+    background-color: #FFF8F6;
+    border: 1px solid rgba(232, 153, 141, 0.12);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.chat-utility-btn:hover { background-color: #E8998D; color: #FFFFFF; border-color: #E8998D; }
+
+/* --- Scrollable Conversational Message Logs Window Canvas --- */
+.chat-messages-log {
+    flex-grow: 1;
+    padding: 28px;
+    overflow-y: auto; /* Activates natural mouse wheel scroller mechanics within log limits box */
+    background-color: #FFFBF9; /* Subtly tinted cozy interior bubble field panel background */
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.chat-bubble-row {
+    display: flex;
+    width: 100%;
+    max-width: 85%;
+    position: relative;
+}
+
+.msg-bubble-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(93, 74, 71, 0.01);
+}
+
+.msg-text {
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.msg-text strong { font-weight: 700; }
+
+.msg-timestamp {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    align-self: flex-end;
+    margin-top: 2px;
+}
+
+/* Category A Styling: Stylist Incoming Response message bubble layout specifications */
+.stylist-msg {
+    align-self: flex-start;
+    gap: 12px;
+}
+
+.bubble-avatar-dot {
+    width: 28px;
+    height: 28px;
+    background-color: #FFF0EC;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+}
+
+.stylist-msg .msg-bubble-wrapper {
+    background-color: #FFFFFF;
+    color: #2A2221;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 4px 18px 18px 18px; /* High contrast custom curved block bubble tail corner hooks */
+}
+
+.stylist-msg .msg-timestamp { color: #8C7672; }
+
+/* Category B Styling: Client Outgoing Message bubble layout specifications */
+.client-msg {
+    align-self: flex-end;
+    justify-content: flex-end;
+}
+
+.client-msg .msg-bubble-wrapper {
+    background-color: #0F141C; /* Dark Slate premium solid near-black matching client buttons palettes */
+    color: #FFFFFF;
+    border-radius: 18px 4px 18px 18px; /* Reversed custom curved block bubble tail corner hooks */
+    box-shadow: 0 4px 15px rgba(15, 20, 28, 0.1);
+}
+
+.client-msg .msg-timestamp { color: #A39391; }
+
+/* --- Instant Message Transmission Action Form Footer --- */
+.chat-action-footer-form {
+    background-color: #FFFFFF;
+    border-top: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 16px 28px;
+    flex-shrink: 0;
+}
+
+.chat-input-wrapper-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #FFF8F6;
+    border: 1.5px solid rgba(93, 74, 71, 0.1);
+    padding: 4px;
+    border-radius: 14px;
+    transition: border-color 0.3s frame, box-shadow 0.3s;
+}
+
+.chat-input-wrapper-group:focus-within {
+    border-color: #E8998D; /* Core brand peach accent highlight border line */
+    box-shadow: 0 0 0 4px rgba(232, 153, 141, 0.12);
+    background-color: #FFFFFF;
+}
+
+.chat-attachment-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    color: #8C7672;
+    cursor: pointer;
+    padding: 10px 14px;
+    transition: color 0.2s ease;
+}
+.chat-attachment-btn:hover { color: #E8998D; }
+
+.chat-input-wrapper-group input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    color: #111111;
+}
+
+.chat-input-wrapper-group input::placeholder {
+    color: rgba(140, 118, 114, 0.5);
+}
+
+.chat-send-submit-btn {
+    background-color: #E8998D; /* Brand core peach accent color block keys submit */
+    color: #FFFFFF;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.25s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(232, 153, 141, 0.2);
+}
+
+.chat-send-submit-btn svg { width: 16px; height: 16px; transform: translateX(-1px) translateY(1px); }
+
+.chat-send-submit-btn:hover { background-color: #D6867B; transform: scale(1.02); }
+.chat-send-submit-btn:active { transform: scale(0.98); }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINT OVERRIDES
+   ========================================================================== */
+@media (max-width: 992px) {
+    .chat-canvas-wrapper { height: calc(100vh - 130px); } /* Re-calibrates window limits safe bounds over mobile header bar */
+    .chat-profile-header, .chat-action-footer-form { padding: 14px 20px; }
+    .chat-messages-log { padding: 20px; gap: 20px; }
+    .chat-bubble-row { max-width: 92%; }
+}
+
+@media (max-width: 576px) {
+    .chat-app-container { border-radius: 12px; }
+    .chat-profile-header { padding: 12px 16px; }
+    .chat-action-footer-form { padding: 12px 16px; }
+    .chat-messages-log { padding: 16px; gap: 16px; }
+    .msg-bubble-wrapper { padding: 12px 16px; border-radius: 12px; }
+    .msg-text { font-size: 0.9rem; }
+    .chat-bubble-row { max-width: 100%; }
+    .bubble-avatar-dot { display: none; } /* Drop redundant small side bubbles profile icons over narrow phone windows */
+    .chat-input-wrapper-group { border-radius: 10px; }
+    .chat-attachment-btn { padding: 8px 10px; }
+    .chat-send-submit-btn { width: 38px; height: 38px; border-radius: 8px; }
+}
+
+</style>
+
+<script>
+    // --- PART 7: REAL-TIME CLIENT CHAT MESSAGES DISPATCH MATRIX ---
+const chatActionForm = document.getElementById("chatActionForm");
+const chatInputMessage = document.getElementById("chatInputMessage");
+const chatMessageLog = document.getElementById("chatMessageLog");
+
+if (chatActionForm && chatInputMessage && chatMessageLog) {
+    
+    // Auto-scroll conversational field viewport root down to baseline bounds upon panel switches loading
+    const forceScrollChatToBottom = () => {
+        chatMessageLog.scrollTop = chatMessageLog.scrollHeight;
+    };
+    
+    // Wire auto-scrollers hooks up onto side tab click tracking actions channels loops
+    const chatNavTabItem = document.querySelector(".nav-item-btn[data-target='chat-stylist-section']");
+    if (chatNavTabItem) {
+        chatNavTabItem.addEventListener("click", () => {
+            setTimeout(forceScrollChatToBottom, 100);
+        });
+    }
+
+    chatActionForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // Terminate standard reload transmission loops
+
+        const messagePayloadString = chatInputMessage.value.trim();
+        if (messagePayloadString === "") return; // Terminate early if text field parameters are empty
+
+        // Fetch current localized timestamp metrics code block natively
+        const activeClock = new Date();
+        let currentHours = activeClock.getHours();
+        const currentMinutes = activeClock.getMinutes().toString().padStart(2, "0");
+        const trackingMeridiemFlag = currentHours >= 12 ? "PM" : "AM";
+        
+        currentHours = currentHours % 12;
+        currentHours = currentHours ? currentHours : 12; // Formats zero tracking elements safely to 12
+        const computedTimeStr = `${currentHours}:${currentMinutes} ${trackingMeridiemFlag}`;
+
+        // Create Outgoing Client Chat Bubble Component Elements Matrix
+        const clientBubbleRow = document.createElement("div");
+        clientBubbleRow.classList.add("chat-bubble-row", "client-msg");
+
+        clientBubbleRow.innerHTML = `
+            <div class="msg-bubble-wrapper">
+                <p class="msg-text">${messagePayloadString}</p>
+                <span class="msg-timestamp">${computedTimeStr}</span>
+            </div>
+        `;
+
+        // Inject new node layout into viewport content list canvas paths smoothly
+        chatMessageLog.appendChild(clientBubbleRow);
+        
+        // Wipe character indices input text strings track fields cleanly
+        chatInputMessage.value = "";
+        chatInputMessage.focus();
+
+        // Smooth scroll viewports window track down seamlessly along the new bubble element
+        chatMessageLog.animate({
+            scrollTop: chatMessageLog.scrollHeight
+        }, {
+            duration: 300,
+            easing: "cubic-bezier(0.25, 1, 0.5, 1)"
+        });
+        
+        // Force direct jump parameters safely to ground baselines tracks lines
+        setTimeout(forceScrollChatToBottom, 50);
+    });
+}
+
+</script>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <style>
+        /* --- Core Layout Resets --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-body {
+    background-color: #FFF8F6; /* Domain signature pale pink canvas background colors */
+    color: #1A1A1A;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.dashboard-grid-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Rigid grid split locking the sidebar layout bounds */
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ==========================================================================
+   SIDEBAR NAV TRAY ARCHITECTURE STYLING
+   ========================================================================== */
+.db-sidebar {
+    background-color: #0F141C; /* Premium dark solid slate color matching client-side authentication buttons */
+    border-right: 1px solid rgba(232, 153, 141, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sidebar-header-branding {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-logo-wrap {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+.sidebar-logo-wrap:hover { opacity: 0.8; }
+.sidebar-logo-img { height: 32px; width: auto; object-fit: contain; }
+
+.mobile-menu-close-btn {
+    display: none; /* Suppressed by default rules on standard desktop viewports */
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Tab Layout Menus Stack Buttons */
+.sidebar-nav-menu {
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+.nav-item-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: #A39391; /* Soft contrast readable dark gray texts */
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.25s ease;
+    text-align: left;
+}
+
+.nav-icon {
+    width: 18px;
+    height: 18px;
+    color: #A39391;
+    transition: color 0.25s ease;
+}
+
+/* Interactive Active Hover Focus States mapping */
+.nav-item-btn:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #FFFFFF;
+}
+.nav-item-btn:hover .nav-icon { color: #FFFFFF; }
+
+/* Current tab active state indicator coloring rules mapping */
+.nav-item-btn.active-tab {
+    background-color: #E8998D; /* Shifts into signature core brand peach accent color tone */
+    color: #FFFFFF;
+}
+.nav-item-btn.active-tab .nav-icon {
+    color: #FFFFFF;
+}
+
+/* Sidebar Footer Dismiss Session Section Buttons */
+.sidebar-footer-row {
+    padding: 24px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-logout-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background-color: rgba(220, 53, 69, 0.1); /* Crimson background opacity accent layers */
+    border: 1px solid rgba(220, 53, 69, 0.15);
+    border-radius: 12px;
+    color: #F8D7DA;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.25s ease;
+}
+
+.logout-icon { width: 18px; height: 18px; color: #F8D7DA; }
+
+.sidebar-logout-btn:hover {
+    background-color: #DC3545; /* Solid warning feedback error color highlight */
+    color: #FFFFFF;
+    border-color: #DC3545;
+}
+.sidebar-logout-btn:hover .logout-icon { color: #FFFFFF; }
+
+/* ==========================================================================
+   MAIN VIEWPORT WORKSPACE ARCHITECTURE DESIGN
+   ========================================================================== */
+.db-main-viewport {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Upper sticky interface header bar controls */
+.db-header-bar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.header-left-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.mobile-hamburger-btn {
+    display: none; /* Hidden on desktop screens by default layout rules */
+    background: transparent;
+    border: none;
+    color: #1A1A1A;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+.mobile-hamburger-btn svg { width: 22px; height: 22px; }
+
+.header-brand-link {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    cursor: pointer;
+    letter-spacing: -0.3px;
+    transition: color 0.2s ease;
+}
+.header-brand-link:hover { color: #E8998D; }
+
+/* Right meta properties information box block layers */
+.header-right-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.header-bell-badge {
+    background: transparent;
+    border: none;
+    color: #8C7672;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+.header-bell-badge:hover { color: #E8998D; }
+.header-bell-badge svg { width: 22px; height: 22px; }
+
+.bell-active-indicator-dot {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #DC3545;
+    border-radius: 50%;
+    border: 1.5px solid #FFFFFF;
+}
+
+.header-profile-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.profile-avatar-circle {
+    width: 38px;
+    height: 38px;
+    background-color: #FFF0EC;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+}
+
+.profile-greeting {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-greeting-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #8C7672;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dynamic-username {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111111;
+    text-transform: capitalize; /* Enforces beautiful clean name casing layouts */
+}
+
+/* ==========================================================================
+   INTERACTIVE SUB-PANELS MAIN VIEW CANVAS CONTENT
+   ========================================================================== */
+.viewport-content-canvas {
+    padding: 40px;
+    flex-grow: 1;
+}
+
+.content-panel {
+    display: none; /* Suppressed baseline profiles */
+    width: 100%;
+}
+
+.content-panel.active-panel {
+    display: block;
+    animation: fadeInCanvasPanel 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes fadeInCanvasPanel {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.placeholder-section-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 48px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.02);
+}
+
+.placeholder-section-card h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #111111;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+}
+
+.placeholder-section-card p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+    max-width: 600px;
+}
+
+/* ==========================================================================
+   FULLY ROBUST MOBILE HAMBURGER MULTI-PANEL MECHANICS
+   ========================================================================== */
+@media (max-width: 992px) {
+    .dashboard-grid-layout {
+        grid-template-columns: 1fr; /* Drops track sidebar row out of layout grid streams on compressed viewports */
+    }
+
+    .db-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%); /* Displaces active panel tray sidebar out of screen views defaults */
+        box-shadow: 25px 0 50px rgba(0,0,0,0.15);
+    }
+
+    /* Target utility class stamps panel back smoothly on call triggers */
+    .db-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .mobile-menu-close-btn { display: block; }
+    .mobile-hamburger-btn { display: flex; }
+    .db-header-bar { padding: 18px 24px; }
+    .viewport-content-canvas { padding: 24px; }
+}
+
+@media (max-width: 576px) {
+    .db-header-bar { padding: 16px; }
+    .header-right-meta-row { gap: 16px; }
+    .user-greeting-label { display: none; } /* Drop profile greetings sub-tags to clear mobile space bounds */
+    .placeholder-section-card { padding: 32px 20px; border-radius: 16px; }
+    .placeholder-section-card h2 { font-size: 1.4rem; }
+    .placeholder-section-card p { font-size: 0.95rem; }
+}
+
+/* Mobile Sidebar Background Blur Overlay */
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 20, 28, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 99;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.sidebar-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Prevent Background Scrolling */
+body.sidebar-scroll-locked {
+    overflow: hidden;
+    touch-action: none;
+}
+
+/* Keep sidebar above blur overlay */
+.db-sidebar {
+    z-index: 100;
+}
+    </style>
+<script>
+    // --- PART 2: MOBILE HAMBURGER WITH BLUR & SCROLL LOCK ---
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileCloseBtn = document.getElementById("mobileCloseBtn");
+const dbSidebar = document.getElementById("dbSidebar");
+const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+function openMobileSidebar() {
+    dbSidebar.classList.add("mobile-open");
+    sidebarBackdrop.classList.add("active");
+    document.body.classList.add("sidebar-scroll-locked");
+}
+
+function closeMobileSidebar() {
+    dbSidebar.classList.remove("mobile-open");
+    sidebarBackdrop.classList.remove("active");
+    document.body.classList.remove("sidebar-scroll-locked");
+}
+
+if (hamburgerBtn && dbSidebar) {
+    hamburgerBtn.addEventListener("click", openMobileSidebar);
+}
+
+if (mobileCloseBtn && dbSidebar) {
+    mobileCloseBtn.addEventListener("click", closeMobileSidebar);
+}
+
+if (sidebarBackdrop) {
+    sidebarBackdrop.addEventListener("click", closeMobileSidebar);
+}
+</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: DYNAMIC EMAIL FIRST NAME GREET STRING PARSER ENGINE ---
+    const userLabelNode = document.getElementById("dashboardUserLabel");
+    
+    // Safely extract committed registration email token records out of local storage tracks
+    const storedEmail = localStorage.getItem("stackly_user_email") || "jeevi@gmail.com"; // Standard clean fallback value mapping block
+    
+    if (storedEmail) {
+        // Core Parsing Strategy: Split string indices cleanly right at the '@' text token location point
+        const parsedFirstName = storedEmail.split("@");
+        
+        // Push the isolated username prefix string onto your active header display node layout
+        userLabelNode.textContent = parsedFirstName[0];
+    }
+
+// --- RESTORE PREVIOUSLY SELECTED SIDEBAR MENU ---
+const savedSection = localStorage.getItem("stackly_active_section");
+
+if (savedSection) {
+    const savedButton = document.querySelector(
+        `.nav-item-btn[data-target="${savedSection}"]`
+    );
+
+    const savedPanel = document.getElementById(savedSection);
+
+    if (savedButton && savedPanel) {
+        document.querySelectorAll(".nav-item-btn").forEach(btn => {
+            btn.classList.remove("active-tab");
+        });
+
+        document.querySelectorAll(".content-panel").forEach(panel => {
+            panel.classList.remove("active-panel");
+        });
+
+        savedButton.classList.add("active-tab");
+        savedPanel.classList.add("active-panel");
+    }
+}
+
+// --- SAVE CURRENT MENU AND REFRESH DASHBOARD ---
+window.refreshDashboard = function () {
+    const activeButton = document.querySelector(".nav-item-btn.active-tab");
+
+    if (activeButton) {
+        localStorage.setItem(
+            "stackly_active_section",
+            activeButton.getAttribute("data-target")
+        );
+    }
+
+    window.location.reload();
+};
+    // --- PART 2: MOBILE COMPACT VIEW DRAWER TOGGLES ---
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileCloseBtn = document.getElementById("mobileCloseBtn");
+    const dbSidebar = document.getElementById("dbSidebar");
+
+    if (hamburgerBtn && dbSidebar) {
+        hamburgerBtn.addEventListener("click", () => {
+            dbSidebar.classList.add("mobile-open");
+        });
+    }
+
+    if (mobileCloseBtn && dbSidebar) {
+        mobileCloseBtn.addEventListener("click", () => {
+            dbSidebar.classList.remove("mobile-open");
+        });
+    }
+
+
+    // --- PART 3: RE-DYNAMIC PANEL TAB SWITCHING WORKFLOW ---
+    const tabButtons = document.querySelectorAll(".nav-item-btn");
+    const contentPanels = document.querySelectorAll(".content-panel");
+
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const targetSectionId = button.getAttribute("data-target");
+
+            // De-activate current highlighted sidebar tab focus state identifiers
+            tabButtons.forEach(btn => btn.classList.remove("active-tab"));
+            button.classList.add("active-tab");
+
+            // Suppress alternate panels layers configurations visibility traces completely
+            contentPanels.forEach(panel => panel.classList.remove("active-panel"));
+            
+            // Unmask selected destination section panel up onto display canvases
+            const targetPanel = document.getElementById(targetSectionId);
+            if (targetPanel) {
+                targetPanel.classList.add("active-panel");
+            }
+
+            // Mobile UX Refinement: Collapse sidebar tray immediately once a mobile tab is locked down
+            if (window.innerWidth <= 992) {
+                dbSidebar.classList.remove("mobile-open");
+            }
+        });
+    });
+
+
+    // --- PART 4: SECURE DISMISS RETRACT SESSION KEYS LOGOUT ENGINE ---
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            console.log("[Stackly Session]: Terminating active client lookup session tokens, routing back to authentication desk...");
+            
+            // Wipe data logs to prevent unauthorized backward navigation loops
+            localStorage.removeItem("stackly_user_email");
+            localStorage.removeItem("stackly_user_role");
+
+            // Direct route back comfort boundaries gate
+            window.location.href = "login.html";
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

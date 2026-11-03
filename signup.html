@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly | Create Decor Account Matrix</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body class="split-signup-body">
+
+    <div class="signup-split-container">
+        
+        <!-- LEFT PANEL: Brand Story & Portfolio Focus Accent -->
+        <div class="signup-left-brand-panel">
+            <div class="brand-panel-content">
+                <div class="brand-badge-row">
+                    <span class="brand-badge-pill">✦ Elite Scenography</span>
+                </div>
+                <h1 class="brand-marquee-title">Create Your<br><span class="peach-text">Styling Journey.</span></h1>
+                <p class="brand-marquee-desc">
+                    Join our premier design community and discover customized structural mandapams, artisanal floral arrangements, and synchronized lighting plans built perfectly for your landmark events.
+                </p>
+                
+                <!-- Aligned Decor Portfolio Image Wrapper -->
+                <div class="brand-portfolio-graphic-box">
+                    <img src="./assests/couple shoot.webp" alt="Stackly Wedding Design Asset Moodboard" class="brand-portfolio-img">
+                </div>
+
+                <!-- Features Checklist Row directly matching reference layout footer flags -->
+                <div class="brand-features-checklist">
+                    <span class="check-item"><span class="check-icon">✓</span> Premium Sourcing</span>
+                    <span class="check-item"><span class="check-icon">✓</span> Balanced Geometry</span>
+                    <span class="check-item"><span class="check-icon">✓</span> On-Site Production</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: Interactive Registration Form Desk -->
+        <div class="signup-right-form-panel">
+            <div class="form-content-wrapper">
+                
+                <!-- Back Route Navigation Header Link -->
+                <a href="login.html" class="back-navigation-link">
+                    <span class="back-arrow-vector">←</span> Back to Login
+                </a>
+
+                <div class="form-header-group">
+                    <h2>Create <span class="peach-text">Account</span></h2>
+                    <p>Register your account to manage luxury styling packages, event lookbooks, and customized spatial estimations.</p>
+                </div>
+
+                <!-- Input Interactive Form Block Matrix -->
+                <form class="auth-matrix-form" id="signupForm" novalidate>
+                    
+                    <!-- Field 1: Your Full Name (Filtered) -->
+                    <div class="form-input-group">
+                        <label for="userFullName">Your Full Name</label>
+                        <div class="input-vector-wrapper">
+                            <input type="text" id="userFullName" placeholder="Enter your full name...">
+                        </div>
+                    </div>
+
+                    <!-- Field 2: Email Address -->
+                    <div class="form-input-group">
+                        <label for="userEmail">Email Address</label>
+                        <div class="input-vector-wrapper">
+                            <input type="email" id="userEmail" placeholder="you@example.com">
+                        </div>
+                    </div>
+
+                    <!-- Field 3: 10-Digit Mobile Number (Filtered) -->
+                    <div class="form-input-group">
+                        <label for="userMobile">10-Digit Mobile Number</label>
+                        <div class="input-vector-wrapper">
+                            <input type="tel" id="userMobile" placeholder="10-digit mobile number" maxlength="10">
+                        </div>
+                    </div>
+
+                    <!-- Field 4: Password Key Track -->
+                    <div class="form-input-group">
+                        <label for="userPassword">Password Key</label>
+                        <div class="input-vector-wrapper">
+                            <input type="password" id="userPassword" placeholder="Create a password...">
+                            <button type="button" class="password-toggle-btn" id="togglePassword" aria-label="Toggle password visibility">👁️</button>
+                        </div>
+                    </div>
+
+                    <!-- Field 5: Confirm Password Key Track -->
+                    <div class="form-input-group">
+                        <label for="confirmPassword">Confirm Password Key</label>
+                        <div class="input-vector-wrapper">
+                            <input type="password" id="confirmPassword" placeholder="Confirm your password...">
+                            <button type="button" class="password-toggle-btn" id="toggleConfirmPassword" aria-label="Toggle confirm password visibility">👁️</button>
+                        </div>
+                    </div>
+
+                    <!-- Submission Transmit Action Trigger Row -->
+                    <div class="form-submit-row">
+                        <button type="submit" class="auth-submit-btn">SIGN UP ➔</button>
+                        
+                        <!-- Integrated Alerts Layout Layer -->
+                        <span class="auth-validation-alert error-alert" id="authFormAlert">Please fill out all the fields.</span>
+                        <span class="auth-validation-alert success-alert" id="authSuccessAlert">🎉 Successfully Signed Up! Redirecting to login portal...</span>
+                    </div>
+
+                </form>
+
+                <p class="login-routing-prompt">
+                    Already have an account? <a href="login.html" class="login-account-link">Log In</a>
+                </p>
+
+                <a href="#" onclick="event.preventDefault(); window.history.back();" class="return-home-link">Return to Home</a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <style>
+        /* --- Core Reset Configuration --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.split-signup-body {
+    background-color: #FFF8F6; /* Pale pink signature base backdrop */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.signup-split-container {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Exact 50/50 split matching reference layout */
+    background-color: #FFFFFF;
+}
+
+/* ==========================================================================
+   LEFT SIDE BRAND SHOWCASE PANEL STYLING
+   ========================================================================== */
+.signup-left-brand-panel {
+    position: relative;
+    background-color: #FFF0EC; /* Soft peach canvas accent fill */
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    border-right: 1px solid rgba(232, 153, 141, 0.1);
+}
+
+.brand-panel-content {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.brand-badge-row {
+    margin-bottom: 20px;
+}
+
+.brand-badge-pill {
+    padding: 6px 14px;
+    background-color: #FFFFFF;
+    color: #E8998D; /* Brand core peach primary color accent */
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.05);
+}
+
+.brand-marquee-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #111111; /* Near Black */
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+}
+
+.peach-text {
+    color: #E8998D; /* Stackly Core Peach Highlight signature typography switch */
+}
+
+.brand-marquee-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+    margin-bottom: 32px;
+}
+
+/* Portfolio Highlight Block Image Frame */
+.brand-portfolio-graphic-box {
+    width: 100%;
+    height: 260px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(93, 74, 71, 0.05);
+    background-color: #FFF8F6;
+    margin-bottom: 24px;
+}
+
+.brand-portfolio-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Checkbox Features Layout Strip */
+.brand-features-checklist {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.check-item {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #8C7672;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.check-icon {
+    color: #E8998D;
+}
+
+/* ==========================================================================
+   RIGHT SIDE REGISTRATION FORM DESK DESIGN
+   ========================================================================== */
+.signup-right-form-panel {
+    background-color: #FFFFFF;
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.form-content-wrapper {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Back Link Element Navigation rules */
+.back-navigation-link {
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #8C7672;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+.back-navigation-link:hover { color: #E8998D; }
+
+.form-header-group {
+    margin-bottom: 28px;
+}
+
+.form-header-group h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #111111;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.form-header-group p {
+    font-size: 0.9rem;
+    color: #8C7672;
+    line-height: 1.5;
+}
+
+/* --- Input Fields Grid Architecture --- */
+.auth-matrix-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.form-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-input-group label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+}
+
+.input-vector-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-vector-wrapper input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid rgba(93, 74, 71, 0.15);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #111111;
+    background-color: #FFFFFF;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.input-vector-wrapper input::placeholder {
+    color: rgba(140, 118, 114, 0.5);
+}
+
+/* Focus Input States */
+.input-vector-wrapper input:focus {
+    border-color: #E8998D;
+    box-shadow: 0 0 0 4px rgba(232, 153, 141, 0.12);
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #8C7672;
+}
+
+/* Dynamic error input warning highlight */
+.form-input-group.has-error input {
+    border-color: #DC3545;
+    background-color: #FFF5F5;
+}
+
+/* --- Action Submit Button --- */
+.form-submit-row {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+    padding-bottom: 28px; /* Safe padding slot clears space for error banner positions */
+}
+
+.auth-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #0F141C; /* Dark luxury solid slate color anchor precisely matching reference theme */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: none;
+    border-radius: 30px; /* Pillow-curved button contour bounds */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.3s frame, transform 0.2s;
+}
+
+.auth-submit-btn:hover { background-color: #E8998D; box-shadow: 0 4px 15px rgba(232, 153, 141, 0.25); }
+.auth-submit-btn:active { transform: scale(0.99); }
+
+/* Unified Alerts Structural Pipeline Box Styling */
+.auth-validation-alert {
+    position: absolute;
+    top: calc(100% - 20px);
+    left: 0;
+    width: 100%;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.error-alert { color: #DC3545; }
+.success-alert { color: #1E7E34; }
+
+.auth-validation-alert.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Links & Route Navigation Overlays */
+.login-routing-prompt {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #5D4A47;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.login-account-link {
+    color: #111111;
+    font-weight: 700;
+    text-decoration: underline;
+}
+.login-account-link:hover { color: #E8998D; }
+
+.return-home-link {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #8C7672;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+.return-home-link:hover { color: #E8998D; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .signup-left-brand-panel { padding: 40px; }
+    .signup-right-form-panel { padding: 40px; }
+    .brand-marquee-title { font-size: 2.4rem; }
+    .back-navigation-link { left: 40px; top: 30px; }
+}
+
+@media (max-width: 840px) {
+    /* Collapse split screen down to a clean singular column workflow file */
+    .signup-split-container {
+        grid-template-columns: 1fr;
+    }
+    .signup-left-brand-panel {
+        display: none;
+    }
+    .signup-right-form-panel {
+        padding: 60px 24px;
+    }
+    .back-navigation-link { left: 24px; }
+}
+
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    
+    const signupForm = document.getElementById("signupForm");
+    const userFullName = document.getElementById("userFullName");
+    const userEmail = document.getElementById("userEmail");
+    const userMobile = document.getElementById("userMobile");
+    const userPassword = document.getElementById("userPassword");
+    const confirmPassword = document.getElementById("confirmPassword");
+    
+    const togglePassword = document.getElementById("togglePassword");
+    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+    
+    const authFormAlert = document.getElementById("authFormAlert");
+    const authSuccessAlert = document.getElementById("authSuccessAlert");
+
+    // --- PART 1: Eye Vector Visibility Password Toggles ---
+    const wirePasswordToggle = (buttonBtn, inputTrack) => {
+        buttonBtn.addEventListener("click", () => {
+            const isHidden = inputTrack.getAttribute("type") === "password";
+            inputTrack.setAttribute("type", isHidden ? "text" : "password");
+            buttonBtn.textContent = isHidden ? "🙈" : "👁️";
+        });
+    };
+    wirePasswordToggle(togglePassword, userPassword);
+    wirePasswordToggle(toggleConfirmPassword, confirmPassword);
+
+
+    // --- PART 2: HARD INLINE FILTER REGEX MECHANICS ---
+    
+    // Rule A: Full Name input field rejects numeric integers instantly
+    userFullName.addEventListener("input", (e) => {
+        const rawValue = e.target.value;
+        // Strip everything that isn't an alphabet letter, white space, or period symbol
+        e.target.value = rawValue.replace(/[^a-zA-Z\s.]/g, "");
+    });
+
+    // Rule B: Mobile Number input field rejects alphabetical letters instantly
+    userMobile.addEventListener("input", (e) => {
+        const rawValue = e.target.value;
+        // Strip out everything that isn't a baseline base-10 integer number digit
+        e.target.value = rawValue.replace(/[^0-9]/g, "");
+    });
+
+
+    // --- PART 3: Comprehensive Form Input Fields Check ---
+    signupForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // Terminate browser submission protocol
+
+        // Wipe baseline visibility traces
+        authFormAlert.classList.remove("is-visible");
+        authSuccessAlert.classList.remove("is-visible");
+
+        let isInputsValid = true;
+        const formFieldsStack = [userFullName, userEmail, userMobile, userPassword, confirmPassword];
+
+        // Check each input group parameter
+        formFieldsStack.forEach(field => {
+            const parentGroup = field.closest(".form-input-group");
+            if (field.value.trim() === "") {
+                isInputsValid = false;
+                if (parentGroup) parentGroup.classList.add("has-error");
+            } else {
+                if (parentGroup) parentGroup.classList.remove("has-error");
+            }
+        });
+
+        // Secondary specific check logic parameter matches
+        if (isInputsValid) {
+            if (userPassword.value !== confirmPassword.value) {
+                isInputsValid = false;
+                userPassword.closest(".form-input-group").classList.add("has-error");
+                confirmPassword.closest(".form-input-group").classList.add("has-error");
+                authFormAlert.textContent = "Passwords do not match. Please verify.";
+                authFormAlert.classList.add("is-visible");
+                return;
+            }
+        }
+
+        if (!isInputsValid) {
+            if (authFormAlert.textContent === "") {
+                authFormAlert.textContent = "Please fill out all the fields.";
+            }
+            authFormAlert.classList.add("is-visible");
+        } else {
+            // Success Pathway: Clear errors and invoke message sequence
+            authFormAlert.classList.remove("is-visible");
+            authSuccessAlert.classList.add("is-visible");
+            
+            // Lock active inputs down during processing delays
+            formFieldsStack.forEach(field => field.setAttribute("disabled", "true"));
+            signupForm.querySelector(".auth-submit-btn").setAttribute("disabled", "true");
+
+            // Route user smoothly back to login portal after a 2-second display delay
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+        }
+    });
+
+    // Wipes red error border frames instantly upon text character additions
+    [userFullName, userEmail, userMobile, userPassword, confirmPassword].forEach(field => {
+        field.addEventListener("input", () => {
+            const parentGroup = field.closest(".form-input-group");
+            if (field.value.trim() !== "") {
+                if (parentGroup) parentGroup.classList.remove("has-error");
+                
+                const currentTrackingErrors = signupForm.querySelectorAll(".has-error");
+                if (currentTrackingErrors.length === 0) {
+                    authFormAlert.classList.remove("is-visible");
+                }
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

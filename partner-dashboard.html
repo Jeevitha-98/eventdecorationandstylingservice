@@ -1,0 +1,2668 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly | Partner Artisan Workspace Dashboard</title>
+    <link rel="stylesheet" href="partner-dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <div class="dashboard-grid-layout">
+        <!-- Mobile Sidebar Blur Background -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+        
+        <!-- ==========================================================================
+           LEFT SIDEBAR NAVIGATION MODULE (With Hamburger Collapse States)
+           ========================================================================== -->
+        <aside class="db-sidebar" id="dbSidebar">
+            <div class="sidebar-header-branding">
+                <!-- Clickable Logo Refreshes Dashboard Viewports Comfortably -->
+                <div class="sidebar-logo-wrap" onclick="refreshDashboard()" role="button" aria-label="Refresh Dashboard">
+    <img src="./assests/footer event logo.webp" alt="Stackly Industry Logo" class="sidebar-logo-img">
+</div>
+                <!-- Mobile Sidebar Close Trigger Toggle -->
+                <button class="mobile-menu-close-btn" id="mobileCloseBtn">✕</button>
+            </div>
+
+            <!-- Tab Layout Tracking Menus Stack -->
+            <nav class="sidebar-nav-menu">
+                <button class="nav-item-btn active-tab" data-target="overview-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Overview Hub</span>
+                </button>
+                <button class="nav-item-btn" data-target="blueprints-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>Design Blueprints</span>
+                </button>
+                <button class="nav-item-btn" data-target="floral-orders-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.41M18.36 18.36l1.42 1.42M1 12h2M20 12h2M4.22 19.78l1.41-1.42M18.36 5.64l1.42-1.41"/></svg>
+                    <span>Floral Sourcing</span>
+                </button>
+                <button class="nav-item-btn" data-target="illumination-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span>Luminance Mapping</span>
+                </button>
+                <button class="nav-item-btn" data-target="earnings-section">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <span>Earnings Matrix</span>
+                </button>
+            </nav>
+
+            <!-- Bottom Anchored Session Dismiss Button -->
+            <div class="sidebar-footer-row">
+                <button class="sidebar-logout-btn" id="logoutBtn">
+                    <svg class="logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ==========================================================================
+           MAIN CONTENT DISPLAY FRAME WORKSPACE
+           ========================================================================== -->
+        <main class="db-main-viewport">
+            
+            <!-- UPPER UTILITY UTILS ACTION BAR HEADER -->
+            <header class="db-header-bar">
+                <div class="header-left-toggle-row">
+                    <!-- Mobile Hamburger Menu Button Toggle Layout -->
+                    <button class="mobile-hamburger-btn" id="hamburgerBtn" aria-label="Open Sidebar Menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    
+                    <span class="header-brand-link" onclick="window.location.reload();">Stackly Space</span>
+                </div>
+
+                <!-- Right Side Profile Greet & Alert Notifications -->
+                <div class="header-right-meta-row">
+                    
+                    <!-- Interactive Notification Bell Trigger -->
+                    <button class="header-bell-badge" aria-label="View notifications" onclick="window.location.href='404.html'">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <span class="bell-active-indicator-dot"></span>
+                    </button>
+
+                    <!-- Profile Profile Dynamic User Text Box Block Label -->
+                    <div class="header-profile-box" onclick="window.location.href='404.html'">
+                        <div class="profile-avatar-circle">🎨</div>
+                        <div class="profile-greeting">
+                            <span class="user-greeting-label">Welcome,</span>
+                            <span class="dynamic-username" id="dashboardUserLabel">Artisan Partner</span>
+                        </div>
+                    </div>
+
+                </div>
+            </header>
+
+            <!-- ==========================================================================
+               SECTION ROUTING TRACK CONTENT LAYER PANELS
+               ========================================================================== -->
+            <div class="viewport-content-canvas">
+                
+                <!-- Section 1: Overview Dashboard Core Frame -->
+              <section id="overview-section" class="content-panel active-panel">
+    <div class="overview-canvas-wrapper">
+        
+        <!-- ROW 1: Panoramic Analytics Analytics Stats Row Metrics Grid -->
+        <div class="overview-analytics-matrix">
+            <!-- Stat 1 -->
+            <div class="analytics-stat-card" onclick="window.location.href='404.html'">
+                <div class="stat-avatar-circle circle-peach">📋</div>
+                <div class="stat-data-nodes">
+                    <span class="stat-lbl">Active Blueprints</span>
+                    <h3>08 Space Blocks</h3>
+                    <p>Production tracks locked for execution morning.</p>
+                </div>
+            </div>
+            <!-- Stat 2 -->
+            <div class="analytics-stat-card" onclick="window.location.href='404.html'">
+                <div class="stat-avatar-circle circle-green">🌸</div>
+                <div class="stat-data-nodes">
+                    <span class="stat-lbl">Floral Sourcing Cargo</span>
+                    <h3>12 Sourcing Lots</h3>
+                    <p>Premium regional jasmine drapes harvests locked.</p>
+                </div>
+            </div>
+            <!-- Stat 3 -->
+            <div class="analytics-stat-card" onclick="window.location.href='404.html'">
+                <div class="stat-data-nodes">
+                    <span class="stat-lbl">Total Ledger Revenue</span>
+                    <h3>₹4,85,000</h3>
+                    <p>Retainer balance payments cleared this month matrix.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Asymmetric Split Grid Matrix Layout (Project Feeds & Live Operational Timelines) -->
+        <div class="overview-details-matrix">
+            
+            <!-- LEFT AREA COLUMN: Detailed Incoming Live Project Track Feed Grid Matrix -->
+            <div class="overview-feed-column">
+                <h3 class="overview-block-heading">✦ Incoming Live Assignment Feeds</h3>
+                
+                <div class="feed-grid-layout">
+                    <!-- Project 1 -->
+                    <div class="feed-status-card" onclick="window.location.href='404.html'">
+                        <div class="feed-image-box">
+                            <img src="./assests/wedding decor.webp" alt="Luxury Mandapam Stage Layout preview" loading="lazy">
+                        </div>
+                        <div class="feed-data-nodes">
+                            <div class="feed-header-line">
+                                <span class="feed-pill-tag pill-peach">Mandapam Setup</span>
+                                <span class="feed-timestamp-tag">2 hours ago</span>
+                            </div>
+                            <h4>The Heritage Royal Canopy Project</h4>
+                            <p>Client verified 3D blueprint proofs parameters. Sourcing operations initiated over Salem sector lawns lanes.</p>
+                            <span class="feed-action-prompt">Manage Blueprint ➔</span>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="feed-status-card" onclick="window.location.href='404.html'">
+                        <div class="feed-image-box">
+                            <img src="./assests/candid.webp" alt="Corporate Gala Lightscape tracking setup" loading="lazy">
+                        </div>
+                        <div class="feed-data-nodes">
+                            <div class="feed-header-line">
+                                <span class="feed-pill-tag pill-dark">Lightscapes Mapping</span>
+                                <span class="feed-timestamp-tag">Yesterday</span>
+                            </div>
+                            <h4>Neon Matrix Tech Awards Stage</h4>
+                            <p>Truss rigging weights vectors approved. Calibrating intelligent DMX moving head spotlights tracks next.</p>
+                            <span class="feed-action-prompt">Manage Luminance ➔</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT AREA COLUMN: Live Timeline Operations Feed Track Module -->
+            <div class="overview-timeline-column">
+                <h3 class="overview-block-heading">✦ Logistics Production Tracks Log</h3>
+                
+                <div class="timeline-interactive-box">
+                    <div class="tracker-timeline-track">
+                        
+                        <!-- Step 1 -->
+                        <div class="t-step step-active-log">
+                            <div class="t-marker-circle">●</div>
+                            <div class="t-info-node">
+                                <strong>Floral Fleet Dispatch Complete</strong>
+                                <span class="t-timestamp">11:15 AM — Coimbatore Cargo Hub</span>
+                                <p>Premium blush pink roses harvest secured and routed safely to destination tents.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="t-step">
+                            <div class="t-marker-circle">○</div>
+                            <div class="t-info-node">
+                                <strong>German Truss Rigging Sign-off</strong>
+                                <span class="t-timestamp">09:30 AM — Salem Venue Grounds</span>
+                                <p>Overhead aluminum layout frames load testing capacity certified symmetrically.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="t-step">
+                            <div class="t-marker-circle">○</div>
+                            <div class="t-info-node">
+                                <strong>Advance Retainer Clearance Logged</strong>
+                                <span class="t-timestamp">Yesterday — Razorpay Gateway</span>
+                                <p>30% Initial security date block advancement released to account statement ledgers.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<style>
+    /* ==========================================================================
+   ENHANCED OVERVIEW HUB WORKSPACE DESIGN SYSTEM
+   ========================================================================== */
+.overview-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- ROW 1: Panoramic Analytics Stats Row Metrics Grid --- */
+.overview-analytics-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 perfectly symmetric row columns */
+    gap: 24px;
+}
+
+.analytics-stat-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-avatar-circle {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+}
+.circle-peach { background-color: #FFF0EC; color: #E8998D; }
+.circle-green { background-color: #E2F6EC; color: #1E7E34; }
+
+.stat-data-nodes {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-lbl {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+    margin-bottom: 2px;
+}
+
+.analytics-stat-card h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    transition: color 0.2s ease;
+}
+
+.analytics-stat-card p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #5D4A47;
+}
+
+/* Card hover scaling parameters */
+.analytics-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(232, 153, 141, 0.1);
+    border-color: rgba(232, 153, 141, 0.3);
+}
+.analytics-stat-card:hover h3 { color: #E8998D; }
+
+/* --- ROW 2: Asymmetric Split Grid Matrix Layout --- */
+.overview-details-matrix {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr; /* Custom asymmetric columns splits text layouts */
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.overview-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 20px;
+    letter-spacing: -0.2px;
+}
+
+.overview-feed-column,
+.overview-timeline-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- LEFT SIDE: Project Assignment Cards Feeds --- */
+.feed-grid-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.feed-status-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.feed-image-box {
+    width: 200px;
+    min-height: 100%;
+    flex-shrink: 0;
+    background-color: #FFEBE5;
+}
+
+.feed-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.feed-data-nodes {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.feed-header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.feed-pill-tag {
+    padding: 4px 10px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+}
+.pill-peach { background-color: #FFF0EC; color: #E8998D; }
+.pill-dark { background-color: #0F141C; color: #FFFFFF; }
+
+.feed-timestamp-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #8C7672;
+}
+
+.feed-data-nodes h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 6px;
+    transition: color 0.2s;
+}
+
+.feed-data-nodes p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #5D4A47;
+    margin-bottom: 16px;
+}
+
+.feed-action-prompt {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    transition: color 0.2s, transform 0.2s;
+}
+
+/* Hover Assignment Card Transformations */
+.feed-status-card:hover {
+    transform: translateX(6px); /* Interactive horizontal sliding layout signature emphasis */
+    box-shadow: 0 15px 35px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.feed-status-card:hover h4 { color: #E8998D; }
+.feed-status-card:hover .feed-action-prompt { color: #E8998D; transform: translateX(3px); }
+
+/* --- RIGHT SIDE: Live Timeline Production Track Logs --- */
+.timeline-interactive-box {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+.tracker-timeline-track {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 12px;
+}
+
+/* Vertical Timeline Track Line Rail */
+.tracker-timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 17px;
+    width: 2px;
+    height: calc(100% - 32px);
+    background-color: rgba(93, 74, 71, 0.12);
+    z-index: 1;
+}
+
+.t-step {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 24px;
+    position: relative;
+    z-index: 2;
+}
+.t-step:last-child { padding-bottom: 0; }
+
+.t-marker-circle {
+    font-size: 0.72rem;
+    font-weight: 900;
+    color: #C2B4B2;
+    background-color: #FFFFFF;
+    margin-top: 1px;
+    user-select: none;
+}
+
+.step-active-log .t-marker-circle {
+    color: #E8998D; /* Bright brand tracking colors for active logs points */
+    animation: pulseMarkerNode 2s infinite ease-in-out;
+}
+
+@keyframes pulseMarkerNode {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+.t-info-node {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.t-info-node strong {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2A2221;
+}
+
+.t-timestamp {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #8C7672;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.t-info-node p {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: #5D4A47;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINT MATRIX OVERRIDES
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .overview-analytics-matrix { gap: 16px; }
+    .analytics-stat-card { padding: 20px; gap: 14px; }
+    .analytics-stat-card h3 { font-size: 1.3rem; }
+    .overview-details-matrix { gap: 24px; }
+    .feed-status-card { flex-direction: column; }
+    .feed-image-box { width: 100%; height: 160px; }
+    .feed-data-nodes { padding: 20px; }
+    .timeline-interactive-box { padding: 24px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse side-by-side split columns into standard single vertical streams flow layouts */
+    .overview-analytics-matrix {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .overview-details-matrix {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .feed-image-box { height: 200px; } /* Re-expand aspect wrapper windows on linear phone streams */
+}
+
+@media (max-width: 576px) {
+    .analytics-stat-card { border-radius: 12px; }
+    .feed-status-card { border-radius: 12px; }
+    .timeline-interactive-box { border-radius: 12px; padding: 20px 16px; }
+    .feed-image-box { height: 160px; }
+    .feed-data-nodes h4 { font-size: 1.1rem; }
+    .feed-data-nodes p { font-size: 0.85rem; }
+    .t-info-node strong { font-size: 0.9rem; }
+}
+
+</style>
+
+
+                <!-- Section 2: Blueprints Structural Frame -->
+               <section id="blueprints-section" class="content-panel">
+    <div class="blueprints-canvas-wrapper">
+        
+        <!-- ROW 1: Configuration Status Overview Prompt Banner -->
+        <div class="bp-status-banner">
+            <div class="bp-banner-content">
+                <div class="bp-left-meta">
+                    <span class="bp-mini-label">Engineering Desk</span>
+                    <h2>Spatial 3D Layout Framework</h2>
+                    <p class="bp-summary-text">Review and clear structural spatial 3D parameters, spatial orientation tolerances, and active center stage rigging configurations across assigned event coordinates.</p>
+                </div>
+                <div class="bp-right-action-box">
+                    <button class="bp-upload-trigger-btn" onclick="window.location.href='404.html'">
+                        <span class="bp-btn-icon">➕</span> Upload New CAD Vector
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Cross-Comparison Blueprint Matrix Table -->
+        <div class="bp-table-block">
+            <h3 class="bp-block-heading">✦ Active Structural Load Allocations</h3>
+            <div class="bp-table-responsive-wrapper">
+                <table class="bp-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Project Reference ID</th>
+                            <th>Venue Coordinates</th>
+                            <th>Truss Scale Metrics</th>
+                            <th>Weight Threshold Max</th>
+                            <th>DMX Node Points</th>
+                            <th>Clearance Status</th>
+                            <th>Technical Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="bp-font-mono">PRJ-2026-MAND</td>
+                            <td>Salem Lawns Ground</td>
+                            <td>40ft x 16ft Box Rig</td>
+                            <td class="bp-font-bold">1.5 Metric Tons</td>
+                            <td>32 Channels</td>
+                            <td><span class="bp-status-badge badge-green">Approved</span></td>
+                            <td><button class="bp-table-action-link" onclick="window.location.href='404.html'">Configure 🛠️</button></td>
+                        </tr>
+                        <tr>
+                            <td class="bp-font-mono">PRJ-2026-GALA</td>
+                            <td>Chennai Convention Complex</td>
+                            <td>60ft panoramic span</td>
+                            <td class="bp-font-bold">2.2 Metric Tons</td>
+                            <td>64 Channels</td>
+                            <td><span class="bp-status-badge badge-orange">Under Review</span></td>
+                            <td><button class="bp-table-action-link" onclick="window.location.href='404.html'">Edit Track 🛠️</button></td>
+                        </tr>
+                        <tr>
+                            <td class="bp-font-mono">PRJ-2026-BTHD</td>
+                            <td>Erode Resort Terraces</td>
+                            <td>Lightweight 20ft Arch</td>
+                            <td class="bp-font-bold gray-text">0.4 Metric Tons</td>
+                            <td>12 Channels</td>
+                            <td><span class="bp-status-badge badge-green">Approved</span></td>
+                            <td><button class="bp-table-action-link" onclick="window.location.href='404.html'">Configure 🛠️</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ROW 3: Asymmetric Technical Document Asset Grid -->
+        <h3 class="bp-block-heading">✦ Vector Schematic Layout Files</h3>
+        <div class="bp-assets-grid">
+            
+            <!-- Blueprint Doc 1 -->
+            <div class="bp-asset-card" onclick="window.location.href='404.html'">
+                <div class="bp-img-shell">
+                    <img src="./assests/flower decor.webp" alt="German Truss Rigging Installation Layout" loading="lazy">
+                </div>
+                <div class="bp-meta-text">
+                    <div class="bp-pill-tag">Aluminum Rigging</div>
+                    <h3>German Truss Structural Scaling Blueprint</h3>
+                    <p>Load bearing capacity calculations, box cross connector nodes tracking vectors, and ceiling anchor points distribution schematics.</p>
+                </div>
+            </div>
+
+            <!-- Blueprint Doc 2 -->
+            <div class="bp-asset-card" onclick="window.location.href='404.html'">
+                <div class="bp-img-shell">
+                    <img src="./assests/wedding detail closeup.webp" alt="Bespoke furniture seating layout vector math" loading="lazy">
+                </div>
+                <div class="bp-meta-text">
+                    <div class="bp-pill-tag">Spatial Geography</div>
+                    <h3>Panoramic Furniture Cluster Blueprint</h3>
+                    <p>Mathematical calculations ensuring optimal clearance spaces around guest tables, aisle run passes, and server entryway buffers.</p>
+                </div>
+            </div>
+
+            <!-- Blueprint Doc 3 -->
+            <div class="bp-asset-card" onclick="window.location.href='404.html'">
+                <div class="bp-img-shell">
+                    <img src="./assests/church.webp" alt="Cinematic Stage Elevation Schematic View" loading="lazy">
+                </div>
+                <div class="bp-meta-text">
+                    <div class="bp-pill-tag">Elevation Models</div>
+                    <h3>Cinematic Altar Elevation Wireframe</h3>
+                    <p>Front and side viewport profile calculations tracking structural backdrop layer overlap zones and line-of-sight dimensions maps.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ==========================================================================
+   ENHANCED DESIGN BLUEPRINTS CONFIGURATION WORKSPACE
+   ========================================================================== */
+.blueprints-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- ROW 1: Banner Summary Card --- */
+.bp-status-banner {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.01);
+}
+
+.bp-banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.bp-left-meta { max-width: 700px; }
+
+.bp-mini-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #E8998D;
+    margin-bottom: 8px;
+}
+
+.bp-left-meta h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111111;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.bp-summary-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+}
+
+.bp-right-action-box { flex-shrink: 0; }
+
+.bp-upload-trigger-btn {
+    padding: 14px 24px;
+    background-color: #E8998D; /* Brand core peach primary color accent */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+}
+
+.bp-upload-trigger-btn:hover {
+    background-color: #D6867B;
+    transform: translateY(-2px);
+}
+
+/* --- ROW 2: Cross-Comparison Blueprint Matrix Table --- */
+.bp-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+}
+
+.bp-table-block {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+.bp-table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.bp-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 900px; /* Locked secure horizontal spacing for parallel layout columns tracking */
+}
+
+.bp-matrix-table th {
+    background-color: #FFF8F6;
+    padding: 14px 18px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+}
+
+.bp-matrix-table td {
+    padding: 16px 18px;
+    font-size: 0.9rem;
+    color: #5D4A47;
+    border-bottom: 1px solid rgba(93, 74, 71, 0.05);
+}
+
+.bp-matrix-table tbody tr:last-child td { border-bottom: none; }
+
+.bp-font-mono { font-family: 'Courier New', Courier, monospace; font-weight: 700; font-size: 0.85rem !important; }
+.bp-font-bold { font-weight: 700; color: #1A1A1A !important; }
+
+/* Custom Badge Tags inside Table matrix cells */
+.bp-status-badge {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    display: inline-block;
+}
+.badge-green { background-color: #E2F6EC; color: #1E7E34; }
+.badge-orange { background-color: #FFF2E6; color: #D97706; }
+
+.bp-table-action-link {
+    background: transparent;
+    border: none;
+    color: #E8998D;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.bp-table-action-link:hover { color: #D6867B; text-decoration: underline; }
+
+/* --- ROW 3: Asymmetric Technical Document Asset Grid --- */
+.bp-assets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 column modular track matrix split layout */
+    gap: 32px;
+    align-items: stretch;
+}
+
+.bp-asset-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 25px rgba(93, 74, 71, 0.01);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.bp-img-shell {
+    width: 100%;
+    aspect-ratio: 16 / 10; /* Rigid horizontal structural scale limits lock */
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+.bp-img-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bp-meta-text {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.bp-pill-tag {
+    align-self: flex-start;
+    padding: 4px 10px;
+    background-color: #FFF0EC;
+    color: #E8998D;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    margin-bottom: 14px;
+}
+
+.bp-meta-text h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+}
+
+.bp-meta-text p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #5D4A47;
+}
+
+/* Universal Asset Card Hover Transformations Focus Responses */
+.bp-asset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.bp-asset-card:hover .bp-img-shell img { transform: scale(1.03); }
+.bp-asset-card:hover h3 { color: #E8998D; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .bp-banner-content { padding: 32px; }
+    .bp-left-meta h2 { font-size: 1.6rem; }
+    .bp-table-block { padding: 24px; }
+    .bp-matrix-table th, .bp-matrix-table td { padding: 12px; }
+    .bp-assets-grid { gap: 20px; }
+    .bp-meta-text { padding: 20px; }
+    .bp-meta-text h3 { font-size: 1.1rem; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse split column arrays down seamlessly to vertical singular column channels flow layouts */
+    .bp-assets-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .bp-banner-content { text-align: center; justify-content: center; gap: 20px; }
+    .bp-left-meta h2 { font-size: 1.4rem; }
+    .bp-summary-text { font-size: 0.95rem; }
+    .bp-upload-trigger-btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .bp-status-banner { padding: 24px 20px; border-radius: 16px; }
+    .bp-table-block { border-radius: 16px; padding: 20px 14px; }
+    .bp-asset-card { border-radius: 12px; }
+}
+
+</style>
+
+                <!-- Section 3: Floral Orders Core Panel -->
+              <section id="floral-orders-section" class="content-panel">
+    <div class="floral-canvas-wrapper">
+        
+        <!-- ROW 1: Sourcing Status Overview Banner -->
+        <div class="fl-status-banner">
+            <div class="fl-banner-content">
+                <div class="fl-left-meta">
+                    <span class="fl-mini-label">Botanical Ledger</span>
+                    <h2>Fresh Supply Chain Management</h2>
+                    <p class="fl-summary-text">Coordinate direct local regional farm networks, track fresh jasmine rope arrival timelines, manage double-stuffed premium rose harvests, and lock down on-site conditioning schedules.</p>
+                </div>
+                <div class="fl-right-action-box">
+                    <button class="fl-dispatch-trigger-btn" onclick="window.location.href='404.html'">
+                        <span class="fl-btn-icon">📦</span> Request Bulk Sourcing Lot
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Inventory Cross-Checking Comparison Matrix Table -->
+        <div class="fl-table-block">
+            <h3 class="fl-block-heading">✦ Active Farm Sourcing Allocations</h3>
+            <div class="fl-table-responsive-wrapper">
+                <table class="fl-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Supply Batch ID</th>
+                            <th>Botanical Variety</th>
+                            <th>Sourcing Farm Origin</th>
+                            <th>Harvest Quantity Metric</th>
+                            <th>Arrival Log Target</th>
+                            <th>Conditioning Status</th>
+                            <th>Inventory Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fl-font-mono">FLR-2026-JASM</td>
+                            <td>Madurai Premium Jasmine</td>
+                            <td>Sathyamangalam Plains</td>
+                            <td class="fl-font-bold">250 Ropes (120m)</td>
+                            <td>04:00 AM (Launch Day)</td>
+                            <td><span class="fl-status-badge badge-green">Confirmed</span></td>
+                            <td><button class="fl-table-action-link" onclick="window.location.href='404.html'">Log Quality 📋</button></td>
+                        </tr>
+                        <tr>
+                            <td class="fl-font-mono">FLR-2026-ROSE</td>
+                            <td>Dutch Double-Stuffed Rose</td>
+                            <td>Ooty Botanical Ridge</td>
+                            <td class="fl-font-bold">1,800 Stems (Blush)</td>
+                            <td>Yesterday (In Atelier)</td>
+                            <td><span class="fl-status-badge badge-green">Conditioned</span></td>
+                            <td><button class="fl-table-action-link" onclick="window.location.href='404.html'">Check Hydration 📋</button></td>
+                        </tr>
+                        <tr>
+                            <td class="fl-font-mono">FLR-2026-PAMP</td>
+                            <td>Premium Feather Pampas</td>
+                            <td>Sourced Import Lot</td>
+                            <td class="fl-font-bold gray-text">45 Bundles (Tall)</td>
+                            <td>Nov 04, 2026</td>
+                            <td><span class="fl-status-badge badge-orange">In Transit</span></td>
+                            <td><button class="fl-table-action-link" onclick="window.location.href='404.html'">Track Fleet 📋</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ROW 3: Asymmetric Seasonal Botanical Asset Cards Grid -->
+        <h3 class="fl-block-heading">✦ Core Botanical Scenography Elements</h3>
+        <div class="fl-assets-grid">
+            
+            <!-- Floral Card 1 -->
+            <div class="fl-asset-card" onclick="window.location.href='404.html'">
+                <div class="fl-img-shell">
+                    <img src="./assests/flower decor.webp" alt="Traditional Madurai Jasmine Ropes Conditioning" loading="lazy">
+                </div>
+                <div class="fl-meta-text">
+                    <div class="fl-pill-tag">Cultural Centerpieces</div>
+                    <h3>Madurai Jasmine Strands & Ropes</h3>
+                    <p>Direct farm-sourced strings handled under cold chains. Highly fragrant strands curated cleanly for cascading mandapam ceiling tracks and organic entrance drapes.</p>
+                </div>
+            </div>
+
+            <!-- Floral Card 2 -->
+            <div class="fl-asset-card" onclick="window.location.href='404.html'">
+                <div class="fl-img-shell">
+                    <img src="./assests/couple shoot.webp" alt="Premium Blush Pink Dutch Roses Bundles" loading="lazy">
+                </div>
+                <div class="fl-meta-text">
+                    <div class="fl-pill-tag">Chromatic Palette</div>
+                    <h3>Ooty Double-Stuffed Blush Roses</h3>
+                    <p>Premium multi-petaled stems selected for dense color depth block setups. Kept on continuous hydration grids to preserve bloom freshness on warm lawns frames.</p>
+                </div>
+            </div>
+
+            <!-- Floral Card 3 -->
+            <div class="fl-asset-card" onclick="window.location.href='404.html'">
+                <div class="fl-img-shell">
+                    <img src="./assests/church.webp" alt="Fluffy Feather Pampas Grass Strands Curation" loading="lazy">
+                </div>
+                <div class="fl-meta-text">
+                    <div class="fl-pill-tag">Modern Boho Textiles</div>
+                    <h3>Feather Pampas Plumes & Eucalyptus</h3>
+                    <p>Dried structural pampas grass units combined seamlessly with fresh regional eucalyptus runners to outline asymmetric photo frames backgrounds.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ==========================================================================
+   ENHANCED FLORAL SOURCING & INVENTORY LOGISTICS WORKSPACE
+   ========================================================================== */
+.floral-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- ROW 1: Banner Summary Card --- */
+.fl-status-banner {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.01);
+}
+
+.fl-banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.fl-left-meta { max-width: 700px; }
+
+.fl-mini-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #E8998D;
+    margin-bottom: 8px;
+}
+
+.fl-left-meta h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111111;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.fl-summary-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+}
+
+.fl-right-action-box { flex-shrink: 0; }
+
+.fl-dispatch-trigger-btn {
+    padding: 14px 24px;
+    background-color: #1A1A1A; /* Solid contrast near-black requested for actions button framework toggles */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 4px 15px rgba(26, 26, 26, 0.1);
+}
+
+.fl-dispatch-trigger-btn:hover {
+    background-color: #E8998D; /* Shifts peach accent color on focus mouse hovers */
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+    transform: translateY(-2px);
+}
+
+/* --- ROW 2: Cross-Comparison Inventory Matrix Table --- */
+.fl-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+}
+
+.fl-table-block {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+.fl-table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.fl-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 900px; /* Locked horizontal space alignment grid metrics columns bounds */
+}
+
+.fl-matrix-table th {
+    background-color: #FFF8F6;
+    padding: 14px 18px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+}
+
+.fl-matrix-table td {
+    padding: 16px 18px;
+    font-size: 0.9rem;
+    color: #5D4A47;
+    border-bottom: 1px solid rgba(93, 74, 71, 0.05);
+}
+
+.fl-matrix-table tbody tr:last-child td { border-bottom: none; }
+
+.fl-font-mono { font-family: 'Courier New', Courier, monospace; font-weight: 700; font-size: 0.85rem !important; }
+.fl-font-bold { font-weight: 700; color: #1A1A1A !important; }
+
+/* Custom Badge Tags inside Table matrix cells */
+.fl-status-badge {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    display: inline-block;
+}
+.badge-green { background-color: #E2F6EC; color: #1E7E34; }
+.badge-orange { background-color: #FFF2E6; color: #D97706; }
+
+.fl-table-action-link {
+    background: transparent;
+    border: none;
+    color: #E8998D;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.fl-table-action-link:hover { color: #D6867B; text-decoration: underline; }
+
+/* --- ROW 3: Asymmetric Fresh Botanical Asset Cards Grid --- */
+.fl-assets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 column symmetric track matrix split layout layout */
+    gap: 32px;
+    align-items: stretch;
+}
+
+.fl-asset-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 25px rgba(93, 74, 71, 0.01);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.fl-img-shell {
+    width: 100%;
+    aspect-ratio: 16 / 11; /* Rigid structural scale bounds limits aspect ratio window */
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+.fl-img-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fl-meta-text {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.fl-pill-tag {
+    align-self: flex-start;
+    padding: 4px 10px;
+    background-color: #FFF0EC;
+    color: #E8998D;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    margin-bottom: 14px;
+}
+
+.fl-meta-text h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+}
+
+.fl-meta-text p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #5D4A47;
+}
+
+/* Universal Asset Card Hover Transformations Focus Responses */
+.fl-asset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.fl-asset-card:hover .fl-img-shell img { transform: scale(1.03); }
+.fl-asset-card:hover h3 { color: #E8998D; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .fl-banner-content { padding: 32px; }
+    .fl-left-meta h2 { font-size: 1.6rem; }
+    .fl-table-block { padding: 24px; }
+    .fl-matrix-table th, .fl-matrix-table td { padding: 12px; }
+    .fl-assets-grid { gap: 20px; }
+    .fl-meta-text { padding: 20px; }
+    .fl-meta-text h3 { font-size: 1.1rem; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse split column arrays down seamlessly to vertical singular column channels flow layouts */
+    .fl-assets-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .fl-banner-content { text-align: center; justify-content: center; gap: 20px; }
+    .fl-left-meta h2 { font-size: 1.4rem; }
+    .fl-summary-text { font-size: 0.95rem; }
+    .fl-dispatch-trigger-btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .fl-status-banner { padding: 24px 20px; border-radius: 16px; }
+    .fl-table-block { border-radius: 16px; padding: 20px 14px; }
+    .fl-asset-card { border-radius: 12px; }
+}
+
+</style>
+
+                <!-- Section 4: Illumination Technical Mapping -->
+              <section id="illumination-section" class="content-panel">
+    <div class="illumination-canvas-wrapper">
+        
+        <!-- ROW 1: Luminance Status Overview Banner -->
+        <div class="il-status-banner">
+            <div class="il-banner-content">
+                <div class="il-left-meta">
+                    <span class="il-mini-label">DMX Console Hub</span>
+                    <h2>Atmospheric Lighting Command Center</h2>
+                    <p class="il-summary-text">Calibrate intelligent moving head spotlights, map ambient wireless LED washes, address cross-channel network profiles, and balance vintage hanging filament bulb chains smoothly.</p>
+                </div>
+                <div class="il-right-action-box">
+                    <button class="il-test-trigger-btn" onclick="window.location.href='404.html'">
+                        <span class="il-btn-icon">⚡</span> Run Global DMX Line Test
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Lighting Node Points Cross-Checking Comparison Matrix Table -->
+        <div class="il-table-block">
+            <h3 class="il-block-heading">✦ Active DMX Network Profile Address Tracks</h3>
+            <div class="il-table-responsive-wrapper">
+                <table class="il-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Fixture Group ID</th>
+                            <th>Luminance Hardware Type</th>
+                            <th>Assigned Channel Address</th>
+                            <th>Active Node Output Count</th>
+                            <th>Calibrated Dimmer Intensity</th>
+                            <th>Network Status</th>
+                            <th>Console Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="il-font-mono">DMX-WASH-01</td>
+                            <td>Intelligent LED Moving Wash</td>
+                            <td>Ch 001 - Ch 032</td>
+                            <td class="il-font-bold">12 Fixture Units</td>
+                            <td>85% (Warm Blush Hue)</td>
+                            <td><span class="il-status-badge badge-green">Online</span></td>
+                            <td><button class="il-table-action-link" onclick="window.location.href='404.html'">Map Color 🎨</button></td>
+                        </tr>
+                        <tr>
+                            <td class="il-font-mono">DMX-SPOT-02</td>
+                            <td>Art active Tracking Spotlight</td>
+                            <td>Ch 033 - Ch 048</td>
+                            <td class="il-font-bold">04 Precision Units</td>
+                            <td>90% (Crisp Neutral White)</td>
+                            <td><span class="il-status-badge badge-green">Online</span></td>
+                            <td><button class="il-table-action-link" onclick="window.location.href='404.html'">Test Focus 🎯</button></td>
+                        </tr>
+                        <tr>
+                            <td class="il-font-mono">DMX-VINT-03</td>
+                            <td>Vintage Hanging Filaments</td>
+                            <td>Ch 049 - Ch 064</td>
+                            <td class="il-font-bold gray-text">120 Total Bulb Nodes</td>
+                            <td>45% (Soft Amber Glow)</td>
+                            <td><span class="il-status-badge badge-orange">Standby</span></td>
+                            <td><button class="il-table-action-link" onclick="window.location.href='404.html'">Test Dimmer 🛠️</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ROW 3: Asymmetric Luminance Equipment Asset Cards Grid -->
+        <h3 class="il-block-heading">✦ Core Lighting Scenography Hardware</h3>
+        <div class="il-assets-grid">
+            
+            <!-- Lighting Card 1 -->
+            <div class="il-asset-card" onclick="window.location.href='404.html'">
+                <div class="il-img-shell">
+                    <img src="./assests/wedding detail closeup.webp" alt="DMX Intelligent Moving Head Spotlights Installation" loading="lazy">
+                </div>
+                <div class="il-meta-text">
+                    <div class="il-pill-tag">Intelligent Washes</div>
+                    <h3>DMX Computerized Moving Heads</h3>
+                    <p>High-output computerized spot profiles running smart macro transitions. Programmed to wash fabrics and wedding mandapams into beautiful night-capture depths seamlessly.</p>
+                </div>
+            </div>
+
+            <!-- Lighting Card 2 -->
+            <div class="il-asset-card" onclick="window.location.href='404.html'">
+                <div class="il-img-shell">
+                    <img src="./assests/candid.webp" alt="Wireless Ambient LED Uplighting Bars Setup" loading="lazy">
+                </div>
+                <div class="il-meta-text">
+                    <div class="il-pill-tag">Ambient Glow</div>
+                    <h3>Wireless Ambient LED Uplighter Bars</h3>
+                    <p>Battery-powered high-intensity wash bars set around venue perimeters. Operates over wireless mesh networks to prevent messy wire runs along entryways lanes.</p>
+                </div>
+            </div>
+
+            <!-- Lighting Card 3 -->
+            <div class="il-asset-card" onclick="window.location.href='404.html'">
+                <div class="il-img-shell">
+                    <img src="./assests/couple shoot.webp" alt="Vintage Filament Strings Hanging Lights Curation" loading="lazy">
+                </div>
+                <div class="il-meta-text">
+                    <div class="il-pill-tag">Vintage Lightscapes</div>
+                    <h3>Hanging Vintage Amber Filament Strands</h3>
+                    <p>Heavy-duty outdoor string lights with antique warm-glow filament bulbs. Layered through canopy rigging grids to design an immersive stardust roof effect over receptions.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ==========================================================================
+   ENHANCED LUMINANCE ARCHITECTURE COMMAND CENTER WORKSPACE
+   ========================================================================== */
+.illumination-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- ROW 1: Banner Summary Card --- */
+.il-status-banner {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.01);
+}
+
+.il-banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.il-left-meta { max-width: 700px; }
+
+.il-mini-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #E8998D;
+    margin-bottom: 8px;
+}
+
+.il-left-meta h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111111;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.il-summary-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+}
+
+.il-right-action-box { flex-shrink: 0; }
+
+.il-test-trigger-btn {
+    padding: 14px 24px;
+    background-color: #E8998D; /* Brand core peach primary accent color */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+}
+
+.il-test-trigger-btn:hover {
+    background-color: #D6867B;
+    transform: translateY(-2px);
+}
+
+/* --- ROW 2: Cross-Comparison Lighting Node Matrix Table --- */
+.il-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+}
+
+.il-table-block {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+.il-table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.il-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 900px; /* Secure horizontal spacing locks alignment tracks across screen sizes */
+}
+
+.il-matrix-table th {
+    background-color: #FFF8F6;
+    padding: 14px 18px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+}
+
+.il-matrix-table td {
+    padding: 16px 18px;
+    font-size: 0.9rem;
+    color: #5D4A47;
+    border-bottom: 1px solid rgba(93, 74, 71, 0.05);
+}
+
+.il-matrix-table tbody tr:last-child td { border-bottom: none; }
+
+.il-font-mono { font-family: 'Courier New', Courier, monospace; font-weight: 700; font-size: 0.85rem !important; }
+.il-font-bold { font-weight: 700; color: #1A1A1A !important; }
+
+/* Custom Badge Tags inside Table matrix cells */
+.il-status-badge {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    display: inline-block;
+}
+.badge-green { background-color: #E2F6EC; color: #1E7E34; }
+.badge-orange { background-color: #FFF2E6; color: #D97706; }
+
+.il-table-action-link {
+    background: transparent;
+    border: none;
+    color: #E8998D;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.il-table-action-link:hover { color: #D6867B; text-decoration: underline; }
+
+/* --- ROW 3: Asymmetric Equipment Asset Cards Grid --- */
+.il-assets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 column symmetric track matrix split layout layout layout */
+    gap: 32px;
+    align-items: stretch;
+}
+
+.il-asset-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 25px rgba(93, 74, 71, 0.01);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.il-img-shell {
+    width: 100%;
+    aspect-ratio: 16 / 11; /* Rigid structural scale bounds limits aspect ratio window */
+    overflow: hidden;
+    background-color: #FFEBE5;
+}
+
+.il-img-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.il-meta-text {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.il-pill-tag {
+    align-self: flex-start;
+    padding: 4px 10px;
+    background-color: #FFF0EC;
+    color: #E8998D;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    margin-bottom: 14px;
+}
+
+.il-meta-text h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+}
+
+.il-meta-text p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #5D4A47;
+}
+
+/* Universal Asset Card Hover Transformations Focus Responses */
+.il-asset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.il-asset-card:hover .il-img-shell img { transform: scale(1.03); }
+.il-asset-card:hover h3 { color: #E8998D; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .il-banner-content { padding: 32px; }
+    .il-left-meta h2 { font-size: 1.6rem; }
+    .il-table-block { padding: 24px; }
+    .il-matrix-table th, .il-matrix-table td { padding: 12px; }
+    .il-assets-grid { gap: 20px; }
+    .il-meta-text { padding: 20px; }
+    .il-meta-text h3 { font-size: 1.1rem; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse split column arrays down seamlessly to vertical singular column channels flow layouts */
+    .il-assets-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .il-banner-content { text-align: center; justify-content: center; gap: 20px; }
+    .il-left-meta h2 { font-size: 1.4rem; }
+    .il-summary-text { font-size: 0.95rem; }
+    .il-test-trigger-btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .il-status-banner { padding: 24px 20px; border-radius: 16px; }
+    .il-table-block { border-radius: 16px; padding: 20px 14px; }
+    .il-asset-card { border-radius: 12px; }
+}
+
+</style>
+
+                <!-- Section 5: Earnings Statement Accounts Matrix -->
+              <section id="earnings-section" class="content-panel">
+    <div class="earnings-canvas-wrapper">
+        
+        <!-- ROW 1: Panoramic Earnings Overview Summary Metrics -->
+        <div class="ern-summary-row">
+            <!-- Metric 1 -->
+            <div class="ern-summary-card" onclick="window.location.href='404.html'">
+                <span class="ern-metric-lbl">Cumulative Gross Revenue</span>
+                <h3>Scale Matrix Total</h3>
+                <p class="ern-big-val">Values Locked</p>
+                <span class="ern-value-display">₹6,40,000</span>
+            </div>
+            <!-- Metric 2 -->
+            <div class="ern-summary-card balance-cleared-card" onclick="window.location.href='404.html'">
+                <span class="ern-metric-lbl">Total Cleared Payouts</span>
+                <h3>Released Funds</h3>
+                <p class="ern-big-val">Cleared to Ledger</p>
+                <span class="ern-value-display value-green">₹4,85,000</span>
+            </div>
+            <!-- Metric 3 -->
+            <div class="ern-summary-card balance-escrow-card" onclick="window.location.href='404.html'">
+                <span class="ern-metric-lbl">Escrow Pipeline Balance</span>
+                <h3>Retainer Hold</h3>
+                <p class="ern-big-val">Awaiting Handover</p>
+                <span class="ern-value-display value-orange">₹1,55,000</span>
+            </div>
+        </div>
+
+        <!-- ROW 2: Transaction Settlement Table Ledger Matrix Grid -->
+        <div class="ern-table-block">
+            <div class="ern-table-header-row">
+                <h3 class="ern-block-heading">✦ Project Settlement Accounts Track</h3>
+                <!-- Direct Account Cashout Request Button -->
+                <button class="ern-payout-trigger-btn" onclick="window.location.href='404.html'">
+                    <span>💸</span> Request Instant Settlement Dispatch
+                </button>
+            </div>
+            
+            <div class="ern-table-responsive-wrapper">
+                <table class="ern-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Settlement ID</th>
+                            <th>Event Project Reference</th>
+                            <th>Release Milestone Code</th>
+                            <th>Settle Date Log</th>
+                            <th>Transfer Method</th>
+                            <th>Net Revenue Amount</th>
+                            <th>Clearance Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ern-font-mono">SET-2026-8041</td>
+                            <td>The Heritage Royal Canopy</td>
+                            <td>30% Booking Retainer</td>
+                            <td>Sep 14, 2026</td>
+                            <td>Razorpay UPI</td>
+                            <td class="ern-font-bold">₹37,500</td>
+                            <td><span class="ern-status-badge badge-green">Settled</span></td>
+                        </tr>
+                        <tr>
+                            <td class="ern-font-mono">SET-2026-8210</td>
+                            <td>The Heritage Royal Canopy</td>
+                            <td>50% Blueprint Release</td>
+                            <td>Oct 28, 2026</td>
+                            <td>NEFT Bank Wire</td>
+                            <td class="ern-font-bold">₹62,500</td>
+                            <td><span class="ern-status-badge badge-green">Settled</span></td>
+                        </tr>
+                        <tr>
+                            <td class="ern-font-mono">SET-2026-9022</td>
+                            <td>Neon Matrix Tech Awards</td>
+                            <td>50% Mid-Production Base</td>
+                            <td>Nov 01, 2026</td>
+                            <td>IMPS Bank Transfer</td>
+                            <td class="ern-font-bold">₹1,10,000</td>
+                            <td><span class="ern-status-badge badge-green">Settled</span></td>
+                        </tr>
+                        <tr>
+                            <td class="ern-font-mono">SET-2026-HOLD</td>
+                            <td>Neon Matrix Tech Awards</td>
+                            <td>50% Setup Handover</td>
+                            <td>Launch Pending</td>
+                            <td>Awaiting Transfer</td>
+                            <td class="ern-font-bold gray-text">₹1,10,000</td>
+                            <td><span class="ern-status-badge badge-orange">In Escrow</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ==========================================================================
+   ENHANCED PARTNER EARNINGS STATEMENT & LEDGER DESIGN
+   ========================================================================== */
+.earnings-canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+/* --- ROW 1: Panoramic Summary Metrics Cards Layout --- */
+.ern-summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.ern-summary-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.ern-metric-lbl {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+    margin-bottom: 12px;
+}
+
+.ern-summary-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 2px;
+}
+
+.ern-big-val {
+    font-size: 0.82rem;
+    color: #8C7672;
+    margin-bottom: 16px;
+}
+
+.ern-value-display {
+    display: block;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    transition: color 0.2s ease;
+}
+
+/* Color theme variance pops hover modifications */
+.value-green { color: #1E7E34; }
+.value-orange { color: #D97706; }
+
+.ern-summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(232, 153, 141, 0.12);
+    border-color: rgba(232, 153, 141, 0.4);
+}
+.ern-summary-card:hover .ern-value-display:not(.value-green):not(.value-orange) { color: #E8998D; }
+.balance-cleared-card:hover .value-green { color: #128C54; }
+.balance-escrow-card:hover .value-orange { color: #B45309; }
+
+/* --- ROW 2: Interactive Settlement Table Ledger --- */
+.ern-block-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    letter-spacing: -0.2px;
+}
+
+.ern-table-block {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(93, 74, 71, 0.01);
+}
+
+.ern-table-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.ern-payout-trigger-btn {
+    padding: 12px 20px;
+    background-color: #128C54; /* Clean premium accounting settlement green color */
+    color: #FFFFFF;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(18, 140, 84, 0.15);
+}
+
+.ern-payout-trigger-btn:hover {
+    background-color: #0E7341;
+    transform: translateY(-1px);
+}
+
+.ern-table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ern-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 850px; /* Safe bounds locks table row width alignments across smaller viewports */
+}
+
+.ern-matrix-table th {
+    background-color: #FFF8F6;
+    padding: 14px 18px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+}
+
+.ern-matrix-table td {
+    padding: 16px 18px;
+    font-size: 0.9rem;
+    color: #5D4A47;
+    border-bottom: 1px solid rgba(93, 74, 71, 0.05);
+}
+
+.ern-matrix-table tbody tr:last-child td { border-bottom: none; }
+
+.ern-font-mono { font-family: 'Courier New', Courier, monospace; font-weight: 700; font-size: 0.85rem !important; }
+.ern-font-bold { font-weight: 700; color: #1A1A1A !important; }
+
+/* Custom Table Row Status Badges */
+.ern-status-badge {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    display: inline-block;
+}
+.badge-green { background-color: #E2F6EC; color: #1E7E34; }
+.badge-orange { background-color: #FFF2E6; color: #D97706; }
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA ADAPTER BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .ern-summary-row { gap: 16px; }
+    .ern-summary-card { padding: 20px; }
+    .ern-value-display { font-size: 1.6rem; }
+    .ern-table-block { padding: 24px; }
+    .ern-matrix-table th, .ern-matrix-table td { padding: 12px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse horizontal summary metrics cards row down to vertical singular column tracking flow layout */
+    .ern-summary-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ern-summary-card { border-radius: 12px; }
+    .ern-table-block { border-radius: 16px; padding: 20px 14px; }
+    .ern-payout-trigger-btn { width: 100%; justify-content: center; }
+}
+
+</style>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <style>
+        /* --- High-Quality Layout Backing Architecture Resets --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-body {
+    background-color: #FFF8F6; /* Domain signature pale pink canvas background colors */
+    color: #1A1A1A;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.dashboard-grid-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Rigid grid split locking the sidebar layout bounds */
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ==========================================================================
+   SIDEBAR TRAY COMPONENT STYLING
+   ========================================================================== */
+.db-sidebar {
+    background-color: #0F141C; /* Premium dark solid slate color matching sign-up actions button theme */
+    border-right: 1px solid rgba(232, 153, 141, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sidebar-header-branding {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-logo-wrap {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+.sidebar-logo-wrap:hover { opacity: 0.8; }
+.sidebar-logo-img { height: 32px; width: auto; object-fit: contain; }
+
+.mobile-menu-close-btn {
+    display: none; /* Hidden by default on desktop computers viewports */
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Tab Layout Menus Stack Buttons */
+.sidebar-nav-menu {
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+.nav-item-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: #A39391; /* Soft readable dark contrast tone texts */
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.25s ease;
+    text-align: left;
+}
+
+.nav-icon {
+    width: 18px;
+    height: 18px;
+    color: #A39391;
+    transition: color 0.25s ease;
+}
+
+/* Interactive Active Hover Focus States mapping */
+.nav-item-btn:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #FFFFFF;
+}
+.nav-item-btn:hover .nav-icon { color: #FFFFFF; }
+
+/* Injected current active view status tracker indicator styling */
+.nav-item-btn.active-tab {
+    background-color: #E8998D; /* Shifts beautifully into brand peach primary accent core */
+    color: #FFFFFF;
+}
+.nav-item-btn.active-tab .nav-icon {
+    color: #FFFFFF;
+}
+
+/* Sidebar Bottom Dismiss Button */
+.sidebar-footer-row {
+    padding: 24px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-logout-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background-color: rgba(220, 53, 69, 0.1); /* Subtle dark crimson alpha layer fill */
+    border: 1px solid rgba(220, 53, 69, 0.15);
+    border-radius: 12px;
+    color: #F8D7DA;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.logout-icon { width: 18px; height: 18px; color: #F8D7DA; }
+
+.sidebar-logout-btn:hover {
+    background-color: #DC3545; /* Solid feedback warning fill color accent */
+    color: #FFFFFF;
+    border-color: #DC3545;
+}
+.sidebar-logout-btn:hover .logout-icon { color: #FFFFFF; }
+
+/* ==========================================================================
+   MAIN DASHBOARD WORKSPACE AREA DESIGN
+   ========================================================================== */
+.db-main-viewport {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Header bar tracking menu alignments */
+.db-header-bar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.header-left-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.mobile-hamburger-btn {
+    display: none; /* Hidden by default rule frameworks on desktop screen displays */
+    background: transparent;
+    border: none;
+    color: #1A1A1A;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+.mobile-hamburger-btn svg { width: 22px; height: 22px; }
+
+.header-brand-link {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    cursor: pointer;
+    letter-spacing: -0.3px;
+    transition: color 0.2s ease;
+}
+.header-brand-link:hover { color: #E8998D; }
+
+/* Notification and Profile Meta Group Elements */
+.header-right-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.header-bell-badge {
+    background: transparent;
+    border: none;
+    color: #8C7672;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+.header-bell-badge:hover { color: #E8998D; }
+.header-bell-badge svg { width: 22px; height: 22px; }
+
+/* Small active unread dot flag notification */
+.bell-active-indicator-dot {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #DC3545;
+    border-radius: 50%;
+    border: 1.5px solid #FFFFFF;
+}
+
+.header-profile-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.profile-avatar-circle {
+    width: 38px;
+    height: 38px;
+    background-color: #FFF0EC;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    border: 1px solid rgba(232, 153, 141, 0.2);
+}
+
+.profile-greeting {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-greeting-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #8C7672;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dynamic-username {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111111;
+    text-transform: capitalize; /* Cleaner user presentation */
+}
+
+/* ==========================================================================
+   DYNAMIC INTERACTION SUB-PANELS STYLING
+   ========================================================================== */
+.viewport-content-canvas {
+    padding: 40px;
+    flex-grow: 1;
+}
+
+.content-panel {
+    display: none; /* Suppressed baseline layers */
+    width: 100%;
+}
+
+/* Current target panel activated rule */
+.content-panel.active-panel {
+    display: block;
+    animation: fadeInSlate 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes fadeInSlate {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.placeholder-section-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 20px;
+    padding: 48px;
+    box-shadow: 0 10px 40px rgba(93, 74, 71, 0.02);
+}
+
+.placeholder-section-card h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #111111;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+}
+
+.placeholder-section-card p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+    max-width: 600px;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINTS HAMBURGER MECHANICS
+   ========================================================================== */
+@media (max-width: 992px) {
+    .dashboard-grid-layout {
+        grid-template-columns: 1fr; /* Sidebar drops out of grid stream allocations on tablets/phones */
+    }
+
+    .db-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%); /* Displaces menu tray panel out of active window views default states */
+        box-shadow: 25px 0 50px rgba(0,0,0,0.15);
+    }
+
+    /* JavaScript utility hook class stamps slider tray back smoothly */
+    .db-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .mobile-menu-close-btn { display: block; }
+    .mobile-hamburger-btn { display: flex; }
+    .db-header-bar { padding: 18px 24px; }
+    .viewport-content-canvas { padding: 24px; }
+}
+
+@media (max-width: 576px) {
+    .db-header-bar { padding: 16px; }
+    .header-right-meta-row { gap: 16px; }
+    .user-greeting-label { display: none; } /* Shrink components profile footprints to clean lines gaps */
+    .placeholder-section-card { padding: 32px 20px; border-radius: 16px; }
+    .placeholder-section-card h2 { font-size: 1.4rem; }
+    .placeholder-section-card p { font-size: 0.95rem; }
+}
+
+/* =========================================
+   MOBILE SIDEBAR BLUR OVERLAY
+========================================= */
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 20, 28, 0.35);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 99;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.sidebar-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Prevent Background Scrolling */
+body.sidebar-scroll-locked {
+    overflow: hidden !important;
+    touch-action: none;
+}
+
+/* Sidebar Above Overlay */
+.db-sidebar {
+    z-index: 100;
+}
+
+    </style>
+
+    <script>
+        // --- PART 2: MOBILE HAMBURGER WITH BLUR & SCROLL LOCK ---
+
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileCloseBtn = document.getElementById("mobileCloseBtn");
+const dbSidebar = document.getElementById("dbSidebar");
+const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+function openMobileSidebar() {
+    dbSidebar.classList.add("mobile-open");
+    sidebarBackdrop.classList.add("active");
+    document.body.classList.add("sidebar-scroll-locked");
+}
+
+function closeMobileSidebar() {
+    dbSidebar.classList.remove("mobile-open");
+    sidebarBackdrop.classList.remove("active");
+    document.body.classList.remove("sidebar-scroll-locked");
+}
+
+if (hamburgerBtn) {
+    hamburgerBtn.addEventListener("click", openMobileSidebar);
+}
+
+if (mobileCloseBtn) {
+    mobileCloseBtn.addEventListener("click", closeMobileSidebar);
+}
+
+if (sidebarBackdrop) {
+    sidebarBackdrop.addEventListener("click", closeMobileSidebar);
+}
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: DYNAMIC EMAIL SUBSTRING GREET PARSER ENGINE ---
+    const userLabelNode = document.getElementById("dashboardUserLabel");
+    
+    // Pull active session records out of browser storage arrays safely
+    const storedEmail = localStorage.getItem("stackly_user_email") || "jeevi@gmail.com"; // Graceful fallback value mapping block
+    
+    if (storedEmail) {
+        // Core Parsing Routine: Isolate all character sequences located before the '@' text token
+        const parsedFirstName = storedEmail.split("@")[0];
+        
+        // Print the cleaned user signature string onto the active DOM header canvas node path
+        userLabelNode.textContent = parsedFirstName;
+    }
+
+
+    // --- PART 2: RESPONSIVE TOGGLE HAMBURGER FLY-OUT PIPELINES ---
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileCloseBtn = document.getElementById("mobileCloseBtn");
+    const dbSidebar = document.getElementById("dbSidebar");
+
+    if (hamburgerBtn && dbSidebar) {
+        hamburgerBtn.addEventListener("click", () => {
+            dbSidebar.classList.add("mobile-open");
+        });
+    }
+
+    if (mobileCloseBtn && dbSidebar) {
+        mobileCloseBtn.addEventListener("click", () => {
+            dbSidebar.classList.remove("mobile-open");
+        });
+    }
+
+
+    // --- PART 3: SECTION TAB HIGHLIGHT NAVIGATION SWAPPING ---
+    const tabButtons = document.querySelectorAll(".nav-item-btn");
+    const contentPanels = document.querySelectorAll(".content-panel");
+
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const targetSectionId = button.getAttribute("data-target");
+
+            // Row Step A: De-activate current highlighted side tab flags
+            tabButtons.forEach(btn => btn.classList.remove("active-tab"));
+            // Step B: Set current selection highlighted pop focus active status
+            button.classList.add("active-tab");
+
+            // Row Step C: Suppress visibility across alternate content tracks panels layers
+            contentPanels.forEach(panel => panel.classList.remove("active-panel"));
+            
+            // Step D: Direct render target layout section layer pane up onto canvas windows
+            const targetPanel = document.getElementById(targetSectionId);
+            if (targetPanel) {
+                targetPanel.classList.add("active-panel");
+            }
+
+            // Mobile UX Detail: Automatically close sidebar tray upon click navigation adjustments
+            if (window.innerWidth <= 992) {
+                dbSidebar.classList.remove("mobile-open");
+            }
+        });
+    });
+
+
+    // --- PART 4: SESSION DISMISS & BACK TO PORTAL LOGOUT PROTOCOL ---
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            console.log("[Stackly Session]: Dismissing active artisan session keys, cleaning local cache tracks...");
+            
+            // Wipe committed credential metrics to lock security authorization frames comfortably
+            localStorage.removeItem("stackly_user_email");
+            localStorage.removeItem("stackly_user_role");
+
+            // Route back immediately to the core entry gate portal panel desk
+            window.location.href = "login.html";
+        });
+    }
+});
+
+    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileCloseBtn = document.getElementById("mobileCloseBtn");
+    const dbSidebar = document.getElementById("dbSidebar");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+    const tabButtons = document.querySelectorAll(".nav-item-btn");
+    const contentPanels = document.querySelectorAll(".content-panel");
+
+    // --------------------------------
+    // MOBILE SIDEBAR
+    // --------------------------------
+
+    function openMobileSidebar() {
+        if (dbSidebar) dbSidebar.classList.add("mobile-open");
+        if (sidebarBackdrop) sidebarBackdrop.classList.add("active");
+        document.body.classList.add("sidebar-scroll-locked");
+    }
+
+    function closeMobileSidebar() {
+        if (dbSidebar) dbSidebar.classList.remove("mobile-open");
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove("active");
+        document.body.classList.remove("sidebar-scroll-locked");
+    }
+
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener("click", openMobileSidebar);
+    }
+
+    if (mobileCloseBtn) {
+        mobileCloseBtn.addEventListener("click", closeMobileSidebar);
+    }
+
+    if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener("click", closeMobileSidebar);
+    }
+
+    // --------------------------------
+    // USER NAME
+    // --------------------------------
+
+    const userLabelNode = document.getElementById("dashboardUserLabel");
+    const storedEmail = localStorage.getItem("stackly_user_email") || "jeevi@gmail.com";
+
+    if (userLabelNode) {
+        userLabelNode.textContent = storedEmail.split("@")[0];
+    }
+
+    // --------------------------------
+    // RESTORE LAST ACTIVE SIDEBAR SECTION
+    // --------------------------------
+
+    function activateSection(sectionId) {
+
+        const targetButton = Array.from(tabButtons).find(
+            button => button.getAttribute("data-target") === sectionId
+        );
+
+        const targetPanel = document.getElementById(sectionId);
+
+        if (!targetButton || !targetPanel) {
+            return false;
+        }
+
+        tabButtons.forEach(button => {
+            button.classList.remove("active-tab");
+        });
+
+        contentPanels.forEach(panel => {
+            panel.classList.remove("active-panel");
+        });
+
+        targetButton.classList.add("active-tab");
+        targetPanel.classList.add("active-panel");
+
+        return true;
+    }
+
+    // Restore saved section after refresh
+    const savedSection = localStorage.getItem("stackly_active_section");
+
+    if (!savedSection || !activateSection(savedSection)) {
+
+        // Keep the default active section if no saved section exists
+        const defaultTab = document.querySelector(".nav-item-btn.active-tab");
+
+        if (defaultTab) {
+            const defaultSection = defaultTab.getAttribute("data-target");
+            activateSection(defaultSection);
+        }
+    }
+
+    // --------------------------------
+    // SIDEBAR NAVIGATION
+    // --------------------------------
+
+    tabButtons.forEach(button => {
+
+        button.addEventListener("click", function (event) {
+
+            event.preventDefault();
+
+            const sectionId = this.getAttribute("data-target");
+
+            if (activateSection(sectionId)) {
+
+                // Save selected section immediately
+                localStorage.setItem("stackly_active_section", sectionId);
+
+                if (window.innerWidth <= 992) {
+                    closeMobileSidebar();
+                }
+            }
+        });
+    });
+
+    // --------------------------------
+    // LOGOUT
+    // --------------------------------
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+
+            localStorage.removeItem("stackly_user_email");
+            localStorage.removeItem("stackly_user_role");
+            localStorage.removeItem("stackly_active_section");
+
+            window.location.href = "login.html";
+        });
+    }
+
+});
+
+// --------------------------------
+// LOGO REFRESH
+// --------------------------------
+
+function refreshDashboard() {
+
+    const activeTab = document.querySelector(".nav-item-btn.active-tab");
+
+    if (activeTab) {
+        const sectionId = activeTab.getAttribute("data-target");
+
+        localStorage.setItem("stackly_active_section", sectionId);
+    }
+
+    window.location.reload();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,2522 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Preloader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+    <!-- Standalone Responsive Preloader Screen -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <!-- Scaling Vector Icon (Abstract Event Arches) -->
+            <div class="logo-icon-wrapper">
+                <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
+                    <path class="arch arch-1" d="M20 90V50C20 33.4315 33.4315 20 50 20C66.5685 20 80 33.4315 80 50V90" stroke="url(#peachGradient)" stroke-width="6" stroke-linecap="round"/>
+                    <path class="arch arch-2" d="M35 90V55C35 46.7157 41.7157 40 50 40C58.2843 40 65 46.7157 65 55V90" stroke="url(#pinkGradient)" stroke-width="5" stroke-linecap="round"/>
+                    <circle class="sparkle" cx="50" cy="15" r="4" fill="#E8998D"/>
+                </svg>
+            </div>
+
+            
+            <h1 class="brand-name">Stackly</h1>
+            <p class="brand-tagline">Curating Moments, Styling Spaces</p>
+
+            <!-- Progress Tracker Components -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <span class="loading-text">Crafting your experience...</span>
+        </div>
+    </div>
+
+    <!-- Global SVG Gradient Definitions -->
+    <svg width="0" height="0" style="position:absolute; visibility: hidden;">
+        <defs>
+            <linearGradient id="peachGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD3C4"/>
+                <stop offset="100%" stop-color="#E8998D"/>
+            </linearGradient>
+            <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF0EC"/>
+                <stop offset="100%" stop-color="#F3B0A6"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const preloader = document.getElementById("preloader");
+    const progressBar = document.getElementById("progress-bar");
+
+    // Instantly begin progress bar loading transition
+    setTimeout(() => {
+        progressBar.style.width = "100%";
+    }, 50);
+
+    // Exact 2000ms delay window before executing clean removal sequence
+    setTimeout(() => {
+        preloader.classList.add("fade-out");
+        document.body.classList.remove("loading");
+        
+        // Remove structural items entirely after fade duration closes
+        setTimeout(() => {
+            preloader.remove();
+        }, 600); 
+    }, 2000);
+});
+
+    </script>
+
+    <!-- Navigation Header Component -->
+<header class="main-header">
+    <div class="header-container">
+        
+        <!-- Brand Logo (Refreshes Page on Click) -->
+        <div class="logo-wrapper" onclick="window.location.reload();" role="button" aria-label="Refresh home page">
+            <img src="./assests/header logo.webp" alt="Stackly Logo" class="brand-logo-img">
+        </div>
+
+        <!-- Center Navigation Menu -->
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link ">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="Portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <!-- Auth Button duplicated inside mobile drawer for layout flow -->
+       <button class="auth-btn mobile-auth-btn" onclick="window.location.href='login.html'">Sign In</button>
+        </nav>
+
+        <!-- Right Side Auth Button (Desktop View) -->
+        <div class="auth-wrapper">
+          <button class="auth-btn" onclick="window.location.href='login.html'">Sign In</button>
+        </div>
+
+        <!-- Mobile Hamburger Trigger -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+    </div>
+</header>
+
+<!-- Mobile Blur Backdrop Layer -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const navMenu = document.getElementById("navMenu");
+    const menuBackdrop = document.getElementById("menuBackdrop");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    // Unified function to handle open/close states
+    const toggleMenu = () => {
+        const isOpen = navMenu.classList.toggle("is-open");
+        hamburgerBtn.classList.toggle("is-active");
+        menuBackdrop.classList.toggle("is-visible");
+        
+        // Accessibility update
+        hamburgerBtn.setAttribute("aria-expanded", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+    };
+
+    // Trigger toggle on click elements
+    hamburgerBtn.addEventListener("click", toggleMenu);
+    menuBackdrop.addEventListener("click", toggleMenu);
+
+    // Track Navigation Item Interactions and switch visual Active State
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Remove active profile styling classes from all existing links
+            navLinks.forEach(item => item.classList.remove("active"));
+            
+            // Apply focus/active states cleanly onto target item
+            link.classList.add("active");
+
+            // Smooth close logic handling mobile interactions
+            if (navMenu.classList.contains("is-open")) {
+                toggleMenu();
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Sub-Header Actions Utility Bar Section -->
+<section class="action-bar-section">
+    <div class="action-bar-container">
+        
+        <!-- Left Side Dynamic Context Operations -->
+        <div class="left-actions-group">
+            <!-- Validation Protected Search Box -->
+            <form class="action-search-form" id="searchForm" novalidate>
+                <div class="search-input-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search decor styles, events..." aria-label="Search">
+                    <button type="submit" class="search-submit-btn" aria-label="Submit search">
+                        <!-- Search Vector Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <!-- Custom Native Tooltip Alert Placement -->
+                    <span class="validation-message" id="searchAlert">Please fill out this field.</span>
+                </div>
+            </form>
+
+            <!-- Interactive Geolocation Pointer -->
+            <a href="https://maps.app.goo.gl/1iUAJLxSuFhmkqeE8" target="_blank" rel="noopener noreferrer" class="location-anchor-link">
+                <!-- Map Pin Vector Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pin-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span class="location-text">Coimbatore, TN</span>
+            </a>
+        </div>
+
+        <!-- Center Flex Spacer (Maintained Horizontally via CSS Flex layout alignment) -->
+        <div class="center-flex-spacer"></div>
+
+        <!-- Right Side Social Ecosystem Layout -->
+        <div class="right-socials-group">
+            <!-- Instagram -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Instagram profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit Facebook profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <!-- YouTube -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit YouTube channel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="404.html" class="social-icon-link" aria-label="Visit LinkedIn workspace">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Action Utility Config --- */
+.action-bar-section {
+    width: 100%;
+    background-color: #FFF8F6;
+    border-bottom: 1px solid rgba(232, 153, 141, 0.15);
+    padding: 16px 0;
+    margin-top: 80px; /* Aligns correctly below the fixed header layout offset */
+}
+
+.action-bar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Left Sided Alignment Flex Units --- */
+.left-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Validation Wrapper Box Structure */
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrapper input {
+    width: 260px;
+    padding: 10px 40px 10px 16px;
+    border: 1.5px solid rgba(93, 74, 71, 0.15);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #1A1A1A;
+    background-color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: #E8998D;
+    box-shadow: 0 0 0 3px rgba(232, 153, 141, 0.1);
+}
+
+.search-submit-btn {
+    position: absolute;
+    right: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8C7672;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.search-submit-btn:hover {
+    color: #E8998D;
+}
+
+.search-submit-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Message Box Dynamic Placement CSS */
+.validation-message {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 12px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+/* Clean micro triangle anchor decoration pointing up to input window */
+.validation-message::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 16px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #1A1A1A transparent;
+}
+
+.validation-message.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- Location Map Point Links --- */
+.location-anchor-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #5D4A47;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.location-anchor-link:hover {
+    color: #E8998D;
+}
+
+.location-anchor-link svg.pin-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D;
+}
+
+/* --- Center Segment --- */
+.center-flex-spacer {
+    flex-grow: 1;
+}
+
+/* --- Right Side Vectors --- */
+.right-socials-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.social-icon-link {
+    color: #5D4A47;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.social-icon-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-icon-link:hover {
+    color: #E8998D;
+    transform: translateY(-2px);
+}
+
+/* --- Fully Responsive Breakpoints Viewports Layout --- */
+@media (max-width: 992px) {
+    .action-bar-container {
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .action-bar-section {
+        margin-top: 70px; /* Responsive tracking downscaled configuration step */
+        padding: 14px 0;
+    }
+
+    .action-bar-container {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .left-actions-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .search-input-wrapper input {
+        width: 100%; /* Spans viewport wide cleanly on compact displays */
+    }
+
+    .location-anchor-link {
+        justify-content: center;
+        padding: 4px 0;
+    }
+
+    .center-flex-spacer {
+        display: none; /* Collapses space unit natively when running vertical structures */
+    }
+
+    .right-socials-group {
+        justify-content: center;
+        border-top: 1px solid rgba(232, 153, 141, 0.1);
+        padding-top: 14px;
+        gap: 28px;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    const searchAlert = document.getElementById("searchAlert");
+
+    searchForm.addEventListener("submit", (e) => {
+        // Halt default transmission protocols instantly
+        e.preventDefault();
+
+        // Extract whitespace stripped characters from input layer
+        const queryValue = searchInput.value.trim();
+
+        if (queryValue === "") {
+            // Reveal validation context box banner
+            searchAlert.classList.add("is-visible");
+            searchInput.focus();
+        } else {
+            // Clean active errors out and smoothly direct to targeted broken page path
+            searchAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Dismiss active visible validation boxes if user initiates typing corrections
+    searchInput.addEventListener("input", () => {
+        if (searchAlert.classList.contains("is-visible")) {
+            searchAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Dismiss tooltip box elements cleanly if user shifts layout context/blur focus
+    searchInput.addEventListener("blur", () => {
+        searchAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Elegant Creative Contact Hero Component -->
+<section class="contact-hero-section" id="contactHero">
+    <div class="contact-hero-container">
+        
+        <!-- Left Column: Typography Operations & Coordinates -->
+        <div class="ch-left-content fly-from-left">
+            <span class="ch-mini-label">Connect With Stackly</span>
+            
+            <!-- Scroll-Triggered Word-by-Word Title Header -->
+            <h1 class="contact-hero-title" id="contactHeroTitle">
+                <span class="ch-word">Let's</span>
+                <span class="ch-word">Style</span>
+                <span class="ch-word">Your</span>
+                <span class="ch-word">Next</span>
+                <span class="ch-word-accent">Celebration</span>
+            </h1>
+
+            <p class="ch-interactive-para">
+                Have a milestone vision in mind? Whether you are planning a grand royal outdoor wedding mandapam or an intimate backyard milestone function across Tamil Nadu, our styling team is ready to map your concept blueprint meticulously from the ground up.
+            </p>
+
+            <!-- Quick Access Studio Links -->
+            <div class="ch-quick-coordinates">
+                <div class="ch-coord-item">
+                    <span class="ch-coord-label">General Inquiry</span>
+                    <a href="404.html" class="ch-coord-link">hello@stacklyevents.com</a>
+                </div>
+                <div class="ch-coord-item">
+                    <span class="ch-coord-label">Call Our Studio</span>
+                    <a href="404.html" class="ch-coord-link">+91 7010792745</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Asymmetric Layered Framing Collage Matrix -->
+        <div class="ch-right-graphics fly-from-right">
+            <div class="asymmetric-contact-frame">
+                
+                <!-- Main Layer Image Container Wrapper -->
+                <div class="ch-img-wrapper main-frame" onclick="window.location.href='404.html'">
+                    <img src="./assests/wedding decor.webp" alt="Stackly Creative Stylist Mapping Event Color Palettes" loading="lazy">
+                    <div class="ch-cover-shading"></div>
+                </div>
+
+                <!-- Front Floating Overlay Image Container Wrapper -->
+                <div class="ch-img-wrapper front-overlay-frame" onclick="window.location.href='404.html'">
+                    <img src="./assests/wedding hall decor.webp" alt="Fresh Floral Stage Setup Detail Capture" loading="lazy">
+                </div>
+
+                <!-- Geometric Frame Offset Backdrop Plate Decoration -->
+                <div class="ch-decor-offset-plate"></div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Architecture --- */
+.contact-hero-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain signature pale pink / soft peach canvas theme color */
+    padding: 40px 0 100px 0; /* Tight top padding pulls element up directly below subheaders */
+    margin-top: 0px; 
+    overflow: hidden;
+    position: relative;
+}
+
+.contact-hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr; /* Proportional track distribution balancing text and graphics */
+    gap: 60px;
+    align-items: center;
+}
+
+/* --- Left Side Content Area Typography --- */
+.ch-left-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.ch-mini-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand signature primary peach token */
+    margin-bottom: 8px;
+}
+
+/* --- Word-by-Word Scroll Headline Reveals --- */
+.contact-hero-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    color: #111111; /* Clean High-Contrast Near-Black */
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -1.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 14px;
+}
+
+.ch-word, .ch-word-accent {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ch-word-accent {
+    color: #E8998D; /* Highlight color token swap pop */
+}
+
+/* Activated via dynamic JS scroll pipelines */
+.contact-active-trigger .ch-word,
+.contact-active-trigger .ch-word-accent {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger sequence delay array mappings */
+.contact-active-trigger .ch-word:nth-child(1) { transition-delay: 0.05s; }
+.contact-active-trigger .ch-word:nth-child(2) { transition-delay: 0.15s; }
+.contact-active-trigger .ch-word:nth-child(3) { transition-delay: 0.25s; }
+.contact-active-trigger .ch-word:nth-child(4) { transition-delay: 0.35s; }
+.contact-active-trigger .ch-word-accent { transition-delay: 0.45s; }
+
+/* Micro-Scaling Interactive Paragraph */
+.ch-interactive-para {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: #5D4A47;
+    margin-bottom: 36px;
+    max-width: 540px;
+    cursor: default;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+    transform-origin: left center;
+}
+
+.ch-interactive-para:hover {
+    transform: scale(1.02);
+    color: #111111;
+}
+
+/* Coordinates Information Links Wrapper */
+.ch-quick-coordinates {
+    display: flex;
+    gap: 40px;
+    border-top: 1px dashed rgba(232, 153, 141, 0.25);
+    padding-top: 24px;
+}
+
+.ch-coord-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ch-coord-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8C7672;
+}
+
+.ch-coord-link {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.ch-coord-link:hover {
+    color: #E8998D;
+}
+
+/* --- Left / Right Directional Entrance Vector Controls --- */
+.fly-from-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.contact-active-trigger .fly-from-left,
+.contact-active-trigger .fly-from-right {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* ==========================================================================
+   ASYMMETRICAL OVERLAPPING COVER IMAGE COLLAGE
+   ========================================================================== */
+.ch-right-graphics {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.asymmetric-contact-frame {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 520px;
+}
+
+/* Main Background Portrait Image Container Shell */
+.ch-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    background-color: #FFEBE5;
+    cursor: pointer;
+    box-shadow: 0 15px 45px rgba(93, 74, 71, 0.06);
+}
+
+.ch-img-wrapper.main-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 82%;
+    height: 88%;
+    border-radius: 20px;
+    z-index: 3;
+}
+
+.ch-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ch-cover-shading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(26,26,26,0) 60%, rgba(26,26,26,0.15) 100%);
+}
+
+/* Secondary Front Floating Overlay Image Container Shell */
+.ch-img-wrapper.front-overlay-frame {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 52%;
+    height: 46%;
+    border-radius: 16px;
+    z-index: 4; /* Floats directly on top of background frame */
+    border: 4px solid #FFFFFF; /* High-contrast crisp border profile separation lines */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Geometric Offset Backdrop Plate Decoration */
+.ch-decor-offset-plate {
+    position: absolute;
+    bottom: -16px;
+    left: -16px;
+    width: 35%;
+    height: 35%;
+    background-color: #F3B0A6; /* Pale pink layout block backer fill coloring */
+    border-radius: 16px;
+    z-index: 1;
+    opacity: 0.25;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Unified Interactive Hovers on Graphic Wrapper Intercept Focus */
+.asymmetric-contact-frame:hover .main-frame img {
+    transform: scale(1.03);
+}
+
+.asymmetric-contact-frame:hover .front-overlay-frame {
+    transform: translate(-8px, -8px) scale(1.02); /* Coordinates shift smoothly out on hover */
+}
+
+.asymmetric-contact-frame:hover .ch-decor-offset-plate {
+    transform: translate(6px, 6px);
+}
+
+/* ==========================================================================
+   FLUID RESPONSIVE MEDIA CONSTRAINTS BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .contact-hero-title { font-size: 3rem; }
+    .asymmetric-contact-frame { height: 420px; max-width: 420px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse split rows layout architecture down cleanly into central single vertical stack channels natively */
+    .contact-hero-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+
+    .contact-hero-title { justify-content: center; }
+    .ch-interactive-para { margin-left: auto; margin-right: auto; }
+    .ch-quick-coordinates { justify-content: center; gap: 30px; }
+    .ch-right-graphics { justify-content: center; }
+
+    /* Re-direct side-slides entries to safe bottom-up vector flows for screen stability */
+    .fly-from-left, .fly-from-right {
+        transform: translateY(40px) !important;
+    }
+    
+    .ch-decor-offset-plate { display: none; } /* Strip background block card shapes to balance mobile viewport spacing */
+}
+
+@media (max-width: 576px) {
+    .contact-hero-section { padding: 30px 0 60px 0; margin-top: 0px; }
+    .contact-hero-container { padding: 0 24px; }
+    .contact-hero-title { font-size: 2.2rem; gap: 0 8px; }
+    .ch-interactive-para { font-size: 0.95rem; }
+    .ch-quick-coordinates { flex-direction: column; align-items: center; gap: 20px; }
+    .asymmetric-contact-frame { height: 320px; max-width: 320px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const contactHero = document.getElementById("contactHero");
+
+    // --- INTEGRATED INTERSECTION SCROLL PIPELINE ---
+    const contactObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Stamping parent class hook executes typography sequence and block slides simultaneously
+                contactHero.classList.add("contact-active-trigger");
+                contactObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 }); // Fires smoothly when 15% of container height scales onto viewport frames
+
+    if (contactHero) contactObserver.observe(contactHero);
+});
+
+</script>
+
+<!-- Stackly Event Consultation & Contact Coordinates Section -->
+<section class="contact-form-section" id="contactFormSection">
+    <div class="cf-master-container">
+
+        <!-- LEFT COLUMN: Bespoke Event Styling Inquiry Form -->
+        <div class="cf-form-column-block">
+            <div class="cf-badge-tag tag-peach">Design Mapping</div>
+            
+            <h2 class="cf-block-title" id="formTitle">
+                <span class="cf-word">Configure</span>
+                <span class="cf-word">Your</span>
+                <span class="cf-word">Celebration</span>
+                <span class="cf-word">Matrix</span>
+            </h2>
+            <p class="cf-block-desc">Fill out your baseline requirements below. Our design systems will dynamically compute a tailored decoration proposal blueprint.</p>
+
+            <form class="cf-interactive-form" id="consultationForm" novalidate>
+                <div class="form-fields-grid">
+                    
+                    <!-- Input 1: Full Name -->
+                    <div class="input-field-group">
+                        <label for="fullName">Full Name / Client Title</label>
+                        <div class="input-icon-wrapper">
+                            <span class="field-vector-icon">👤</span>
+                            <input type="text" id="fullName" placeholder="e.g. Vikram R">
+                        </div>
+                    </div>
+
+                    <!-- Input 2: Mobile -->
+                    <div class="input-field-group">
+                        <label for="mobileHandle">Contact Mobile Handle</label>
+                        <div class="input-icon-wrapper">
+                            <span class="field-vector-icon">📞</span>
+                            <input type="tel" id="mobileHandle" placeholder="e.g. +91 9876543210">
+                        </div>
+                    </div>
+
+                    <!-- Input 3: Email -->
+                    <div class="input-field-group">
+                        <label for="emailAddress">Email Inbox Address</label>
+                        <div class="input-icon-wrapper">
+                            <span class="field-vector-icon">✉️</span>
+                            <input type="email" id="emailAddress" placeholder="e.g. design@stacklystudio.com">
+                        </div>
+                    </div>
+
+                    <!-- Input 4: Guest Volume -->
+                    <div class="input-field-group">
+                        <label for="guestVolume">Estimated Guest Volume Attendance</label>
+                        <div class="input-icon-wrapper">
+                            <span class="field-vector-icon">👥</span>
+                            <input type="number" id="guestVolume" placeholder="e.g. 150">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Textarea Block -->
+                <div class="input-field-group textarea-group">
+                    <label for="eventNotes">Thematic Style Preferences & Event Notes</label>
+                    <div class="input-icon-wrapper text-area-wrap">
+                        <span class="field-vector-icon area-icon">📝</span>
+                        <textarea id="eventNotes" placeholder="Describe any tracking theme preferences, flower choices, traditional mandapam setups, lighting architectures, or specific package inclusions..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Form Action Button -->
+                <div class="form-action-row">
+                    <button type="submit" class="cf-submit-btn">
+                        <span class="btn-send-icon">✨</span> Transmit Design Blueprint Request
+                    </button>
+                    <!-- Custom Native Error Prompt Banner -->
+                    <span class="global-validation-alert" id="formAlert">Please fill out all the fields.</span>
+                </div>
+            </form>
+        </div>
+
+        <!-- RIGHT COLUMN: Headquarters Coordinates Info Panel -->
+        <div class="cf-info-column-block">
+            <div class="cf-badge-tag tag-dark">Flagship Curation Atelier</div>
+            
+            <h2 class="cf-block-title" id="infoTitle">
+                <span class="cf-word">Reach</span>
+                <span class="cf-word">Our</span>
+                <span class="cf-word">Design</span>
+                <span class="cf-word">Architects</span>
+            </h2>
+            <p class="cf-block-desc">Connect directly with our event design staff to fast-track specialized site bookings, custom staging consultations, and structural lookbook estimates.</p>
+
+            <div class="info-coordinates-stack">
+                
+                <!-- Studio Location Anchor -->
+                <a href="https://maps.app.goo.gl/1iUAJLxSuFhmkqeE8" target="_blank" rel="noopener noreferrer" class="coord-card-item">
+                    <div class="coord-icon-circle">📍</div>
+                    <div class="coord-data-text">
+                        <span class="coord-label">Visit Our Studio</span>
+                        <p>MMR Complex, Periyakollapatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</p>
+                    </div>
+                </a>
+
+                <!-- Hotlines Anchor -->
+                <a href="tel:+917010792745" class="coord-card-item">
+                    <div class="coord-icon-circle">📞</div>
+                    <div class="coord-data-text">
+                        <span class="coord-label">Direct Hotlines</span>
+                        <p>+91 7010792745</p>
+                    </div>
+                </a>
+
+                <!-- Outlook Link Protocol Trigger (Forces mail id into the 'To' column automatically) -->
+                <a href="mailto:design@://stacklystudio.com" class="coord-card-item mail-outlook-trigger">
+                    <div class="coord-icon-circle">✉️</div>
+                    <div class="coord-data-text">
+                        <span class="coord-label">Electronic Mail</span>
+                        <p class="underlined-email">design@stacklystudio.com</p>
+                    </div>
+                </a>
+
+                <!-- Atelier Availability Hours -->
+                <div class="coord-card-item default-cursor">
+                    <div class="coord-icon-circle">🕒</div>
+                    <div class="coord-data-text">
+                        <span class="coord-label">Atelier Availability</span>
+                        <p>Mon - Sun: 9:00 AM - 7:00 PM</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Core Section Structure --- */
+.contact-form-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach canvas backdrop color theme */
+    padding: 100px 0;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cf-master-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* Precise horizontal layout ratio split from image reference */
+    gap: 48px;
+    align-items: stretch;
+}
+
+/* --- Card Column Architecture Containers --- */
+.cf-form-column-block, 
+.cf-info-column-block {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 15px 45px rgba(93, 74, 71, 0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Badge System Branding Tones */
+.cf-badge-tag {
+    align-self: flex-start;
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+.tag-peach { background-color: #FFF0EC; color: #E8998D; }
+.tag-dark { background-color: #1A1A1A; color: #FFFFFF; }
+
+/* --- Word-by-Word Scroll Reveal Titles --- */
+.cf-block-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #111111; /* High-Contrast Near-Black */
+    line-height: 1.2;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+}
+
+.cf-word {
+    opacity: 0.15;
+    transform: translateY(10px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal-active .cf-word {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cf-block-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5D4A47;
+    margin-bottom: 32px;
+}
+
+/* ==========================================================================
+   FORM CORE MATRIX FIELDS DESIGN
+   ========================================================================== */
+.form-fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+    margin-bottom: 24px;
+}
+
+.input-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.textarea-group {
+    margin-bottom: 32px;
+}
+
+.input-field-group label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+}
+
+.input-icon-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.field-vector-icon {
+    position: absolute;
+    left: 16px;
+    font-size: 1rem;
+    color: #8C7672;
+    pointer-events: none;
+    user-select: none;
+}
+
+.area-icon {
+    top: 14px;
+}
+
+.input-icon-wrapper input,
+.input-icon-wrapper textarea {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    border: 1.5px solid rgba(93, 74, 71, 0.15);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #111111;
+    background-color: #FFFFFF;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.input-icon-wrapper textarea {
+    height: 110px;
+    resize: none;
+    line-height: 1.6;
+}
+
+/* Focus input behaviors */
+.input-icon-wrapper input:focus,
+.input-icon-wrapper textarea:focus {
+    border-color: #E8998D;
+    box-shadow: 0 0 0 4px rgba(232, 153, 141, 0.12);
+}
+
+/* Validation error border warning highlight toggle */
+.input-field-group.has-error input,
+.input-field-group.has-error textarea {
+    border-color: #DC3545;
+    background-color: #FFF5F5;
+}
+
+/* --- Action Submit Button --- */
+.form-action-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+.cf-submit-btn {
+    padding: 16px 28px;
+    background-color: #E8998D; /* Brand core peach primary color */
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+}
+
+.cf-submit-btn:hover {
+    background-color: #D6867B;
+    transform: translateY(-1px);
+}
+
+/* In-line warning notification label */
+.global-validation-alert {
+    color: #DC3545;
+    font-size: 0.85rem;
+    font-weight: 700;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.25s ease;
+}
+
+.global-validation-alert.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* ==========================================================================
+   RIGHT COLUMN COORDINATES PANEL DESIGN
+   ========================================================================== */
+.info-coordinates-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-grow: 1;
+}
+
+.coord-card-item {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(93, 74, 71, 0.08);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+.coord-icon-circle {
+    width: 44px;
+    height: 44px;
+    background-color: #FFF8F6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.coord-data-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.coord-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #8C7672;
+}
+
+.coord-data-text p {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    line-height: 1.5;
+}
+
+/* Target outlook pre-formatted anchor behavior link styles */
+.mail-outlook-trigger:hover .underlined-email {
+    color: #E8998D;
+    text-decoration: underline;
+}
+
+/* Card item tracking pointer responses */
+.coord-card-item:not(.default-cursor):hover {
+    transform: translateX(6px); /* Clean row sliding emphasis precisely from image */
+    box-shadow: 0 10px 25px rgba(232, 153, 141, 0.1);
+    border-color: rgba(232, 153, 141, 0.3);
+}
+
+.default-cursor {
+    cursor: default;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .cf-master-container { gap: 32px; padding: 0 24px; }
+    .cf-form-column-block, .cf-info-column-block { padding: 32px; }
+    .cf-block-title { font-size: 1.8rem; }
+}
+
+@media (max-width: 992px) {
+    /* Collapse split layout rows down seamlessly into centralized vertical singular column tracking files */
+    .cf-master-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        max-width: 650px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-form-section { padding: 60px 0; }
+    .cf-master-container { padding: 0 16px; }
+    .cf-form-column-block, .cf-info-column-block { padding: 24px; border-radius: 16px; }
+    .form-fields-grid { grid-template-columns: 1fr; gap: 16px; } /* Stack inputs vertically on mobile screen devices */
+    .cf-block-title { font-size: 1.5rem; }
+    .coord-card-item { padding: 16px; gap: 14px; }
+    .form-action-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .global-validation-alert { text-align: center; transform: none; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Intersection Observer ---
+    const headers = document.querySelectorAll(".cf-block-title");
+
+    const headerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-active");
+                headerObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    headers.forEach(header => headerObserver.observe(header));
+
+
+    // --- PART 2: Client-Side Form Field Validation Engine ---
+    const consultationForm = document.getElementById("consultationForm");
+    const globalFormAlert = document.getElementById("formAlert");
+    
+    // Target inputs stack validation matrices
+    const formInputs = [
+        document.getElementById("fullName"),
+        document.getElementById("mobileHandle"),
+        document.getElementById("emailAddress"),
+        document.getElementById("guestVolume"),
+        document.getElementById("eventNotes")
+    ];
+
+    consultationForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // Halt standard core browser transmission protocol
+
+        let isFormPayloadValid = true;
+
+        // Loop inputs to detect empty character string fields entries
+        formInputs.forEach(input => {
+            if (!input) return;
+            
+            const rawValue = input.value.trim();
+            const fieldParentGroup = input.closest(".input-field-group");
+
+            if (rawValue === "") {
+                isFormPayloadValid = false;
+                if (fieldParentGroup) {
+                    fieldParentGroup.classList.add("has-error");
+                }
+            } else {
+                if (fieldParentGroup) {
+                    fieldParentGroup.classList.remove("has-error");
+                }
+            }
+        });
+
+        if (!isFormPayloadValid) {
+            // Unmask the inline warning label prompt block natively
+            globalFormAlert.classList.add("is-visible");
+        } else {
+            // Dismiss error highlights and transition seamlessly to targeted 404 broken link path
+            globalFormAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Strip error border styles instantly as soon as client implements typings corrections
+    formInputs.forEach(input => {
+        if (!input) return;
+
+        input.addEventListener("input", () => {
+            const fieldParentGroup = input.closest(".input-field-group");
+            if (input.value.trim() !== "") {
+                if (fieldParentGroup) fieldParentGroup.classList.remove("has-error");
+                
+                // If all fields contain data now, wipe the main global alert prompt string
+                const activeErrors = consultationForm.querySelectorAll(".has-error");
+                if (activeErrors.length === 0) {
+                    globalFormAlert.classList.remove("is-visible");
+                }
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Creative Framed Map Section Component -->
+<section class="studio-map-section" id="mapSection">
+    <div class="map-master-container">
+
+        <!-- Header Group with Scroll Word Reveal -->
+        <div class="map-header-block">
+            <span class="map-small-tag">Atelier Coordinates</span>
+            <h2 class="map-main-title" id="mapTitle">
+                <span class="mp-word">Locate</span>
+                <span class="mp-word">Our</span>
+                <span class="mp-word">Creative</span>
+                <span class="mp-word-accent">Design</span>
+                <span class="mp-word-accent">Studio</span>
+            </h2>
+        </div>
+
+        <!-- Overlapping Frame Matrix Grid -->
+        <div class="map-matrix-grid">
+            
+            <!-- Left Side: Framed Map Graphic Image Shell with Offset Backdrop -->
+            <div class="map-graphic-side fly-from-left">
+                <div class="overlapping-map-frame" onclick="window.open('https://google.com', '_blank');">
+                    <!-- Replace with path to your high-resolution customized map illustration/snapshot -->
+                    <img src="./assests/map.webp" alt="Stackly Studio Location Map Snapshot" class="map-snapshot-img" loading="lazy">
+                    <div class="map-frosted-tint-overlay">
+                        <span class="map-interaction-prompt">Click to view active grid</span>
+                    </div>
+                    <!-- Modern geometric background block decoration from original reference layouts -->
+                    <div class="map-offset-backdrop"></div>
+                </div>
+            </div>
+
+            <!-- Right Side: Detailed Navigation Address Card -->
+            <div class="map-content-side fly-from-right">
+                <div class="studio-address-card">
+                    <div class="studio-marker-icon">📍</div>
+                    <h3>Stackly Headquarters</h3>
+                    <p class="studio-address-text">
+                        MMR Complex, Periyakollapatty,<br>Chinna Thirupathi, Salem,<br>Tamil Nadu 636008
+                    </p>
+                    <span class="studio-proximity-note">✦ Approximately 2.5 hours from Coimbatore hub.</span>
+                    
+                    <!-- High-Contrast Live Navigation Link Button -->
+                    <a href="https://maps.app.goo.gl/1iUAJLxSuFhmkqeE8" target="_blank" rel="noopener noreferrer" class="live-map-nav-btn">
+                        <span class="nav-btn-icon">🧭</span> Launch Live Navigation
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Configuration Base --- */
+.studio-map-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Domain pale pink / soft peach theme canvas color */
+    padding: 30px 0;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.map-master-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Header Word-by-Word Scroll Reveal --- */
+.map-header-block {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.map-small-tag {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #E8998D; /* Brand Peach Color */
+    margin-bottom: 12px;
+}
+
+.map-main-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #111111; /* Near Black */
+    letter-spacing: -1px;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.mp-word, .mp-word-accent {
+    opacity: 0.15;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.mp-word-accent {
+    color: #E8998D; /* Highlights brand location tags in peach */
+}
+
+.map-main-title.reveal-active .mp-word,
+.map-main-title.reveal-active .mp-word-accent {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   INTERACTIVE ASYMMETRIC GRID ARCHITECTURE
+   ========================================================================== */
+.map-matrix-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* Precise horizontal layout ratio split */
+    gap: 80px;
+    align-items: center;
+}
+
+/* --- Directional Fly-In Movement Mappings --- */
+.fly-from-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fly-from-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.map-matrix-grid.animate-grid-active .fly-from-left,
+.map-matrix-grid.animate-grid-active .fly-from-right {
+    opacity: 1;
+    transform: translate(0) translateY(0);
+}
+
+/* --- Left Side: Luxury Image Frame & Hover FX --- */
+.map-graphic-side {
+    position: relative;
+    width: 100%;
+}
+
+.overlapping-map-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 11; /* Locked stable landscape aspect ratio boundary */
+    z-index: 2;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.map-snapshot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 20px 50px rgba(93, 74, 71, 0.06);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.map-frosted-tint-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 26, 0.2);
+    border-radius: 20px;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.map-interaction-prompt {
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transform: translateY(10px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+/* Artistic Geometric Background Offset Backdrop Block */
+.map-offset-backdrop {
+    position: absolute;
+    bottom: -24px;
+    left: -24px;
+    width: 50%;
+    height: 60%;
+    background-color: #F3B0A6; /* Pale pink theme accent backing plate block */
+    border-radius: 20px;
+    z-index: 1;
+    opacity: 0.25;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
+}
+
+/* Image Wrapper Hover Micro-Effects */
+.overlapping-map-frame:hover .map-snapshot-img {
+    transform: scale(1.02);
+}
+
+.overlapping-map-frame:hover .map-frosted-tint-overlay {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.overlapping-map-frame:hover .map-interaction-prompt {
+    transform: translateY(0);
+}
+
+.overlapping-map-frame:hover .map-offset-backdrop {
+    transform: translate(-10px, 10px);
+    opacity: 0.4;
+}
+
+/* --- Right Side: Detailed Address Coordinate Card --- */
+.map-content-side {
+    width: 100%;
+}
+
+.studio-address-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(232, 153, 141, 0.15);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 15px 45px rgba(93, 74, 71, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.studio-marker-icon {
+    width: 52px;
+    height: 52px;
+    background-color: #FFF0EC;
+    color: #E8998D;
+    font-size: 1.3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.studio-address-card h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+}
+
+.studio-address-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #4A3E3D;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.studio-proximity-note {
+    font-size: 0.85rem;
+    color: #8C7672;
+    margin-bottom: 36px;
+    font-style: italic;
+}
+
+/* --- Interactive Google Map Live Redirect Button Button --- */
+.live-map-nav-btn {
+    padding: 16px 32px;
+    background-color: #1A1A1A; /* Premium high-contrast solid near-black requested */
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(26, 26, 26, 0.15);
+    transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s;
+}
+
+.live-map-nav-btn:hover {
+    background-color: #E8998D; /* Shifts seamlessly to brand peach accent on user hover entries */
+    box-shadow: 0 8px 25px rgba(232, 153, 141, 0.35);
+    transform: translateY(-2px);
+}
+
+.nav-btn-icon {
+    font-size: 1.05rem;
+    transition: transform 0.3s ease;
+}
+
+.live-map-nav-btn:hover .nav-btn-icon {
+    transform: rotate(45deg); /* Dynamic micro compass orientation spin */
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .map-main-title { font-size: 2.8rem; }
+    .map-matrix-grid { gap: 40px; }
+    .studio-address-card { padding: 36px; }
+}
+
+@media (max-width: 992px) {
+    /* Collapses row splits into linear vertical column channels cleanly on smaller table viewports */
+    .map-matrix-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    
+    .map-graphic-side {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .map-offset-backdrop {
+        display: none; /* Disables backdrop block shapes to maintain clean responsive boundaries */
+    }
+
+    /* Standardizes responsive entry direction slides into uniform bottom-up movements */
+    .fly-from-left, .fly-from-right {
+        transform: translateY(40px) !important;
+    }
+    
+    .studio-address-card {
+        align-items: center;
+        text-align: center;
+    }
+    .studio-marker-icon { margin-bottom: 16px; }
+}
+
+@media (max-width: 576px) {
+    .studio-map-section { padding: 60px 0; }
+    .map-master-container { padding: 0 24px; }
+    .map-main-title { font-size: 1.9rem; gap: 0 8px; }
+    .studio-address-card { padding: 28px 20px; border-radius: 16px; }
+    .studio-address-text { font-size: 0.95rem; }
+    .live-map-nav-btn { width: 100%; justify-content: center; padding: 14px; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- PART 1: Word-by-Word Scroll Reveal Intersection Observer ---
+    const words = document.querySelectorAll(".mp-word, .mp-word-accent");
+    const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.parentElement.classList.add("reveal-active");
+                wordObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    words.forEach(word => wordObserver.observe(word));
+
+
+    // --- PART 2: Side Sliding Layout Alignment Scroll Trigger ---
+    const matrixGrid = document.querySelector(".map-matrix-grid");
+
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Apply global active flag to execute left/right fly timeline properties simultaneously
+                matrixGrid.classList.add("animate-grid-active");
+                gridObserver.unobserve(matrixGrid);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    if (matrixGrid) gridObserver.observe(matrixGrid);
+});
+
+</script>
+
+<!-- Creative Floating Subscribe CTA Banner Component -->
+<section class="subscribe-section" id="subscribeSection">
+    <div class="subscribe-container">
+        
+        <!-- Elevated Floating Panel Container Shell -->
+        <div class="floating-subscribe-card">
+            
+            <!-- Img Tag Background Media Layer -->
+            <div class="sub-image-wrapper">
+                <img src="./assests/flower decor.webp" alt="Stackly Grand Luxury Event Background" class="sub-bg-img" loading="lazy">
+                <div class="sub-dark-tint-layer"></div>
+            </div>
+
+            <!-- Foreground Interactive Content Frame -->
+            <div class="sub-content-inner">
+                
+                <!-- Bottom-Up Word Staggered Typography Header -->
+                <div class="sub-text-block">
+                    <h2 class="sub-title" id="subscribeTitle">
+                        <span class="s-word">Subscribe</span>
+                        <span class="s-word">To</span>
+                        <span class="s-word">Our</span>
+                        <span class="s-word">Luxury</span>
+                        <span class="s-word">Design</span>
+                        <span class="s-word">Magazine</span>
+                    </h2>
+                    <p class="sub-paragraph" id="subscribePara">
+                        <span class="s-word">Get</span>
+                        <span class="s-word">exclusive</span>
+                        <span class="s-word">wedding</span>
+                        <span class="s-word">decor</span>
+                        <span class="s-word">trends</span>
+                        <span class="s-word">and</span>
+                        <span class="s-word">styling</span>
+                        <span class="s-word">insights</span>
+                        <span class="s-word">delivered</span>
+                        <span class="s-word">monthly.</span>
+                    </p>
+                </div>
+
+                <!-- Input Action Form Field Layer -->
+                <form class="sub-form-block" id="subscribeForm" novalidate>
+                    <div class="sub-input-group">
+                        <input type="email" id="subscriberEmail" placeholder="Enter your email address..." aria-label="Email address">
+                        <button type="submit" class="sub-submit-btn">Subscribe Now</button>
+                        
+                        <!-- Custom Native Tooltip Alert Message Placement -->
+                        <span class="sub-validation-msg" id="subValidationAlert">Please fill out this field.</span>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- Canvas Framing Configuration --- */
+.subscribe-section {
+    width: 100%;
+    background-color: #FFF8F6; /* Standard branding pale pink theme backdrop */
+    padding: 30px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.subscribe-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- Elevated Floating Panel Card Architecture --- */
+.floating-subscribe-card {
+    position: relative;
+    width: 100%;
+    min-height: 280px;
+    border-radius: 24px; /* Highly curved corners to achieve floating look */
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(93, 74, 71, 0.12); /* Deep drop shadow elevation spatial depth */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+/* Background Media Formatting Shell */
+.sub-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.sub-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.floating-subscribe-card:hover .sub-bg-img {
+    transform: scale(1.03);
+}
+
+.sub-dark-tint-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.88) 0%, rgba(93, 74, 71, 0.8) 100%);
+}
+
+/* --- Foreground Main Flex Matrix Layout --- */
+.sub-content-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 50px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.sub-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 550px;
+}
+
+/* --- Word-by-Word Bottom Up Typography Animation Core --- */
+.sub-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+}
+
+.sub-paragraph {
+    font-size: 1rem;
+    color: #FFD3C4; /* Soft branding theme peach accent contrast line text color */
+    line-height: 1.5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+}
+
+/* Individual token state properties configuration */
+.s-word {
+    opacity: 0;
+    transform: translateY(20px); /* Sets initial offset below text alignment paths */
+    display: inline-block;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Trigger classes stamped onto parent layers via intersection scripts */
+.sub-title.reveal-active .s-word,
+.sub-paragraph.reveal-active .s-word {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Interactive Action Form Block --- */
+.sub-form-block {
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+.sub-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    padding: 6px;
+    border-radius: 40px;
+    transition: border-color 0.3s frame, box-shadow 0.3s;
+}
+
+.sub-input-group:focus-within {
+    border-color: #E8998D; /* Brand signature highlight focus accent */
+    box-shadow: 0 0 0 4px rgba(232, 153, 141, 0.15);
+}
+
+.sub-input-group input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    color: #FFFFFF;
+}
+
+.sub-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sub-submit-btn {
+    padding: 14px 28px;
+    background-color: #E8998D; /* Brand primary tone color */
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(232, 153, 141, 0.2);
+}
+
+.sub-submit-btn:hover {
+    background-color: #D6867B;
+    transform: translateY(-1px);
+}
+
+/* --- High Performance Validation Alert Tooltip Element --- */
+.sub-validation-msg {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 24px;
+    background-color: #111111; /* Near-black crisp background */
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Triangle indicator clip pointing downward to input fields */
+.sub-validation-msg::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #111111 transparent transparent transparent;
+}
+
+.sub-validation-msg.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA BREAKPOINT OVERRIDES
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .sub-content-inner { padding: 40px; gap: 30px; }
+    .sub-title { font-size: 1.9rem; }
+}
+
+@media (max-width: 900px) {
+    .subscribe-section { padding: 40px 0; }
+    .subscribe-container { padding: 0 24px; }
+    
+    /* Collapses standard row architecture down into an organic stacked system layout */
+    .sub-content-inner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 50px 32px;
+        gap: 32px;
+    }
+
+    .sub-title, .sub-paragraph {
+        justify-content: center;
+    }
+
+    .sub-form-block {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-subscribe-card { border-radius: 16px; }
+    .sub-content-inner { padding: 40px 20px; }
+    .sub-title { font-size: 1.5rem; }
+    .sub-paragraph { font-size: 0.9rem; }
+    
+    /* Convert horizontal unified inline group elements to single vertical button forms on mobile viewports */
+    .sub-input-group {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 12px;
+    }
+    
+    .sub-input-group input {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        text-align: center;
+        padding: 14px;
+    }
+
+    .sub-input-group input:focus {
+        border-color: #E8998D;
+    }
+
+    .sub-submit-btn {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .sub-validation-msg {
+        left: 50%;
+        transform: translate(-50%, 10px);
+        bottom: calc(100% + 8px);
+    }
+    
+    .sub-validation-msg::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub-validation-msg.is-visible {
+        transform: translate(-50%, 0);
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const subscribeSection = document.getElementById("subscribeSection");
+    const subTitle = document.getElementById("subscribeTitle");
+    const subPara = document.getElementById("subscribePara");
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const subValidationAlert = document.getElementById("subValidationAlert");
+
+    // --- PART 1: Staggered Dynamic Transition Delays Assignment ---
+    const assignWordAnimationDelays = (parentContainer, startingOffsetMs) => {
+        const words = parentContainer.querySelectorAll(".s-word");
+        words.forEach((word, index) => {
+            // Configures staggered delay timing increments flowing from bottom upwards
+            word.style.transitionDelay = `${startingOffsetMs + (index * 60)}ms`;
+        });
+        return startingOffsetMs + (words.length * 60);
+    };
+
+    // Chain lines sequence maps so text blocks rise sequentially fluidly
+    const line1CompletionDelay = assignWordAnimationDelays(subTitle, 100);
+    assignWordAnimationDelays(subPara, line1CompletionDelay + 50);
+
+
+    // --- PART 2: Scroll Intersection Pipeline Observer ---
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Injects active status classes to initiate transition executions
+                subTitle.classList.add("reveal-active");
+                subPara.classList.add("reveal-active");
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.25 }); // Fires when 25% of the floating card enters display frame
+
+    if (subscribeSection) sectionObserver.observe(subscribeSection);
+
+
+    // --- PART 3: Input Form Client-Side Validation Engine ---
+    subscribeForm.addEventListener("submit", (e) => {
+        e.preventDefault(); // Terminate standard browser transmission
+
+        const cleanEmailValue = subscriberEmail.value.trim();
+
+        if (cleanEmailValue === "") {
+            // Display alert banner tooltip natively
+            subValidationAlert.classList.add("is-visible");
+            subscriberEmail.focus();
+        } else {
+            // Dismiss error banners and seamlessly route user target link path
+            subValidationAlert.classList.remove("is-visible");
+            window.location.href = "404.html";
+        }
+    });
+
+    // Clean visualization traces instantly once client edits empty characters
+    subscriberEmail.addEventListener("input", () => {
+        if (subValidationAlert.classList.contains("is-visible")) {
+            subValidationAlert.classList.remove("is-visible");
+        }
+    });
+
+    // Safe blur fallback: clears errors when element focus is shifted away
+    subscriberEmail.addEventListener("blur", () => {
+        subValidationAlert.classList.remove("is-visible");
+    });
+});
+
+</script>
+
+<!-- Elegant Responsive Footer Section -->
+<footer class="main-footer">
+    <div class="footer-top-container">
+        
+        <!-- Column 1: Brand Info & Social Ecosystem -->
+        <div class="footer-column brand-info-col">
+            <div class="footer-logo-wrapper" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" role="button" aria-label="Scroll back to top">
+                <img src="./assests/footer event logo.webp" alt="Stackly Logo" class="footer-logo-img">
+            </div>
+            <p class="footer-brand-desc">
+                Designing premium immersive event decorations and artisanal stage concepts tailored beautifully to celebrate life's most unforgettable milestones.
+            </p>
+            <div class="footer-socials-row">
+                <!-- Instagram -->
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <!-- Facebook -->
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="404.html" class="social-circle-link" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16zM4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <!-- YouTube -->
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Explore Styling Navigation -->
+        <div class="footer-column">
+            <h3 class="column-title">Explore Concepts</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Royal Mandapams</a></li>
+                <li><a href="404.html">Premium Gala Buffets</a></li>
+                <li><a href="404.html">Floral Installations</a></li>
+                <li><a href="404.html">Bespoke High Tea</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Client Support & Logistics -->
+        <div class="footer-column">
+            <h3 class="column-title">Styling Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Design Parameters</a></li>
+                <li><a href="404.html">Production Tracks</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Headquarters Coordinates -->
+        <div class="footer-column contact-info-col">
+            <h3 class="column-title">Headquarters Location</h3>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <a href="https://maps.app.goo.gl/1iUAJLxSuFhmkqeE8" target="_blank" rel="noopener noreferrer" class="map-anchor-link">
+                    MMR Complex, Periyakollapatty, Chinna Thirupathi, Salem, Tamil Nadu 636008
+                </a>
+            </div>
+            <div class="contact-item-row">
+                <svg class="contact-vector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <a href="tel:+917010792745" class="phone-anchor-link">+91 7010792745</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legal Row Bar -->
+    <div class="footer-bottom-bar">
+        <div class="footer-bottom-container">
+            <span class="copyright-text">&copy; 2026 Stackly Industries. All styling rights reserved.</span>
+            <div class="legal-links-group">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* --- High-Quality Layout Backing Variables --- */
+.main-footer {
+    width: 100%;
+    background-color: #0B090A; /* Elegant, premium pitch-black layout backdrop precisely matched from image */
+    padding-top: 80px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-top-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 60px 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr; /* Balanced proportions matrix */
+    gap: 40px;
+}
+
+/* --- Brand Content Elements --- */
+.brand-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo-wrapper {
+    cursor: pointer;
+    margin-bottom: 24px;
+    display: inline-block;
+    align-self: flex-start;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo-wrapper:hover {
+    transform: translateY(-2px);
+}
+
+.footer-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-brand-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #A39391; /* Soft muted peach-gray tone for clean dark readability */
+    margin-bottom: 28px;
+    max-width: 320px;
+}
+
+/* Vector Social Circles Rows */
+.footer-socials-row {
+    display: flex;
+    gap: 12px;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #A39391;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.social-circle-link:hover {
+    background-color: #E8998D; /* Swaps instantly to our signature brand accent peach color on focus */
+    color: #FFFFFF;
+    border-color: #E8998D;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(232, 153, 141, 0.3);
+}
+
+/* --- Navigation & Links Typography --- */
+.column-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    position: relative;
+    letter-spacing: -0.2px;
+}
+
+/* Subtle accent block underneath link headers exactly from original image design lines */
+.column-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background-color: #E8998D; /* Subtle signature underline separator token */
+}
+
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #A39391;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #E8998D;
+    transform: translateX(3px); /* Interactive horizontal sliding motion on text hover */
+}
+
+/* --- Contact & Coordinates Layout Info Block --- */
+.contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.contact-vector-icon {
+    width: 18px;
+    height: 18px;
+    color: #E8998D; /* Bright active tracking color highlights */
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.map-anchor-link, 
+.phone-anchor-link {
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #A39391;
+    transition: color 0.2s ease;
+}
+
+.map-anchor-link:hover, 
+.phone-anchor-link:hover {
+    color: #FFFFFF;
+}
+
+/* --- Bottom Legal Bar Section Layout --- */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px 0;
+    background-color: #070607; /* Darkened deep sub-floor strip */
+}
+
+.footer-bottom-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.copyright-text {
+    font-size: 0.85rem;
+    color: #6E6160;
+}
+
+.legal-links-group {
+    display: flex;
+    gap: 28px;
+}
+
+.legal-links-group a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #6E6160;
+    transition: color 0.2s ease;
+}
+
+.legal-links-group a:hover {
+    color: #A39391;
+}
+
+/* ==========================================================================
+   FULLY ROBUST RESPONSIVE MEDIA CONSTRAINTS MATRIX
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .footer-top-container {
+        grid-template-columns: 1fr 1fr; /* Transforms grid into 2x2 symmetry block fields over tablets */
+        gap: 50px 30px;
+    }
+    .footer-brand-desc { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .footer-top-container {
+        padding: 0 24px 50px 24px;
+    }
+    .footer-bottom-container {
+        padding: 0 24px;
+        flex-direction: column; /* Flattens parallel strings on compact smartphone displays */
+        text-align: center;
+        gap: 16px;
+    }
+    .legal-links-group {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px 20px;
+    }
+}
+
+@media (max-width: 540px) {
+    /* Pure clean structural 1-column layout stacking linear flow directly down small screens */
+    .footer-top-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .column-title { margin-bottom: 18px; }
+}
+
+</style>
+
+<script>
+    /**
+ * Stackly Frontend - Footer UI Engine
+ * Coordinates smooth scrolling back to viewport roots and analytics logging workflows.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. SMOOTH SCROLL ARCHITECTURE MANAGEMENT ---
+    const topScrollButton = document.getElementById("footerScrollTop");
+
+    if (topScrollButton) {
+        topScrollButton.addEventListener("click", (event) => {
+            // Prevent standard anchor jumping behaviors instantly
+            event.preventDefault();
+
+            // Fire high performance native GPU window scrolling pipelines
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
+
+
+    // --- 2. 404 LOGGING ACTION RADAR (Optional Debug Tracer) ---
+    const footerLinks = document.querySelectorAll(".main-footer a[href='404.html']");
+
+    footerLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Optional: Track which footer links your users are visiting most before reaching the placeholder page
+            const destinationLabel = e.currentTarget.textContent.trim() || e.currentTarget.getAttribute("aria-label");
+            console.log(`[Stackly Tracker]: User navigated to 404 handler via link: "${destinationLabel}"`);
+        });
+    });
+});
+
+</script>
+</body>
+</html>
